@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:importantForAutofill="no">
+
+    <ImageView
+        android:id="@+id/imageViewUserProfileInput"
+        android:layout_width="320dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="28dp"
+        android:contentDescription="@string/userProfileInputLogoLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo512" />
+
+    <TextView
+        android:id="@+id/textViewUserProfileInputName"
+        android:layout_width="160dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="28dp"
+        android:gravity="center"
+        android:hint="@string/userProfileInputName"
+        android:text="@string/userProfileInputName"
+        app:layout_constraintEnd_toStartOf="@+id/editTextUserProfileInputName"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewUserProfileInput" />
+
+    <EditText
+        android:id="@+id/editTextUserProfileInputName"
+        android:layout_width="160dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:hint="@string/userProfileInputName"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textViewUserProfileInputName"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewUserProfileInput" />
+
+    <TextView
+        android:id="@+id/textViewUserProfileInputHeight"
+        android:layout_width="160dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="28dp"
+        android:gravity="center"
+        android:hint="@string/userProfileInputHeight"
+        android:text="@string/userProfileInputHeight"
+        app:layout_constraintEnd_toStartOf="@+id/editTextUserProfileInputHeight"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUserProfileInputName" />
+
+    <EditText
+        android:id="@+id/editTextUserProfileInputHeight"
+        android:layout_width="160dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:hint="@string/userProfileInputHeight"
+        android:importantForAutofill="no"
+        android:inputType="numberSigned"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textViewUserProfileInputHeight"
+        app:layout_constraintTop_toBottomOf="@+id/editTextUserProfileInputName" />
+
+    <EditText
+        android:id="@+id/editTextUserProfileInputAge"
+        android:layout_width="160dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:hint="@string/userProfileInputAge"
+        android:importantForAutofill="no"
+        android:inputType="numberSigned"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textViewUserProfileInputAge"
+        app:layout_constraintTop_toBottomOf="@+id/editTextUserProfileInputHeight" />
+
+    <TextView
+        android:id="@+id/textViewUserProfileInputAge"
+        android:layout_width="160dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="28dp"
+        android:gravity="center"
+        android:hint="@string/userProfileInputAge"
+        android:text="@string/userProfileInputAge"
+        app:layout_constraintEnd_toStartOf="@+id/editTextUserProfileInputAge"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUserProfileInputHeight" />
+
+    <Button
+        android:id="@+id/buttonUserProfileInputOk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="@android:string/ok"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUserProfileInputAge" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
