@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Diet</string>
+    <string name="userProfileEntryButtonLabel">User Profile</string>
     <string name="userProfileLogoLabel">Logo</string>
     <string name="userProfileNameLabel">Name</string>
     <string name="userProfileHeightLabel">Height</string>
     <string name="userProfileAgeLabel">Age</string>
+    <string name="userProfileCompleteButtonLabel">Complete</string>
 </resources>
