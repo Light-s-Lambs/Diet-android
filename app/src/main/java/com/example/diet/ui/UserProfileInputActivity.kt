@@ -10,10 +10,10 @@ class UserProfileInputActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_profile_input)
-        buttonUserProfileInputOk.setOnClickListener {
-            val userName : String = editTextUserProfileInputName.getText().toString()
-            val userHeight : Int = editTextUserProfileInputHeight.getText().toString().toInt()
-            val userAge : Int = editTextUserProfileInputAge.getText().toString().toInt()
+        completeButton.setOnClickListener {
+            val userName : String = nameEditView.getText().toString()
+            val userHeight : Int = heightEditView.getText().toString().toInt()
+            val userAge : Int = ageEditView.getText().toString().toInt()
             Toast.makeText(applicationContext, "$userName : $userHeight : $userAge", Toast.LENGTH_LONG).show()
         }
     }

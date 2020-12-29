@@ -9,7 +9,7 @@ class TestMainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        buttonMain.setOnClickListener {
+        mainEntryButton.setOnClickListener {
             startActivity(Intent(this, UserProfileInputActivity::class.java))
         }
     }

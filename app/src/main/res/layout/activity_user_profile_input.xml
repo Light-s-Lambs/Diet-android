@@ -6,11 +6,11 @@
     android:importantForAutofill="no">
 
     <ImageView
-        android:id="@+id/imageViewUserProfileInput"
+        android:id="@+id/imageView"
         android:layout_width="320dp"
         android:layout_height="200dp"
         android:layout_marginTop="28dp"
-        android:contentDescription="@string/userProfileInputLogoLabel"
+        android:contentDescription="@string/userProfileLogoLabel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,88 +18,88 @@
         app:srcCompat="@drawable/logo512" />
 
     <TextView
-        android:id="@+id/textViewUserProfileInputName"
+        android:id="@+id/nameTextView"
         android:layout_width="160dp"
         android:layout_height="44dp"
         android:layout_marginTop="28dp"
         android:gravity="center"
-        android:hint="@string/userProfileInputName"
-        android:text="@string/userProfileInputName"
-        app:layout_constraintEnd_toStartOf="@+id/editTextUserProfileInputName"
+        android:hint="@string/userProfileNameLabel"
+        android:text="@string/userProfileNameLabel"
+        app:layout_constraintEnd_toStartOf="@+id/nameEditView"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewUserProfileInput" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
-        android:id="@+id/editTextUserProfileInputName"
+        android:id="@+id/nameEditView"
         android:layout_width="160dp"
         android:layout_height="44dp"
         android:layout_marginTop="28dp"
         android:ems="10"
-        android:hint="@string/userProfileInputName"
+        android:hint="@string/userProfileNameLabel"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textViewUserProfileInputName"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewUserProfileInput" />
+        app:layout_constraintStart_toEndOf="@+id/nameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <TextView
-        android:id="@+id/textViewUserProfileInputHeight"
+        android:id="@+id/heightTextView"
         android:layout_width="160dp"
         android:layout_height="44dp"
         android:layout_marginTop="28dp"
         android:gravity="center"
-        android:hint="@string/userProfileInputHeight"
-        android:text="@string/userProfileInputHeight"
-        app:layout_constraintEnd_toStartOf="@+id/editTextUserProfileInputHeight"
+        android:hint="@string/userProfileHeightLabel"
+        android:text="@string/userProfileHeightLabel"
+        app:layout_constraintEnd_toStartOf="@+id/heightEditView"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewUserProfileInputName" />
+        app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
 
     <EditText
-        android:id="@+id/editTextUserProfileInputHeight"
+        android:id="@+id/heightEditView"
         android:layout_width="160dp"
         android:layout_height="44dp"
         android:layout_marginTop="28dp"
         android:ems="10"
-        android:hint="@string/userProfileInputHeight"
+        android:hint="@string/userProfileHeightLabel"
         android:importantForAutofill="no"
         android:inputType="numberSigned"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textViewUserProfileInputHeight"
-        app:layout_constraintTop_toBottomOf="@+id/editTextUserProfileInputName" />
+        app:layout_constraintStart_toEndOf="@+id/heightTextView"
+        app:layout_constraintTop_toBottomOf="@+id/nameEditView" />
 
     <EditText
-        android:id="@+id/editTextUserProfileInputAge"
+        android:id="@+id/ageEditView"
         android:layout_width="160dp"
         android:layout_height="44dp"
         android:layout_marginTop="28dp"
         android:ems="10"
-        android:hint="@string/userProfileInputAge"
+        android:hint="@string/userProfileAgeLabel"
         android:importantForAutofill="no"
         android:inputType="numberSigned"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textViewUserProfileInputAge"
-        app:layout_constraintTop_toBottomOf="@+id/editTextUserProfileInputHeight" />
+        app:layout_constraintStart_toEndOf="@+id/ageTextView"
+        app:layout_constraintTop_toBottomOf="@+id/heightEditView" />
 
     <TextView
-        android:id="@+id/textViewUserProfileInputAge"
+        android:id="@+id/ageTextView"
         android:layout_width="160dp"
         android:layout_height="44dp"
         android:layout_marginTop="28dp"
         android:gravity="center"
-        android:hint="@string/userProfileInputAge"
-        android:text="@string/userProfileInputAge"
-        app:layout_constraintEnd_toStartOf="@+id/editTextUserProfileInputAge"
+        android:hint="@string/userProfileAgeLabel"
+        android:text="@string/userProfileAgeLabel"
+        app:layout_constraintEnd_toStartOf="@+id/ageEditView"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewUserProfileInputHeight" />
+        app:layout_constraintTop_toBottomOf="@+id/heightTextView" />
 
     <Button
-        android:id="@+id/buttonUserProfileInputOk"
+        android:id="@+id/completeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
@@ -107,6 +107,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewUserProfileInputAge" />
+        app:layout_constraintTop_toBottomOf="@+id/ageTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

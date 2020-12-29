@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Diet</string>
-    <string name="userProfileInputLogoLabel">Logo</string>
-    <string name="userProfileInputName">Name</string>
-    <string name="userProfileInputHeight">Height</string>
-    <string name="userProfileInputAge">Age</string>
+    <string name="userProfileLogoLabel">Logo</string>
+    <string name="userProfileNameLabel">Name</string>
+    <string name="userProfileHeightLabel">Height</string>
+    <string name="userProfileAgeLabel">Age</string>
 </resources>
