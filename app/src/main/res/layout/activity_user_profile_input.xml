@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:importantForAutofill="no">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="28dp"
+        android:contentDescription="@string/userProfileLogoLabel"
+        android:scaleType="fitXY"
+        app:layout_constraintDimensionRatio="1.25"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo512" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+        <TextView
+            android:id="@+id/nameTextView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="28dp"
+            android:gravity="center"
+            android:hint="@string/userProfileNameLabel"
+            android:text="@string/userProfileNameLabel"
+            app:layout_constraintBottom_toTopOf="@+id/heightTextView"
+            app:layout_constraintDimensionRatio="4"
+            app:layout_constraintEnd_toStartOf="@+id/nameEditView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread" />
+
+        <EditText
+            android:id="@+id/nameEditView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="28dp"
+            android:ems="10"
+            android:hint="@string/userProfileNameLabel"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toTopOf="@+id/heightEditView"
+            app:layout_constraintDimensionRatio="4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/nameTextView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/heightTextView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="28dp"
+            android:gravity="center"
+            android:hint="@string/userProfileHeightLabel"
+            android:text="@string/userProfileHeightLabel"
+            app:layout_constraintBottom_toTopOf="@+id/ageTextView"
+            app:layout_constraintDimensionRatio="4"
+            app:layout_constraintEnd_toStartOf="@+id/heightEditView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
+
+        <EditText
+            android:id="@+id/heightEditView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="28dp"
+            android:ems="10"
+            android:hint="@string/userProfileHeightLabel"
+            android:importantForAutofill="no"
+            android:inputType="numberSigned"
+            app:layout_constraintBottom_toTopOf="@+id/ageEditView"
+            app:layout_constraintDimensionRatio="4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/heightTextView"
+            app:layout_constraintTop_toBottomOf="@+id/nameEditView" />
+
+        <TextView
+            android:id="@+id/ageTextView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="28dp"
+            android:gravity="center"
+            android:hint="@string/userProfileAgeLabel"
+            android:text="@string/userProfileAgeLabel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="4"
+            app:layout_constraintEnd_toStartOf="@+id/ageEditView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/heightTextView" />
+
+        <EditText
+            android:id="@+id/ageEditView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="28dp"
+            android:ems="10"
+            android:hint="@string/userProfileAgeLabel"
+            android:importantForAutofill="no"
+            android:inputType="numberSigned"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ageTextView"
+            app:layout_constraintTop_toBottomOf="@+id/heightEditView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/completeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/userProfileCompleteButtonLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
