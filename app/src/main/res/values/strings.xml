@@ -6,16 +6,9 @@
     <string name="userProfileHeightLabel">Height</string>
     <string name="userProfileAgeLabel">Age</string>
     <string name="userProfileCompleteButtonLabel">Complete</string>
-    <string name="userWeightLogoLabel">Logo</string>
-    <string name="userWeightMyPageLabel">My Page</string>
     <string name="userWeightWeightLabel">Weight</string>
     <string name="userWeightPercentageBodyFatLabel">Percentage\nBody Fat</string>
     <string name="userWeightAmountOfMuscleLabel">Amount Of\nMuscle</string>
-    <string name="userWeightWeightButtonLabel">Weight\nInfo</string>
-    <string name="userWeightActivityButtonLabel">Activity\nInfo</string>
-    <string name="userWeightDietButtonLabel">Diet\nInfo</string>
-    <string name="userWeightHistoryButtonLabel">History</string>
-    <string name="userWeightKgLabel">Kg</string>
-    <string name="userWeightPercentLabel">%</string>
-
+    <string name="userWeightKgHint">Kg</string>
+    <string name="userWeightPercentHint">%</string>
 </resources>
