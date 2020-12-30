@@ -1,5 +1,6 @@
 package com.example.diet.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,7 @@ class UserProfileInputActivity : AppCompatActivity(){
             val userHeight : Int = heightEditView.getText().toString().toInt()
             val userAge : Int = ageEditView.getText().toString().toInt()
             Toast.makeText(applicationContext, "$userName : $userHeight : $userAge", Toast.LENGTH_LONG).show()
+            startActivity(Intent(this, UserWeightInputActivity::class.java))
         }
     }
 }
