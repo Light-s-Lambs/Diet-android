@@ -11,5 +11,4 @@
     <string name="userWeightAmountOfMuscleLabel">Amount Of\nMuscle</string>
     <string name="userWeightKgHint">Kg</string>
     <string name="userWeightPercentHint">%</string>
-    <string name="userWeightCompleteButtonLabel">Complete</string>
 </resources>
