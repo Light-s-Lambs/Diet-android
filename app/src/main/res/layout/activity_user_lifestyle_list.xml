@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/dateGuideLineStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <TextView
+        android:id="@+id/dateTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:autoSizeMaxTextSize="48sp"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeStepGranularity="2sp"
+        android:autoSizeTextType="uniform"
+        android:gravity="bottom|center"
+        android:maxLines="1"
+        app:layout_constraintEnd_toStartOf="@+id/dateGuideLineEnd"
+        app:layout_constraintHeight_percent="0.2"
+        app:layout_constraintStart_toStartOf="@+id/dateGuideLineStart"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/activityMetabolismLabelTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:autoSizeMaxTextSize="24sp"
+        android:autoSizeMinTextSize="8sp"
+        android:autoSizeStepGranularity="2sp"
+        android:autoSizeTextType="uniform"
+        android:gravity="center"
+        android:maxLines="2"
+        android:text="@string/userLifeStyleListActivityMetabolismLabel"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintStart_toStartOf="@+id/dateGuideLineStart"
+        app:layout_constraintTop_toBottomOf="@+id/dateTextView"
+        app:layout_constraintWidth_percent="0.25" />
+
+    <TextView
+        android:id="@+id/activityMetabolismTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:autoSizeMaxTextSize="48sp"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeStepGranularity="2sp"
+        android:autoSizeTextType="uniform"
+        android:gravity="bottom|center_horizontal"
+        android:maxLines="1"
+        app:layout_constraintEnd_toStartOf="@+id/dateGuideLineEnd"
+        app:layout_constraintHeight_percent="0.25"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/dateGuideLineStart"
+        app:layout_constraintTop_toBottomOf="@+id/dateTextView" />
+
+    <TextView
+        android:id="@+id/basalMetabolismLabelTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:autoSizeMaxTextSize="24sp"
+        android:autoSizeMinTextSize="8sp"
+        android:autoSizeStepGranularity="2sp"
+        android:autoSizeTextType="uniform"
+        android:gravity="center"
+        android:maxLines="2"
+        android:text="@string/userLifeStyleListBasalMetabolismLabel"
+        app:layout_constraintEnd_toStartOf="@+id/dateGuideLineEnd"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintTop_toBottomOf="@+id/dateTextView"
+        app:layout_constraintWidth_percent="0.25" />
+
+    <TextView
+        android:id="@+id/basalMetabolismTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:autoSizeMaxTextSize="24sp"
+        android:autoSizeMinTextSize="8sp"
+        android:autoSizeStepGranularity="2sp"
+        android:autoSizeTextType="uniform"
+        android:gravity="center"
+        android:maxLines="1"
+        app:layout_constraintEnd_toStartOf="@+id/basalMetabolismCalorieLabelTextView"
+        app:layout_constraintHeight_percent="0.05"
+        app:layout_constraintTop_toBottomOf="@+id/basalMetabolismLabelTextView"
+        app:layout_constraintWidth_percent="0.2" />
+
+    <TextView
+        android:id="@+id/basalMetabolismCalorieLabelTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:autoSizeMaxTextSize="24sp"
+        android:autoSizeMinTextSize="8sp"
+        android:autoSizeStepGranularity="2sp"
+        android:autoSizeTextType="uniform"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="@string/userLifeStyleListKiloCalorieLabel"
+        app:layout_constraintEnd_toStartOf="@+id/dateGuideLineEnd"
+        app:layout_constraintHeight_percent="0.05"
+        app:layout_constraintTop_toBottomOf="@+id/basalMetabolismLabelTextView"
+        app:layout_constraintWidth_percent="0.075" />
+
+    <TextView
+        android:id="@+id/activityMetabolismCalorieLabelTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:autoSizeMaxTextSize="24sp"
+        android:autoSizeMinTextSize="8sp"
+        android:autoSizeStepGranularity="2sp"
+        android:autoSizeTextType="uniform"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="@string/userLifeStyleListKiloCalorieLabel"
+        app:layout_constraintBottom_toBottomOf="@+id/activityMetabolismTextView"
+        app:layout_constraintEnd_toStartOf="@+id/dateGuideLineEnd"
+        app:layout_constraintHeight_percent="0.05"
+        app:layout_constraintWidth_percent="0.1" />
+
+    <TextView
+        android:id="@+id/lifeStyleNameTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:autoSizeMaxTextSize="24sp"
+        android:autoSizeMinTextSize="8sp"
+        android:autoSizeStepGranularity="2sp"
+        android:autoSizeTextType="uniform"
+        android:gravity="center"
+        android:maxLines="2"
+        android:text="@string/userLifeStyleListLifeStyleNameLabel"
+        app:layout_constraintEnd_toStartOf="@+id/lifeStyleTimeTextView"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintStart_toStartOf="@+id/dateGuideLineStart"
+        app:layout_constraintTop_toBottomOf="@+id/activityMetabolismTextView"
+        app:layout_constraintWidth_percent="0.2" />
+
+    <TextView
+        android:id="@+id/lifeStyleTimeTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:autoSizeMaxTextSize="24sp"
+        android:autoSizeMinTextSize="8sp"
+        android:autoSizeStepGranularity="2sp"
+        android:autoSizeTextType="uniform"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="@string/userLifeStyleListLifeStyleTimeLabel"
+        app:layout_constraintEnd_toStartOf="@+id/lifeStyleBurnedCalorieTextView"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/lifeStyleNameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/activityMetabolismTextView"
+        app:layout_constraintWidth_percent="0.2" />
+
+    <TextView
+        android:id="@+id/lifeStyleBurnedCalorieTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:autoSizeMaxTextSize="24sp"
+        android:autoSizeMinTextSize="8sp"
+        android:autoSizeStepGranularity="2sp"
+        android:autoSizeTextType="uniform"
+        android:gravity="center"
+        android:maxLines="2"
+        android:text="@string/userLifeStyleListBurnedCalorieLabel"
+        app:layout_constraintEnd_toStartOf="@+id/dateGuideLineEnd"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/lifeStyleTimeTextView"
+        app:layout_constraintTop_toBottomOf="@+id/activityMetabolismTextView"
+        app:layout_constraintWidth_percent="0.2" />
+
+    <TextView
+        android:id="@+id/lifeStyleListTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:autoSizeMaxTextSize="24sp"
+        android:autoSizeMinTextSize="8sp"
+        android:autoSizeStepGranularity="2sp"
+        android:autoSizeTextType="uniform"
+        android:gravity="center_horizontal|top"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/dateGuideLineEnd"
+        app:layout_constraintHeight_percent="0.45"
+        app:layout_constraintStart_toStartOf="@+id/dateGuideLineStart"
+        app:layout_constraintTop_toBottomOf="@+id/lifeStyleTimeTextView" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/dateGuideLineEnd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

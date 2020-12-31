@@ -6,4 +6,11 @@
     <string name="userProfileHeightLabel">Height</string>
     <string name="userProfileAgeLabel">Age</string>
     <string name="userProfileCompleteButtonLabel">Complete</string>
+    <string name="userLifeStyleListActivityMetabolismLabel">Activity\nMetabolism</string>
+    <string name="userLifeStyleListBasalMetabolismLabel">Basal\nMetabolism</string>
+    <string name="userLifeStyleListKiloCalorieLabel">kcal</string>
+    <string name="userLifeStyleListLifeStyleNameLabel">LifeStyle\nName</string>
+    <string name="userLifeStyleListLifeStyleTimeLabel">Time</string>
+    <string name="userLifeStyleListBurnedCalorieLabel">Burned\nCalorie</string>
+    <string name="userLifeStyleListAddLifeStyleButtonLabel">Add\nLifeStyle</string>
 </resources>
