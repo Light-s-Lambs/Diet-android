@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/dateGuideLineStart"
+        android:id="@+id/contentsGuideLineStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -21,9 +21,9 @@
         android:autoSizeTextType="uniform"
         android:gravity="bottom|center"
         android:maxLines="1"
-        app:layout_constraintEnd_toStartOf="@+id/dateGuideLineEnd"
+        app:layout_constraintEnd_toStartOf="@+id/contentsGuideLineEnd"
         app:layout_constraintHeight_percent="0.2"
-        app:layout_constraintStart_toStartOf="@+id/dateGuideLineStart"
+        app:layout_constraintStart_toStartOf="@+id/contentsGuideLineStart"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -38,7 +38,7 @@
         android:maxLines="2"
         android:text="@string/userLifeStyleListActivityMetabolismLabel"
         app:layout_constraintHeight_percent="0.1"
-        app:layout_constraintStart_toStartOf="@+id/dateGuideLineStart"
+        app:layout_constraintStart_toStartOf="@+id/contentsGuideLineStart"
         app:layout_constraintTop_toBottomOf="@+id/dateTextView"
         app:layout_constraintWidth_percent="0.25" />
 
@@ -52,10 +52,10 @@
         android:autoSizeTextType="uniform"
         android:gravity="bottom|center_horizontal"
         android:maxLines="1"
-        app:layout_constraintEnd_toStartOf="@+id/dateGuideLineEnd"
+        app:layout_constraintEnd_toStartOf="@+id/contentsGuideLineEnd"
         app:layout_constraintHeight_percent="0.25"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/dateGuideLineStart"
+        app:layout_constraintStart_toStartOf="@+id/contentsGuideLineStart"
         app:layout_constraintTop_toBottomOf="@+id/dateTextView" />
 
     <TextView
@@ -69,7 +69,7 @@
         android:gravity="center"
         android:maxLines="2"
         android:text="@string/userLifeStyleListBasalMetabolismLabel"
-        app:layout_constraintEnd_toStartOf="@+id/dateGuideLineEnd"
+        app:layout_constraintEnd_toStartOf="@+id/contentsGuideLineEnd"
         app:layout_constraintHeight_percent="0.1"
         app:layout_constraintTop_toBottomOf="@+id/dateTextView"
         app:layout_constraintWidth_percent="0.25" />
@@ -100,7 +100,7 @@
         android:gravity="center"
         android:maxLines="1"
         android:text="@string/userLifeStyleListKiloCalorieLabel"
-        app:layout_constraintEnd_toStartOf="@+id/dateGuideLineEnd"
+        app:layout_constraintEnd_toStartOf="@+id/contentsGuideLineEnd"
         app:layout_constraintHeight_percent="0.05"
         app:layout_constraintTop_toBottomOf="@+id/basalMetabolismLabelTextView"
         app:layout_constraintWidth_percent="0.075" />
@@ -117,7 +117,7 @@
         android:maxLines="1"
         android:text="@string/userLifeStyleListKiloCalorieLabel"
         app:layout_constraintBottom_toBottomOf="@+id/activityMetabolismTextView"
-        app:layout_constraintEnd_toStartOf="@+id/dateGuideLineEnd"
+        app:layout_constraintEnd_toStartOf="@+id/contentsGuideLineEnd"
         app:layout_constraintHeight_percent="0.05"
         app:layout_constraintWidth_percent="0.1" />
 
@@ -134,7 +134,7 @@
         android:text="@string/userLifeStyleListLifeStyleNameLabel"
         app:layout_constraintEnd_toStartOf="@+id/lifeStyleTimeTextView"
         app:layout_constraintHeight_percent="0.1"
-        app:layout_constraintStart_toStartOf="@+id/dateGuideLineStart"
+        app:layout_constraintStart_toStartOf="@+id/contentsGuideLineStart"
         app:layout_constraintTop_toBottomOf="@+id/activityMetabolismTextView"
         app:layout_constraintWidth_percent="0.2" />
 
@@ -167,7 +167,7 @@
         android:gravity="center"
         android:maxLines="2"
         android:text="@string/userLifeStyleListBurnedCalorieLabel"
-        app:layout_constraintEnd_toStartOf="@+id/dateGuideLineEnd"
+        app:layout_constraintEnd_toStartOf="@+id/contentsGuideLineEnd"
         app:layout_constraintHeight_percent="0.1"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/lifeStyleTimeTextView"
@@ -184,16 +184,38 @@
         android:autoSizeTextType="uniform"
         android:gravity="center_horizontal|top"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/dateGuideLineEnd"
+        app:layout_constraintEnd_toStartOf="@+id/contentsGuideLineEnd"
         app:layout_constraintHeight_percent="0.45"
-        app:layout_constraintStart_toStartOf="@+id/dateGuideLineStart"
+        app:layout_constraintStart_toStartOf="@+id/contentsGuideLineStart"
         app:layout_constraintTop_toBottomOf="@+id/lifeStyleTimeTextView" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/dateGuideLineEnd"
+        android:id="@+id/contentsGuideLineEnd"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.9" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/addLifeStyleButtonVerticalGuideline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <Button
+        android:id="@+id/addLifeStyleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/userLifeStyleListAddLifeStyleButtonLabel"
+        app:layout_constraintBottom_toTopOf="@+id/addLifeStyleButtonHorizontalGuideline"
+        app:layout_constraintEnd_toStartOf="@+id/addLifeStyleButtonVerticalGuideline" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/addLifeStyleButtonHorizontalGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.95" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
