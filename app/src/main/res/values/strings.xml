@@ -6,6 +6,11 @@
     <string name="userProfileHeightLabel">Height</string>
     <string name="userProfileAgeLabel">Age</string>
     <string name="userProfileCompleteButtonLabel">Complete</string>
+    <string name="userWeightWeightLabel">Weight</string>
+    <string name="userWeightPercentageBodyFatLabel">Percentage\nBody Fat</string>
+    <string name="userWeightAmountOfMuscleLabel">Amount Of\nMuscle</string>
+    <string name="userWeightKgHint">Kg</string>
+    <string name="userWeightPercentHint">%</string>
     <string name="userLifeStyleListActivityMetabolismLabel">Activity\nMetabolism</string>
     <string name="userLifeStyleListBasalMetabolismLabel">Basal\nMetabolism</string>
     <string name="userLifeStyleListKiloCalorieLabel">kcal</string>
