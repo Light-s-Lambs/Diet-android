@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Diet</string>
     <string name="userProfileEntryButtonLabel">User Profile</string>
+    <string name="userLifeStyleEntryButtonLabel">User LifeStyle</string>
     <string name="userProfileLogoLabel">Logo</string>
     <string name="userProfileNameLabel">Name</string>
     <string name="userProfileHeightLabel">Height</string>
@@ -18,4 +19,5 @@
     <string name="userLifeStyleListLifeStyleTimeLabel">Time</string>
     <string name="userLifeStyleListBurnedCalorieLabel">Burned\nCalorie</string>
     <string name="userLifeStyleListAddLifeStyleButtonLabel">Add\nLifeStyle</string>
+    <string name="userLifeStyleListDefaultMetabolismZero">0</string>
 </resources>
