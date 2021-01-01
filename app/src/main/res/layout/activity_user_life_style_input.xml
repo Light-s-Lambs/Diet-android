@@ -162,7 +162,7 @@
             android:id="@+id/lifeStyleTotalCalorieTextView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:gravity="center_vertical|center_horizontal"
+            android:gravity="center"
             android:text="@string/userLifeStyleInputTotalCalorieTextLabel"
             app:layout_constraintDimensionRatio="9"
             app:layout_constraintEnd_toEndOf="parent"
@@ -170,7 +170,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/lifeStyleTotalCalorieValueView"
+            android:id="@+id/lifeStyleTotalCalorieValueTextView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="56dp"
@@ -190,7 +190,7 @@
             android:text="@string/userLifeStyleInputTotalCalorieUnit"
             app:layout_constraintDimensionRatio="4"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/lifeStyleTotalCalorieValueView"
+            app:layout_constraintStart_toEndOf="@id/lifeStyleTotalCalorieValueTextView"
             app:layout_constraintTop_toBottomOf="@id/lifeStyleTotalCalorieTextView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
