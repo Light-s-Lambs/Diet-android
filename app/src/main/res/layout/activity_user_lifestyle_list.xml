@@ -123,74 +123,6 @@
         app:layout_constraintHeight_percent="0.05"
         app:layout_constraintWidth_percent="0.1" />
 
-    <TextView
-        android:id="@+id/lifeStyleNameTextView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:autoSizeMaxTextSize="24dp"
-        android:autoSizeMinTextSize="8dp"
-        android:autoSizeStepGranularity="2dp"
-        android:autoSizeTextType="uniform"
-        android:gravity="center"
-        android:maxLines="2"
-        android:text="@string/userLifeStyleListLifeStyleNameLabel"
-        app:layout_constraintEnd_toStartOf="@+id/lifeStyleTimeTextView"
-        app:layout_constraintHeight_percent="0.1"
-        app:layout_constraintStart_toStartOf="@+id/contentsGuideLineStart"
-        app:layout_constraintTop_toBottomOf="@+id/activityMetabolismTextView"
-        app:layout_constraintWidth_percent="0.2" />
-
-    <TextView
-        android:id="@+id/lifeStyleTimeTextView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:autoSizeMaxTextSize="24dp"
-        android:autoSizeMinTextSize="8dp"
-        android:autoSizeStepGranularity="2dp"
-        android:autoSizeTextType="uniform"
-        android:gravity="center"
-        android:maxLines="1"
-        android:text="@string/userLifeStyleListLifeStyleTimeLabel"
-        app:layout_constraintEnd_toStartOf="@+id/lifeStyleBurnedCalorieTextView"
-        app:layout_constraintHeight_percent="0.1"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/lifeStyleNameTextView"
-        app:layout_constraintTop_toBottomOf="@+id/activityMetabolismTextView"
-        app:layout_constraintWidth_percent="0.2" />
-
-    <TextView
-        android:id="@+id/lifeStyleBurnedCalorieTextView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:autoSizeMaxTextSize="24dp"
-        android:autoSizeMinTextSize="8dp"
-        android:autoSizeStepGranularity="2dp"
-        android:autoSizeTextType="uniform"
-        android:gravity="center"
-        android:maxLines="2"
-        android:text="@string/userLifeStyleListBurnedCalorieLabel"
-        app:layout_constraintEnd_toStartOf="@+id/contentsGuideLineEnd"
-        app:layout_constraintHeight_percent="0.1"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/lifeStyleTimeTextView"
-        app:layout_constraintTop_toBottomOf="@+id/activityMetabolismTextView"
-        app:layout_constraintWidth_percent="0.2" />
-
-    <TextView
-        android:id="@+id/lifeStyleListTextView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:autoSizeMaxTextSize="24dp"
-        android:autoSizeMinTextSize="8dp"
-        android:autoSizeStepGranularity="2dp"
-        android:autoSizeTextType="uniform"
-        android:gravity="center_horizontal|top"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/contentsGuideLineEnd"
-        app:layout_constraintHeight_percent="0.45"
-        app:layout_constraintStart_toStartOf="@+id/contentsGuideLineStart"
-        app:layout_constraintTop_toBottomOf="@+id/lifeStyleTimeTextView" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/lifeStyleMenuListFloatingActionButton"
         android:layout_width="wrap_content"
@@ -218,6 +150,15 @@
         app:layout_constraintEnd_toStartOf="@+id/contentsGuideLineEnd"
         app:layout_constraintStart_toStartOf="@+id/contentsGuideLineEnd"
         app:srcCompat="@android:drawable/ic_input_add" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lifeStyleListRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toStartOf="@+id/contentsGuideLineEnd"
+        app:layout_constraintHeight_percent="0.55"
+        app:layout_constraintStart_toStartOf="@+id/contentsGuideLineStart"
+        app:layout_constraintTop_toBottomOf="@+id/activityMetabolismTextView" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/contentsGuideLineEnd"
