@@ -1,15 +1,9 @@
 package com.example.diet.ui
 
-import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.diet.R
 import kotlinx.android.synthetic.main.activity_user_lifestyle_list.*
 import java.text.SimpleDateFormat
