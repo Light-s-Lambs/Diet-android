@@ -12,5 +12,8 @@ class TestMainActivity : AppCompatActivity() {
         mainEntryButton.setOnClickListener {
             startActivity(Intent(this, UserProfileInputActivity::class.java))
         }
+        userLifeStyleInputEntryButton.setOnClickListener {
+            startActivity(Intent(this, UserLifeStyleInputActivity::class.java))
+        }
     }
 }

@@ -9,6 +9,19 @@
     <string name="userWeightWeightLabel">Weight</string>
     <string name="userWeightPercentageBodyFatLabel">Percentage\nBody Fat</string>
     <string name="userWeightAmountOfMuscleLabel">Amount Of\nMuscle</string>
-    <string name="userWeightKgHint">Kg</string>
+    <string name="userWeightUnitHint">Kg</string>
     <string name="userWeightPercentHint">%</string>
+    <string name="userLifeStyleInputEntryButtonLabel">Life Style Input</string>
+    <string name="userLifeStyleInputExitButtonLabel">X</string>
+    <string name="userLifeStyleInputAddButtonLabel">Add Life Style</string>
+    <string name="userLifeStyleInputSaveButtonLabel">Save</string>
+    <string name="userLifeStyleInputNameTextLabel">Name</string>
+    <string name="userLifeStyleInputNameHint">Name</string>
+    <string name="userLifeStyleInputCalorieTextLabel">Calorie per hours</string>
+    <string name="userLifeStyleInputCalorieHint">kcal/h</string>
+    <string name="userLifeStyleInputTimeTextLabel">Time(Hour)</string>
+    <string name="userLifeStyleInputTimeHint">hour</string>
+    <string name="userLifeStyleInputTotalCalorieTextLabel">Total Calorie</string>
+    <string name="userLifeStyleInputTotalCalorieValue"> </string>
+    <string name="userLifeStyleInputTotalCalorieUnit">kcal</string>
 </resources>
