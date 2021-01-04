@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diet.R
-import java.util.*
 
 class LifeStyleListHeaderAdapter(
     private val context: Context
@@ -15,7 +14,7 @@ class LifeStyleListHeaderAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view =
-            LayoutInflater.from(context).inflate(R.layout.item_user_lifestyle_list, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.user_lifestyle_listitem, parent, false)
         return LifeStyleListHeaderHolder(context, view)
     }
 
@@ -36,13 +35,13 @@ class LifeStyleListHeaderAdapter(
 
 class LifeStyleListBodyAdapter(
     private val context: Context,
-    private val lifeStyleList: ArrayList<LifeStyle>
+    private val lifeStyleList: List<LifeStyle>
 ) : androidx.recyclerview.widget.ListAdapter<LifeStyle, RecyclerView.ViewHolder>(
     LifeStyleDiffCallback()
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view =
-            LayoutInflater.from(context).inflate(R.layout.item_user_lifestyle_list, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.user_lifestyle_listitem, parent, false)
         return LifeStyleListBodyHolder(context, view)
     }
 

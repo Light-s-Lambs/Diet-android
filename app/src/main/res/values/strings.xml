@@ -15,9 +15,4 @@
     <string name="userLifeStyleListActivityMetabolismLabel">Activity\nMetabolism</string>
     <string name="userLifeStyleListBasalMetabolismLabel">Basal\nMetabolism</string>
     <string name="userLifeStyleListKiloCalorieLabel">kcal</string>
-    <string name="userLifeStyleListLifeStyleNameLabel">LifeStyle\nName</string>
-    <string name="userLifeStyleListLifeStyleTimeLabel">Time</string>
-    <string name="userLifeStyleListBurnedCalorieLabel">Burned\nCalorie</string>
-    <string name="userLifeStyleListAddLifeStyleButtonLabel">Add\nLifeStyle</string>
-    <string name="userLifeStyleListDefaultMetabolismZero">0</string>
 </resources>

@@ -17,10 +17,9 @@ class LifeStyleListHeaderHolder(private val context: Context, itemView: View) :
 
     fun bind() {
         lifeStyleName.maxLines = 2
-        lifeStyleName.text = context.getString(R.string.userLifeStyleListLifeStyleNameLabel)
-        lifeStyleTime.text = context.getString(R.string.userLifeStyleListLifeStyleTimeLabel)
+        lifeStyleName.text = "LifeStyle\nName"
+        lifeStyleTime.text = "Time"
         lifeStyleBurnedCalorie.maxLines = 2
-        lifeStyleBurnedCalorie.text =
-            context.getString(R.string.userLifeStyleListBurnedCalorieLabel)
+        lifeStyleBurnedCalorie.text = "Burned\nCalorie"
     }
 }
