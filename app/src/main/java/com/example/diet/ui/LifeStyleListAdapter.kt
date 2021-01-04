@@ -12,8 +12,9 @@ import java.util.*
 class LifeStyleListAdapter(
     private val context: Context,
     private val lifeStyleList: ArrayList<LifeStyle>
-) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : androidx.recyclerview.widget.ListAdapter<LifeStyle, RecyclerView.ViewHolder>(
+    LifeStyleDiffCallback()
+) {
 
     private val TYPE_HEADER = 0
     private val TYPE_ITEM = 1
@@ -77,4 +78,5 @@ class LifeStyleListAdapter(
             lifeStyleBurnedCalorie.text = lifeStyle.burnedCalorie
         }
     }
+
 }
