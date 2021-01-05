@@ -12,8 +12,8 @@ import java.util.*
 class UserLifeStyleListActivity : AppCompatActivity() {
 
     private var lifeStyleList = listOf<LifeStyle>()
-    private val lifeStyleListHeaderAdapter = LifeStyleListHeaderAdapter(this)
-    private val lifeStyleListBodyAdapter = LifeStyleListBodyAdapter(this, lifeStyleList)
+    private val lifeStyleHeaderAdapter = LifeStyleSectionHeaderAdapter(this)
+    private val lifeStyleContentAdapter = LifeStyleContentAdapter(this, lifeStyleList)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +26,7 @@ class UserLifeStyleListActivity : AppCompatActivity() {
         basalMetabolismTextView.text = "0"
 
         lifeStyleListRecyclerView.adapter =
-            ConcatAdapter(lifeStyleListHeaderAdapter, lifeStyleListBodyAdapter)
+            ConcatAdapter(lifeStyleHeaderAdapter, lifeStyleContentAdapter)
         lifeStyleListRecyclerView.layoutManager = LinearLayoutManager(this)
         lifeStyleListRecyclerView.setHasFixedSize(true)
     }

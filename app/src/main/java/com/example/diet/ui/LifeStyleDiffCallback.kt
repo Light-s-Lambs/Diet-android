@@ -7,7 +7,7 @@ class LifeStyleDiffCallback : DiffUtil.ItemCallback<LifeStyle>() {
         oldItem: LifeStyle,
         newItem: LifeStyle
     ): Boolean {
-        return oldItem.name == newItem.name && oldItem.burnedCalorie == oldItem.burnedCalorie && oldItem.time == oldItem.time
+        return oldItem == newItem
     }
 
     override fun areContentsTheSame(
