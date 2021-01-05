@@ -25,9 +25,9 @@
         android:text="@string/userLifeStyleEntryButtonLabel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/userLifeStyleInputEntryButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/userLifeStyleInputEntryButton"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -38,7 +38,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/mainEntryButton"
+        app:layout_constraintStart_toEndOf="@+id/lifeStyleEntryButton"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
