@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:importantForAutofill="no">
+
+    <TextView
+        android:id="@+id/lifeStyleNameTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="28dp"
+        android:gravity="center"
+        android:text="@string/userLifeStyleInputNameTextLabel"
+        app:layout_constraintBottom_toTopOf="@+id/lifeStyleCalorieTextView"
+        app:layout_constraintDimensionRatio="4"
+        app:layout_constraintEnd_toStartOf="@+id/lifeStyleNameEditView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_chainStyle="spread" />
+
+    <EditText
+        android:id="@+id/lifeStyleNameEditView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="28dp"
+        android:ems="10"
+        android:hint="@string/userLifeStyleInputNameHint"
+        android:importantForAutofill="no"
+        android:inputType="textNoSuggestions"
+        app:layout_constraintBottom_toTopOf="@+id/lifeStyleCalorieEditView"
+        app:layout_constraintDimensionRatio="4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/lifeStyleNameTextView"/>
+
+    <TextView
+        android:id="@+id/lifeStyleCalorieTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="28dp"
+        android:gravity="center"
+        android:text="@string/userLifeStyleInputCalorieTextLabel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="4"
+        app:layout_constraintEnd_toStartOf="@+id/lifeStyleCalorieEditView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/lifeStyleCalorieEditView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="28dp"
+        android:ems="10"
+        android:hint="@string/userLifeStyleInputCalorieHint"
+        android:importantForAutofill="no"
+        android:inputType="numberSigned"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/lifeStyleCalorieTextView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lifeStyleTimeTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="28dp"
+        android:gravity="center"
+        android:text="@string/userLifeStyleInputTimeTextLabel"
+        app:layout_constraintDimensionRatio="4"
+        app:layout_constraintEnd_toStartOf="@+id/lifeStyleTimeEditView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lifeStyleCalorieTextView" />
+
+    <EditText
+        android:id="@+id/lifeStyleTimeEditView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:hint="@string/userLifeStyleInputTimeHint"
+        android:importantForAutofill="no"
+        android:inputType="time"
+        app:layout_constraintDimensionRatio="4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/lifeStyleTimeTextView"
+        app:layout_constraintTop_toBottomOf="@+id/lifeStyleCalorieEditView" />
+
+    <TextView
+        android:id="@+id/lifeStyleTotalCalorieTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="56dp"
+        android:gravity="center"
+        android:text="@string/userLifeStyleInputTotalCalorieTextLabel"
+        app:layout_constraintDimensionRatio="9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lifeStyleTimeTextView" />
+
+    <TextView
+        android:id="@+id/lifeStyleTotalCalorieValueTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="56dp"
+        android:gravity="right|center_vertical"
+        android:text="@string/userLifeStyleInputTotalCalorieValue"
+        app:layout_constraintDimensionRatio="4"
+        app:layout_constraintEnd_toStartOf="@+id/lifeStyleTotalCalorieUnitView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lifeStyleTotalCalorieTextView" />
+
+    <TextView
+        android:id="@+id/lifeStyleTotalCalorieUnitView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="left|center_vertical"
+        android:text="@string/userLifeStyleInputTotalCalorieUnit"
+        app:layout_constraintDimensionRatio="4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/lifeStyleTotalCalorieValueTextView"
+        app:layout_constraintTop_toBottomOf="@id/lifeStyleTotalCalorieTextView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
