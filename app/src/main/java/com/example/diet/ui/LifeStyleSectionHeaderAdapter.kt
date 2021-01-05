@@ -30,12 +30,12 @@ class LifeStyleSectionHeaderAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view =
             LayoutInflater.from(context).inflate(R.layout.user_lifestyle_listitem, parent, false)
-        return LifeStyleListHeaderHolder(context, view)
+        return LifeStyleSectionHeaderHolder(context, view)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is LifeStyleListHeaderHolder -> holder.bind()
+            is LifeStyleSectionHeaderHolder -> holder.bind()
         }
     }
 

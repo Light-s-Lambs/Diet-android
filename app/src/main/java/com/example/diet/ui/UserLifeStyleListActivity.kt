@@ -12,7 +12,7 @@ import java.util.*
 class UserLifeStyleListActivity : AppCompatActivity() {
 
     private var lifeStyleList = listOf<LifeStyle>()
-    private val lifeStylSectionHeaderAdapter = LifeStyleSectionHeaderAdapter(this)
+    private val lifeStyleSectionHeaderAdapter = LifeStyleSectionHeaderAdapter(this)
     private val lifeStyleContentAdapter = LifeStyleContentAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +29,7 @@ class UserLifeStyleListActivity : AppCompatActivity() {
         lifeStyleContentAdapter.notifyDataSetChanged()
 
         lifeStyleListRecyclerView.adapter =
-            ConcatAdapter(lifeStylSectionHeaderAdapter, lifeStyleContentAdapter)
+            ConcatAdapter(lifeStyleSectionHeaderAdapter, lifeStyleContentAdapter)
         lifeStyleListRecyclerView.layoutManager = LinearLayoutManager(this)
         lifeStyleListRecyclerView.setHasFixedSize(true)
     }
