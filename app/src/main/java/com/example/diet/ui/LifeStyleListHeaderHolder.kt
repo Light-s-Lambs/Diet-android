@@ -16,10 +16,8 @@ class LifeStyleListHeaderHolder(private val context: Context, itemView: View) :
         itemView.findViewById<TextView>(R.id.lifeStyleBurnedCalorieTextView)
 
     fun bind() {
-        lifeStyleName.maxLines = 2
         lifeStyleName.text = "LifeStyle\nName"
         lifeStyleTime.text = "Time"
-        lifeStyleBurnedCalorie.maxLines = 2
         lifeStyleBurnedCalorie.text = "Burned\nCalorie"
     }
 }
