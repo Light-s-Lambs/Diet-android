@@ -4,14 +4,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diet.R
 
 class LifeStyleContentAdapter(
-    private val context: Context,
-    private val lifeStyleList: List<LifeStyle>
-) : androidx.recyclerview.widget.ListAdapter<LifeStyle, RecyclerView.ViewHolder>(
-    object : DiffUtil.ItemCallback<LifeStyle>(){
+    private val context: Context
+) : ListAdapter<LifeStyle, RecyclerView.ViewHolder>(
+    object : DiffUtil.ItemCallback<LifeStyle>() {
         override fun areItemsTheSame(
             oldItem: LifeStyle,
             newItem: LifeStyle
@@ -35,12 +35,8 @@ class LifeStyleContentAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is LifeStyleListBodyHolder -> holder.bind(lifeStyleList[position])
+            is LifeStyleListBodyHolder -> holder.bind(getItem(position))
         }
-    }
-
-    override fun getItemCount(): Int {
-        return lifeStyleList.size
     }
 
     override fun getItemViewType(position: Int): Int {

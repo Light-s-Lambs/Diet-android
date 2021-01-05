@@ -4,13 +4,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diet.R
 
 class LifeStyleSectionHeaderAdapter(
     private val context: Context
-) : androidx.recyclerview.widget.ListAdapter<LifeStyle, RecyclerView.ViewHolder>(
-    object : DiffUtil.ItemCallback<LifeStyle>(){
+) : ListAdapter<LifeStyle, RecyclerView.ViewHolder>(
+    object : DiffUtil.ItemCallback<LifeStyle>() {
         override fun areItemsTheSame(
             oldItem: LifeStyle,
             newItem: LifeStyle
