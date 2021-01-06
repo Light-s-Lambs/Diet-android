@@ -1,12 +1,11 @@
 package com.example.diet.ui
 
-import android.content.Context
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diet.R
 
-class LifeStyleContentHolder(private val context: Context, itemView: View) :
+class LifeStyleContentHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
     private val lifeStyleName: TextView =
         itemView.findViewById<TextView>(R.id.lifeStyleNameTextView)
