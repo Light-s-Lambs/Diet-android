@@ -15,16 +15,13 @@ class LifeStyleSectionHeaderAdapter(
         override fun areItemsTheSame(
             oldItem: LifeStyle,
             newItem: LifeStyle
-        ): Boolean {
-            return oldItem == newItem
-        }
+        ): Boolean = areContentsTheSame(oldItem, newItem)
 
         override fun areContentsTheSame(
             oldItem: LifeStyle,
             newItem: LifeStyle
-        ): Boolean {
-            return oldItem == newItem
-        }
+        ): Boolean =
+            oldItem == newItem
     }
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
