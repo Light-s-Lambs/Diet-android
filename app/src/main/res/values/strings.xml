@@ -25,7 +25,7 @@
     <string name="userLifeStyleInputTotalCalorieTextLabel">Total Calorie</string>
     <string name="userLifeStyleInputTotalCalorieValue"> </string>
     <string name="userLifeStyleInputTotalCalorieUnit">kcal</string>
-    <string name="userLifeStyleListActivityMetabolismLabel">Activity\nMetabolism</string>
-    <string name="userLifeStyleListBasalMetabolismLabel">Basal\nMetabolism</string>
-    <string name="userLifeStyleListKiloCalorieLabel">kcal</string>
+    <string name="userLifeStyleActivityMetabolismLabel">Activity\nMetabolism</string>
+    <string name="userLifeStyleBasalMetabolismLabel">Basal\nMetabolism</string>
+    <string name="userLifeStyleKiloCalorieLabel">kcal</string>
 </resources>

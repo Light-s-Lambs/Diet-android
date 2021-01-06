@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ui.UserProfileInputActivity"/>
         <activity android:name=".ui.UserWeightInputActivity"/>
-        <activity android:name=".ui.UserLifeStyleListActivity"/>
+        <activity android:name=".ui.UserLifeStyleActivity"/>
         <activity android:name=".ui.UserLifeStyleInputActivity"/>
         <activity android:name=".ui.TestMainActivity">
             <intent-filter>
