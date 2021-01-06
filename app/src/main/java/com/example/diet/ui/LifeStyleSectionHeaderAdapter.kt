@@ -35,12 +35,4 @@ class LifeStyleSectionHeaderAdapter(
             is LifeStyleSectionHeaderHolder -> holder.bind()
         }
     }
-
-    override fun getItemCount(): Int {
-        return 1
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return R.layout.activity_user_lifestyle_list
-    }
 }

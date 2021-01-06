@@ -14,6 +14,8 @@ class UserLifeStyleListActivity : AppCompatActivity() {
     private var lifeStyleList = listOf<LifeStyle>()
     private val lifeStyleSectionHeaderAdapter = LifeStyleSectionHeaderAdapter(this)
     private val lifeStyleContentAdapter = LifeStyleContentAdapter(this)
+    private val lifeStyleListRecyclerViewAdapter =
+        ConcatAdapter(lifeStyleSectionHeaderAdapter, lifeStyleContentAdapter)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,8 +30,7 @@ class UserLifeStyleListActivity : AppCompatActivity() {
         lifeStyleContentAdapter.submitList(lifeStyleList)
         lifeStyleContentAdapter.notifyDataSetChanged()
 
-        lifeStyleListRecyclerView.adapter =
-            ConcatAdapter(lifeStyleSectionHeaderAdapter, lifeStyleContentAdapter)
+        lifeStyleListRecyclerView.adapter = lifeStyleListRecyclerViewAdapter
         lifeStyleListRecyclerView.layoutManager = LinearLayoutManager(this)
         lifeStyleListRecyclerView.setHasFixedSize(true)
     }

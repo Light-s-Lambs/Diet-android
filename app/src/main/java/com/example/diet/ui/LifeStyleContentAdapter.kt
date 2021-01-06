@@ -35,8 +35,4 @@ class LifeStyleContentAdapter(
             is LifeStyleContentHolder -> holder.bind(getItem(position))
         }
     }
-
-    override fun getItemViewType(position: Int): Int {
-        return R.layout.activity_user_lifestyle_list
-    }
 }
