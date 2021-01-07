@@ -26,7 +26,7 @@ class LifeStyleContentAdapter(
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view =
-            LayoutInflater.from(context).inflate(R.layout.user_lifestyle_listitem, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.user_lifestyle_list_item, parent, false)
         return LifeStyleContentHolder(view)
     }
 

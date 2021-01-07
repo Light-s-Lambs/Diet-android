@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diet.R
-import kotlinx.android.synthetic.main.activity_user_lifestyle.*
+import kotlinx.android.synthetic.main.activity_user_life_style.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -19,7 +19,7 @@ class UserLifeStyleActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user_lifestyle)
+        setContentView(R.layout.activity_user_life_style)
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val currentDate = dateFormat.format(Date())
         dateTextView.text = currentDate.toString()
