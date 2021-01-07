@@ -35,4 +35,6 @@ class LifeStyleSectionHeaderAdapter(
             is LifeStyleSectionHeaderHolder -> holder.bind()
         }
     }
+
+    override fun getItemCount(): Int = 1
 }
