@@ -130,7 +130,7 @@
         app:layout_constraintHeight_percent="0.55"
         app:layout_constraintStart_toStartOf="@+id/contentsGuideLineStart"
         app:layout_constraintTop_toBottomOf="@+id/activityMetabolismTextView"
-        tools:listitem="@layout/user_lifestyle_listitem" />
+        tools:listitem="@layout/user_lifestyle_list_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/lifeStyleMenuListFloatingActionButton"
