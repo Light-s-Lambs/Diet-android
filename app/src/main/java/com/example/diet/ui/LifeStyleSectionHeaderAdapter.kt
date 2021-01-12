@@ -24,6 +24,7 @@ class LifeStyleSectionHeaderAdapter(
             oldItem == newItem
     }
 ) {
+    private val listSize = 1
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view =
             LayoutInflater.from(context).inflate(R.layout.user_life_style_list_item, parent, false)
@@ -36,5 +37,5 @@ class LifeStyleSectionHeaderAdapter(
         }
     }
 
-    override fun getItemCount(): Int = 1
+    override fun getItemCount(): Int = listSize
 }
