@@ -9,6 +9,9 @@ import com.example.diet.R
 class MealSectionHeaderAdapter(
     private val context: Context
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private val listSize : Int = 1
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view =
             LayoutInflater.from(context).inflate(R.layout.user_meal_list_item, parent, false)
@@ -21,7 +24,5 @@ class MealSectionHeaderAdapter(
         }
     }
 
-    override fun getItemCount(): Int {
-        return 1
-    }
+    override fun getItemCount(): Int = listSize
 }

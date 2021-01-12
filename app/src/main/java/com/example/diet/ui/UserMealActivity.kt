@@ -10,10 +10,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class UserMealActivity : AppCompatActivity() {
-    private var mealList = listOf<Meal>(
-        Meal("Breakfast", "bulgogi", "300 kcal"),
-        Meal("Lunch", "Sandwich", "500 kcal")
-    )
+    private var mealList = listOf<Meal>()
     private val mealSectionHeaderAdapter = MealSectionHeaderAdapter(this)
     private val mealContentsAdapter = MealContentsAdapter(this)
     private val mealListRecyclerViewAdapter =
