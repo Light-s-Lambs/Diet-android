@@ -10,7 +10,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class UserMealActivity : AppCompatActivity() {
-    private var mealList = listOf<Meal>()
+    private var mealList = listOf<Meal>(
+        Meal("Breakfast", "bulgogi", "300 kcal"),
+        Meal("Lunch", "Sandwich", "500 kcal")
+    )
     private val mealSectionHeaderAdapter = MealSectionHeaderAdapter(this)
     private val mealContentAdapter = MealContentAdapter(this)
     private val mealListRecyclerViewAdapter =
@@ -26,7 +29,6 @@ class UserMealActivity : AppCompatActivity() {
         calorieNeededTextView.text = "0"
 
         mealContentAdapter.submitList(mealList)
-        mealContentAdapter.notifyDataSetChanged()
 
         mealListRecyclerView.adapter = mealListRecyclerViewAdapter
         mealListRecyclerView.layoutManager = LinearLayoutManager(this)
