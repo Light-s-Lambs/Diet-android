@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/contentsGuideLineStart"
+        android:id="@+id/startContentsGuideLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -22,9 +22,9 @@
         android:autoSizeTextType="uniform"
         android:gravity="bottom|center"
         android:maxLines="1"
-        app:layout_constraintEnd_toStartOf="@+id/contentsGuideLineEnd"
+        app:layout_constraintEnd_toStartOf="@+id/endContentsGuideLine"
         app:layout_constraintHeight_percent="0.2"
-        app:layout_constraintStart_toStartOf="@+id/contentsGuideLineStart"
+        app:layout_constraintStart_toStartOf="@+id/startContentsGuideLine"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -39,7 +39,7 @@
         android:maxLines="2"
         android:text="@string/userMealCalorieNeededLabel"
         app:layout_constraintHeight_percent="0.1"
-        app:layout_constraintStart_toStartOf="@+id/contentsGuideLineStart"
+        app:layout_constraintStart_toStartOf="@+id/startContentsGuideLine"
         app:layout_constraintTop_toBottomOf="@+id/dateTextView"
         app:layout_constraintWidth_percent="0.4" />
 
@@ -53,10 +53,10 @@
         android:autoSizeTextType="uniform"
         android:gravity="center"
         android:maxLines="1"
-        app:layout_constraintEnd_toStartOf="@+id/contentsGuideLineEnd"
+        app:layout_constraintEnd_toStartOf="@+id/endContentsGuideLine"
         app:layout_constraintHeight_percent="0.25"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/contentsGuideLineStart"
+        app:layout_constraintStart_toStartOf="@+id/startContentsGuideLine"
         app:layout_constraintTop_toBottomOf="@+id/dateTextView" />
 
     <TextView
@@ -71,7 +71,7 @@
         android:maxLines="1"
         android:text="@string/userMealKiloCalorieLabel"
         app:layout_constraintBottom_toBottomOf="@+id/calorieNeededTextView"
-        app:layout_constraintEnd_toStartOf="@+id/contentsGuideLineEnd"
+        app:layout_constraintEnd_toStartOf="@+id/endContentsGuideLine"
         app:layout_constraintHeight_percent="0.05"
         app:layout_constraintWidth_percent="0.1" />
 
@@ -79,10 +79,10 @@
         android:id="@+id/mealListRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintEnd_toStartOf="@+id/contentsGuideLineEnd"
+        app:layout_constraintEnd_toStartOf="@+id/endContentsGuideLine"
         app:layout_constraintHeight_percent="0.55"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/contentsGuideLineStart"
+        app:layout_constraintStart_toStartOf="@+id/startContentsGuideLine"
         app:layout_constraintTop_toBottomOf="@+id/calorieNeededTextView"
         tools:listitem="@layout/user_meal_list_item" />
 
@@ -96,8 +96,8 @@
         android:backgroundTint="#ffffff"
         android:src="@drawable/ic_baseline_menu_24"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/contentsGuideLineEnd"
-        app:layout_constraintStart_toStartOf="@+id/contentsGuideLineEnd"
+        app:layout_constraintEnd_toStartOf="@+id/endContentsGuideLine"
+        app:layout_constraintStart_toStartOf="@+id/endContentsGuideLine"
         app:rippleColor="@color/colorPrimary" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -108,12 +108,12 @@
         android:backgroundTint="#ffffff"
         app:fabSize="mini"
         app:layout_constraintBottom_toTopOf="@+id/mealMenuListFloatingActionButton"
-        app:layout_constraintEnd_toStartOf="@+id/contentsGuideLineEnd"
-        app:layout_constraintStart_toStartOf="@+id/contentsGuideLineEnd"
+        app:layout_constraintEnd_toStartOf="@+id/endContentsGuideLine"
+        app:layout_constraintStart_toStartOf="@+id/endContentsGuideLine"
         app:srcCompat="@android:drawable/ic_input_add" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/contentsGuideLineEnd"
+        android:id="@+id/endContentsGuideLine"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
