@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diet.R
 
-class MealContentAdapter(
+class MealContentsAdapter(
     private val context: Context
 ) : ListAdapter<Meal, RecyclerView.ViewHolder>(
     object : DiffUtil.ItemCallback<Meal>() {
@@ -27,12 +27,12 @@ class MealContentAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view =
             LayoutInflater.from(context).inflate(R.layout.user_meal_list_item, parent, false)
-        return MealContentHolder(view)
+        return MealContentsHolder(view)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is MealContentHolder -> holder.bind(getItem(position))
+            is MealContentsHolder -> holder.bind(getItem(position))
         }
     }
 }

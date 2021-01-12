@@ -15,9 +15,9 @@ class UserMealActivity : AppCompatActivity() {
         Meal("Lunch", "Sandwich", "500 kcal")
     )
     private val mealSectionHeaderAdapter = MealSectionHeaderAdapter(this)
-    private val mealContentAdapter = MealContentAdapter(this)
+    private val mealContentsAdapter = MealContentsAdapter(this)
     private val mealListRecyclerViewAdapter =
-        ConcatAdapter(mealSectionHeaderAdapter, mealContentAdapter)
+        ConcatAdapter(mealSectionHeaderAdapter, mealContentsAdapter)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +28,7 @@ class UserMealActivity : AppCompatActivity() {
 
         calorieNeededTextView.text = "0"
 
-        mealContentAdapter.submitList(mealList)
+        mealContentsAdapter.submitList(mealList)
 
         mealListRecyclerView.adapter = mealListRecyclerViewAdapter
         mealListRecyclerView.layoutManager = LinearLayoutManager(this)
