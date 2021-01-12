@@ -28,7 +28,6 @@ class UserLifeStyleActivity : AppCompatActivity() {
         basalMetabolismTextView.text = "0"
 
         lifeStyleContentAdapter.submitList(lifeStyleList)
-        lifeStyleContentAdapter.notifyDataSetChanged()
 
         lifeStyleListRecyclerView.adapter = lifeStyleListRecyclerViewAdapter
         lifeStyleListRecyclerView.layoutManager = LinearLayoutManager(this)
