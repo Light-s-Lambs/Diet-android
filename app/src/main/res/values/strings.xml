@@ -28,8 +28,10 @@
     <string name="userLifeStyleActivityMetabolismLabel">Activity\nMetabolism</string>
     <string name="userLifeStyleBasalMetabolismLabel">Basal\nMetabolism</string>
     <string name="userLifeStyleKiloCalorieLabel">kcal</string>
-    <string name="userMealEntryButtonLabel">User Meal</string>
     <string name="userMealCalorieNeededLabel">Calorie Needed</string>
     <string name="userMealKiloCalorieLabel">kcal</string>
-    <string name="userMealAddMealButtonLabel">Add\nMeal</string>
+    <string name="userMealSectionHeaderTypeLabel">Meal\nType</string>
+    <string name="userMealSectionHeaderMealLabel">Meal</string>
+    <string name="userMealSectionHeaderCalorieLabel">Calorie</string>
+
 </resources>

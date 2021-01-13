@@ -15,7 +15,7 @@ class MealSectionHeaderAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view =
             LayoutInflater.from(context).inflate(R.layout.user_meal_list_item, parent, false)
-        return MealSectionHeaderHolder(view)
+        return MealSectionHeaderHolder(view, context)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
