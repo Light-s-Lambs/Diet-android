@@ -9,7 +9,11 @@ import com.example.diet.R
 class LifeStyleSectionHeaderAdapter(
     private val context: Context
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val listSize = 1
+
+    companion object{
+        private const val listSize = 1
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view =
             LayoutInflater.from(context).inflate(R.layout.user_life_style_list_item, parent, false)
