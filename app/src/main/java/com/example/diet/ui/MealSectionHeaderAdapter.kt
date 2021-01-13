@@ -10,7 +10,9 @@ class MealSectionHeaderAdapter(
     private val context: Context
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val listSize : Int = 1
+    companion object {
+        private const val listSize: Int = 1
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view =
