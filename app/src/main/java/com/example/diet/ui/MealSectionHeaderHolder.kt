@@ -11,11 +11,11 @@ class MealSectionHeaderHolder(
     private val context: Context
 ) : RecyclerView.ViewHolder(itemView) {
     private val mealType: TextView =
-        itemView.findViewById<TextView>(R.id.mealTypeTextView)
+        itemView.findViewById<TextView>(R.id.mealSectionHeaderTypeTextView)
     private val mealMenu: TextView =
-        itemView.findViewById<TextView>(R.id.mealMenuTextView)
+        itemView.findViewById<TextView>(R.id.mealSectionHeaderMenuTextView)
     private val mealCalorie: TextView =
-        itemView.findViewById<TextView>(R.id.mealCalorieTextView)
+        itemView.findViewById<TextView>(R.id.mealSectionHeaderCalorieTextView)
 
     fun bind() {
         mealType.text = context.getText(R.string.userMealSectionHeaderTypeLabel)

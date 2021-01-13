@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/mealTypeTextView"
+        android:id="@+id/mealSectionHeaderTypeTextView"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:autoSizeMaxTextSize="24dp"
@@ -13,15 +13,15 @@
         android:autoSizeStepGranularity="2dp"
         android:autoSizeTextType="uniform"
         android:gravity="center"
-        android:maxLines="1"
-        app:layout_constraintEnd_toStartOf="@+id/mealMenuTextView"
+        android:maxLines="2"
+        app:layout_constraintEnd_toStartOf="@+id/mealSectionHeaderMenuTextView"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.3" />
 
     <TextView
-        android:id="@+id/mealMenuTextView"
+        android:id="@+id/mealSectionHeaderMenuTextView"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:autoSizeMaxTextSize="24dp"
@@ -30,14 +30,14 @@
         android:autoSizeTextType="uniform"
         android:gravity="center"
         android:maxLines="1"
-        app:layout_constraintBottom_toBottomOf="@+id/mealTypeTextView"
-        app:layout_constraintEnd_toStartOf="@+id/mealCalorieTextView"
+        app:layout_constraintBottom_toBottomOf="@+id/mealSectionHeaderTypeTextView"
+        app:layout_constraintEnd_toStartOf="@+id/mealSectionHeaderCalorieTextView"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/mealTypeTextView"
+        app:layout_constraintStart_toEndOf="@+id/mealSectionHeaderTypeTextView"
         app:layout_constraintWidth_percent="0.3" />
 
     <TextView
-        android:id="@+id/mealCalorieTextView"
+        android:id="@+id/mealSectionHeaderCalorieTextView"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:autoSizeMaxTextSize="24dp"
@@ -46,9 +46,9 @@
         android:autoSizeTextType="uniform"
         android:gravity="center"
         android:maxLines="1"
-        app:layout_constraintBottom_toBottomOf="@+id/mealMenuTextView"
+        app:layout_constraintBottom_toBottomOf="@+id/mealSectionHeaderMenuTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/mealMenuTextView"
+        app:layout_constraintStart_toEndOf="@+id/mealSectionHeaderMenuTextView"
         app:layout_constraintWidth_percent="0.3" />
 </androidx.constraintlayout.widget.ConstraintLayout>
