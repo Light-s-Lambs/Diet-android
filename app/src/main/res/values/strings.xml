@@ -28,4 +28,7 @@
     <string name="userLifeStyleActivityMetabolismLabel">Activity\nMetabolism</string>
     <string name="userLifeStyleBasalMetabolismLabel">Basal\nMetabolism</string>
     <string name="userLifeStyleKiloCalorieLabel">kcal</string>
+    <string name="userLifeStyleSectionHeaderNameLabel">LifeStyle\nName</string>
+    <string name="userLifeStyleSectionHeaderTimeLabel">Time</string>
+    <string name="userLifeStyleSectionHeaderBurnedCalorieLabel">Burned\nCalorie</string>
 </resources>
