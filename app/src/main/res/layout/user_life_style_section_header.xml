@@ -6,7 +6,7 @@
     android:gravity="center">
 
     <TextView
-        android:id="@+id/lifeStyleNameTextView"
+        android:id="@+id/lifeStyleSectionHeaderNameTextView"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:autoSizeMaxTextSize="24dp"
@@ -15,14 +15,14 @@
         android:autoSizeTextType="uniform"
         android:gravity="center"
         android:maxLines="2"
-        app:layout_constraintEnd_toStartOf="@+id/lifeStyleTimeTextView"
+        app:layout_constraintEnd_toStartOf="@+id/lifeStyleSectionHeaderTimeTextView"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.3" />
 
     <TextView
-        android:id="@+id/lifeStyleTimeTextView"
+        android:id="@+id/lifeStyleSectionHeaderTimeTextView"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:autoSizeMaxTextSize="24dp"
@@ -31,14 +31,14 @@
         android:autoSizeTextType="uniform"
         android:gravity="center"
         android:maxLines="1"
-        app:layout_constraintBottom_toBottomOf="@+id/lifeStyleNameTextView"
-        app:layout_constraintEnd_toStartOf="@+id/lifeStyleBurnedCalorieTextView"
+        app:layout_constraintBottom_toBottomOf="@+id/lifeStyleSectionHeaderNameTextView"
+        app:layout_constraintEnd_toStartOf="@+id/lifeStyleSectionHeaderBurnedCalorieTextView"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/lifeStyleNameTextView"
+        app:layout_constraintStart_toEndOf="@+id/lifeStyleSectionHeaderNameTextView"
         app:layout_constraintWidth_percent="0.3" />
 
     <TextView
-        android:id="@+id/lifeStyleBurnedCalorieTextView"
+        android:id="@+id/lifeStyleSectionHeaderBurnedCalorieTextView"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:autoSizeMaxTextSize="24dp"
@@ -46,10 +46,10 @@
         android:autoSizeStepGranularity="2dp"
         android:autoSizeTextType="uniform"
         android:gravity="center"
-        android:maxLines="1"
-        app:layout_constraintBottom_toBottomOf="@+id/lifeStyleTimeTextView"
+        android:maxLines="2"
+        app:layout_constraintBottom_toBottomOf="@+id/lifeStyleSectionHeaderTimeTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/lifeStyleTimeTextView"
+        app:layout_constraintStart_toEndOf="@+id/lifeStyleSectionHeaderTimeTextView"
         app:layout_constraintWidth_percent="0.3" />
 </androidx.constraintlayout.widget.ConstraintLayout>

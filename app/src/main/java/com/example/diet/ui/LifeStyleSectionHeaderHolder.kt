@@ -12,11 +12,11 @@ class LifeStyleSectionHeaderHolder(
 ) :
     RecyclerView.ViewHolder(itemView) {
     private val lifeStyleName: TextView =
-        itemView.findViewById<TextView>(R.id.lifeStyleNameTextView)
+        itemView.findViewById<TextView>(R.id.lifeStyleSectionHeaderNameTextView)
     private val lifeStyleTime: TextView =
-        itemView.findViewById<TextView>(R.id.lifeStyleTimeTextView)
+        itemView.findViewById<TextView>(R.id.lifeStyleSectionHeaderTimeTextView)
     private val lifeStyleBurnedCalorie: TextView =
-        itemView.findViewById<TextView>(R.id.lifeStyleBurnedCalorieTextView)
+        itemView.findViewById<TextView>(R.id.lifeStyleSectionHeaderBurnedCalorieTextView)
 
     fun bind() {
         lifeStyleName.text = context.getString(R.string.userLifeStyleSectionHeaderNameLabel)
