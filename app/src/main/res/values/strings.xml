@@ -3,7 +3,6 @@
     <string name="userProfileEntryButtonLabel">User Profile</string>
     <string name="userLifeStyleEntryButtonLabel">User LifeStyle</string>
     <string name="userLifeStyleInputEntryButtonLabel">Life Style Input</string>
-    <string name="userMealInputEntryButtonLabel">Meal Input</string>
     <string name="userProfileLogoLabel">Logo</string>
     <string name="userProfileNameLabel">Name</string>
     <string name="userProfileHeightLabel">Height</string>
