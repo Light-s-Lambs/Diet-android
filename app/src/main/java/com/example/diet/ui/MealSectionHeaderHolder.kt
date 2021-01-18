@@ -19,7 +19,7 @@ class MealSectionHeaderHolder(
 
     fun bind() {
         mealType.text = context.getText(R.string.userMealSectionHeaderTypeLabel)
-        mealMenu.text = context.getText(R.string.userMealSectionHeaderMealLabel)
+        mealMenu.text = context.getText(R.string.userMealSectionHeaderMenuLabel)
         mealCalorie.text = context.getText(R.string.userMealSectionHeaderCalorieLabel)
     }
 }
