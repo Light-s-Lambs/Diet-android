@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diet.R
-import domain.lifestyle.LifeStyle
+import com.example.diet.domain.lifestyle.LifeStyle
 import kotlinx.android.synthetic.main.activity_user_lifestyle.*
 import java.text.SimpleDateFormat
 import java.util.*

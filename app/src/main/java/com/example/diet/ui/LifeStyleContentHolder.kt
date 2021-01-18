@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diet.R
-import domain.lifestyle.LifeStyle
+import com.example.diet.domain.lifestyle.LifeStyle
 
 class LifeStyleContentHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {

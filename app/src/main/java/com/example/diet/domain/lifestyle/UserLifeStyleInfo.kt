@@ -1,4 +1,4 @@
-package domain.lifestyle
+package com.example.diet.domain.lifestyle
 
 data class UserLifeStyleInfo(
     val date: String,
