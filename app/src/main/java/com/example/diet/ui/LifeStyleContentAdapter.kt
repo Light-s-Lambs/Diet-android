@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diet.R
+import domain.lifestyle.LifeStyle
 
 class LifeStyleContentAdapter(
     private val context: Context
