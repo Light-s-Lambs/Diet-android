@@ -6,7 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diet.R
 
-class MealSectionHeaderHolder(
+class MealSectionHeaderViewHolder(
     itemView: View
 ) : RecyclerView.ViewHolder(itemView) {
     private val mealType: TextView =
