@@ -15,6 +15,7 @@
         <activity android:name=".ui.UserLifeStyleActivity"/>
         <activity android:name=".ui.UserLifeStyleInputActivity"/>
         <activity android:name=".ui.UserMealActivity"/>
+        <activity android:name=".ui.UserMealInputActivity"/>
         <activity android:name=".ui.TestMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
