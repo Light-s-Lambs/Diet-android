@@ -97,38 +97,38 @@
         app:layout_constraintTop_toBottomOf="@+id/mealMenuEditView" />
 
     <TextView
-        android:id="@+id/mealCalorieNeededLabelTextView"
+        android:id="@+id/mealTotalCalorieLabelTextView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="56dp"
         android:gravity="center"
-        android:text="@string/userMealCalorieNeededLabel"
+        android:text="@string/userMealTotalCalorieLabel"
         app:layout_constraintDimensionRatio="9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/mealCalorieTextView" />
 
     <TextView
-        android:id="@+id/mealCalorieNeededValueTextView"
+        android:id="@+id/mealTotalCalorieValueTextView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="56dp"
         android:gravity="end|center_vertical"
         app:layout_constraintDimensionRatio="4"
-        app:layout_constraintEnd_toStartOf="@+id/mealCalorieNeededUnitView"
+        app:layout_constraintEnd_toStartOf="@+id/mealTotalCalorieUnitView"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mealCalorieNeededLabelTextView" />
+        app:layout_constraintTop_toBottomOf="@id/mealTotalCalorieLabelTextView" />
 
     <TextView
-        android:id="@+id/mealCalorieNeededUnitView"
+        android:id="@+id/mealTotalCalorieUnitView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="start|center_vertical"
         android:text="@string/userMealKiloCalorieUnit"
         app:layout_constraintDimensionRatio="4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/mealCalorieNeededValueTextView"
-        app:layout_constraintTop_toBottomOf="@id/mealCalorieNeededLabelTextView" />
+        app:layout_constraintStart_toEndOf="@id/mealTotalCalorieValueTextView"
+        app:layout_constraintTop_toBottomOf="@id/mealTotalCalorieLabelTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
