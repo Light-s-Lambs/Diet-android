@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.diet.R
 
 class MealSectionHeaderHolder(
-    itemView: View,
-    private val context: Context
+    itemView: View
 ) : RecyclerView.ViewHolder(itemView) {
     private val mealType: TextView =
         itemView.findViewById<TextView>(R.id.mealSectionHeaderTypeTextView)
@@ -18,8 +17,8 @@ class MealSectionHeaderHolder(
         itemView.findViewById<TextView>(R.id.mealSectionHeaderCalorieTextView)
 
     fun bind() {
-        mealType.text = context.getText(R.string.userMealSectionHeaderTypeLabel)
-        mealMenu.text = context.getText(R.string.userMealSectionHeaderMenuLabel)
-        mealCalorie.text = context.getText(R.string.userMealSectionHeaderCalorieLabel)
+        mealType.text = itemView.context.getText(R.string.userMealSectionHeaderTypeLabel)
+        mealMenu.text = itemView.context.getText(R.string.userMealSectionHeaderMenuLabel)
+        mealCalorie.text = itemView.context.getText(R.string.userMealSectionHeaderCalorieLabel)
     }
 }
