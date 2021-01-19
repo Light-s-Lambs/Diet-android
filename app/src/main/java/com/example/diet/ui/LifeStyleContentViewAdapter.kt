@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diet.R
 
-class LifeStyleContentAdapter(
+class LifeStyleContentViewAdapter(
     private val context: Context
 ) : ListAdapter<LifeStyle, RecyclerView.ViewHolder>(
     object : DiffUtil.ItemCallback<LifeStyle>() {
@@ -27,12 +27,12 @@ class LifeStyleContentAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view =
             LayoutInflater.from(context).inflate(R.layout.user_life_style_list_item, parent, false)
-        return LifeStyleContentHolder(view)
+        return LifeStyleContentViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is LifeStyleContentHolder -> holder.bind(getItem(position))
+            is LifeStyleContentViewHolder -> holder.bind(getItem(position))
         }
     }
 }

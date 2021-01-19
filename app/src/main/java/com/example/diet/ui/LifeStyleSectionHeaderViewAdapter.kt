@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diet.R
 
-class LifeStyleSectionHeaderAdapter(
+class LifeStyleSectionHeaderViewAdapter(
     private val context: Context
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -17,12 +17,12 @@ class LifeStyleSectionHeaderAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view =
             LayoutInflater.from(context).inflate(R.layout.user_life_style_section_header, parent, false)
-        return LifeStyleSectionHeaderHolder(view)
+        return LifeStyleSectionHeaderViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is LifeStyleSectionHeaderHolder -> holder.bind()
+            is LifeStyleSectionHeaderViewHolder -> holder.bind()
         }
     }
 

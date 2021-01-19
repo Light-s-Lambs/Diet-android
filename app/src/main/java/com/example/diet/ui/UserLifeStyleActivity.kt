@@ -12,8 +12,8 @@ import java.util.*
 class UserLifeStyleActivity : AppCompatActivity() {
 
     private var lifeStyleList = listOf<LifeStyle>()
-    private val lifeStyleSectionHeaderAdapter = LifeStyleSectionHeaderAdapter(this)
-    private val lifeStyleContentAdapter = LifeStyleContentAdapter(this)
+    private val lifeStyleSectionHeaderAdapter = LifeStyleSectionHeaderViewAdapter(this)
+    private val lifeStyleContentAdapter = LifeStyleContentViewAdapter(this)
     private val lifeStyleListRecyclerViewAdapter =
         ConcatAdapter(lifeStyleSectionHeaderAdapter, lifeStyleContentAdapter)
 

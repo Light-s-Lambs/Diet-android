@@ -5,7 +5,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diet.R
 
-class LifeStyleContentHolder(itemView: View) :
+class LifeStyleContentViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
     private val lifeStyleName: TextView =
         itemView.findViewById<TextView>(R.id.lifeStyleNameTextView)
