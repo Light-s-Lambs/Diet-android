@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:importantForAutofill="no">
+
+    <TextView
+        android:id="@+id/mealTypeTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="28dp"
+        android:gravity="center"
+        android:text="@string/userMealInputTypeLabel"
+        app:layout_constraintBottom_toTopOf="@+id/mealMenuTextView"
+        app:layout_constraintDimensionRatio="4"
+        app:layout_constraintEnd_toStartOf="@+id/mealTypeEditView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_chainStyle="spread" />
+
+    <EditText
+        android:id="@+id/mealTypeEditView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="28dp"
+        android:ems="10"
+        android:hint="@string/userMealInputTypeLabel"
+        android:importantForAutofill="no"
+        android:inputType="textNoSuggestions"
+        app:layout_constraintBottom_toTopOf="@+id/mealMenuEditView"
+        app:layout_constraintDimensionRatio="4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/mealTypeTextView" />
+
+    <TextView
+        android:id="@+id/mealMenuTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="28dp"
+        android:gravity="center"
+        android:text="@string/userMealInputMenuLabel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="4"
+        app:layout_constraintEnd_toStartOf="@+id/mealMenuEditView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/mealMenuEditView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="28dp"
+        android:ems="10"
+        android:hint="@string/userMealInputMenuLabel"
+        android:importantForAutofill="no"
+        android:inputType="textNoSuggestions"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/mealMenuTextView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/mealCalorieTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="28dp"
+        android:gravity="center"
+        android:text="@string/userMealInputCalorieLabel"
+        app:layout_constraintDimensionRatio="4"
+        app:layout_constraintEnd_toStartOf="@+id/mealCalorieEditView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mealMenuTextView" />
+
+    <EditText
+        android:id="@+id/mealCalorieEditView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="28dp"
+        android:ems="10"
+        android:hint="@string/userMealInputKiloCalorieUnit"
+        android:importantForAutofill="no"
+        android:inputType="numberSigned"
+        app:layout_constraintDimensionRatio="4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/mealCalorieTextView"
+        app:layout_constraintTop_toBottomOf="@+id/mealMenuEditView" />
+
+    <TextView
+        android:id="@+id/mealTotalCalorieLabelTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="56dp"
+        android:gravity="center"
+        android:text="@string/userMealInputTotalCalorieLabel"
+        app:layout_constraintDimensionRatio="9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mealCalorieTextView" />
+
+    <TextView
+        android:id="@+id/mealTotalCalorieValueTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="56dp"
+        android:gravity="end|center_vertical"
+        app:layout_constraintDimensionRatio="4"
+        app:layout_constraintEnd_toStartOf="@+id/mealTotalCalorieUnitView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mealTotalCalorieLabelTextView" />
+
+    <TextView
+        android:id="@+id/mealTotalCalorieUnitView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="start|center_vertical"
+        android:text="@string/userMealInputKiloCalorieUnit"
+        app:layout_constraintDimensionRatio="4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/mealTotalCalorieValueTextView"
+        app:layout_constraintTop_toBottomOf="@id/mealTotalCalorieLabelTextView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
