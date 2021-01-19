@@ -1,14 +1,12 @@
 package com.example.diet.ui
 
-import android.content.Context
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diet.R
 
 class LifeStyleSectionHeaderHolder(
-    itemView: View,
-    private val context: Context
+    itemView: View
 ) :
     RecyclerView.ViewHolder(itemView) {
     private val lifeStyleName: TextView =
@@ -19,9 +17,11 @@ class LifeStyleSectionHeaderHolder(
         itemView.findViewById<TextView>(R.id.lifeStyleSectionHeaderBurnedCalorieTextView)
 
     fun bind() {
-        lifeStyleName.text = context.getString(R.string.userLifeStyleSectionHeaderNameLabel)
-        lifeStyleTime.text = context.getString(R.string.userLifeStyleSectionHeaderTimeLabel)
+        lifeStyleName.text =
+            itemView.context.getString(R.string.userLifeStyleSectionHeaderNameLabel)
+        lifeStyleTime.text =
+            itemView.context.getString(R.string.userLifeStyleSectionHeaderTimeLabel)
         lifeStyleBurnedCalorie.text =
-            context.getString(R.string.userLifeStyleSectionHeaderBurnedCalorieLabel)
+            itemView.context.getString(R.string.userLifeStyleSectionHeaderBurnedCalorieLabel)
     }
 }
