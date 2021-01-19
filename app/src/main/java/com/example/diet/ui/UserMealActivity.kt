@@ -11,8 +11,8 @@ import java.util.*
 
 class UserMealActivity : AppCompatActivity() {
     private var mealList = listOf<Meal>()
-    private val mealSectionHeaderAdapter = MealSectionHeaderViewAdapter(this)
-    private val mealContentsAdapter = MealContentsViewAdapter(this)
+    private val mealSectionHeaderAdapter = MealSectionHeaderViewAdapter()
+    private val mealContentsAdapter = MealContentsViewAdapter()
     private val mealListRecyclerViewAdapter =
         ConcatAdapter(mealSectionHeaderAdapter, mealContentsAdapter)
 

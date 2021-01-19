@@ -1,22 +1,20 @@
 package com.example.diet.ui
 
-import android.content.Context
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.diet.R
 
-class MealSectionHeaderViewAdapter(
-    private val context: Context
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MealSectionHeaderViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         private const val listSize: Int = 1
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view =
-            LayoutInflater.from(context).inflate(R.layout.user_meal_section_header, parent, false)
+        val view = MealSectionHeaderView(parent.context)
+        view.layoutParams = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         return MealSectionHeaderViewHolder(view)
     }
 

@@ -1,22 +1,14 @@
 package com.example.diet.ui
 
-import android.view.View
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.diet.R
+import kotlinx.android.synthetic.main.user_meal_list_item.view.*
 
-class MealContentsViewHolder(itemView: View) :
-    RecyclerView.ViewHolder(itemView) {
-    private val mealType: TextView =
-        itemView.findViewById<TextView>(R.id.mealTypeTextView)
-    private val mealMenu: TextView =
-        itemView.findViewById<TextView>(R.id.mealMenuTextView)
-    private val mealCalorie: TextView =
-        itemView.findViewById<TextView>(R.id.mealCalorieTextView)
-
+class MealContentsViewHolder(
+    itemView: MealContentsView
+) : RecyclerView.ViewHolder(itemView) {
     fun bind(meal: Meal) {
-        mealType.text = meal.mealType
-        mealMenu.text = meal.menu
-        mealCalorie.text = meal.calorie
+        itemView.mealTypeTextView.text = meal.mealType
+        itemView.mealMenuTextView.text = meal.menu
+        itemView.mealCalorieTextView.text = meal.calorie
     }
 }
