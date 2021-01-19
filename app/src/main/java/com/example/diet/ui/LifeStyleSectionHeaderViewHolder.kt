@@ -1,27 +1,19 @@
 package com.example.diet.ui
 
-import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diet.R
+import kotlinx.android.synthetic.main.user_life_style_section_header.view.*
 
 class LifeStyleSectionHeaderViewHolder(
-    itemView: View
-) :
-    RecyclerView.ViewHolder(itemView) {
-    private val lifeStyleName: TextView =
-        itemView.findViewById<TextView>(R.id.lifeStyleSectionHeaderNameTextView)
-    private val lifeStyleTime: TextView =
-        itemView.findViewById<TextView>(R.id.lifeStyleSectionHeaderTimeTextView)
-    private val lifeStyleBurnedCalorie: TextView =
-        itemView.findViewById<TextView>(R.id.lifeStyleSectionHeaderBurnedCalorieTextView)
-
+    itemView: LifeStyleSectionHeaderView
+) : RecyclerView.ViewHolder(itemView) {
     fun bind() {
-        lifeStyleName.text =
+        itemView.lifeStyleSectionHeaderNameTextView.text =
             itemView.context.getString(R.string.userLifeStyleSectionHeaderNameLabel)
-        lifeStyleTime.text =
+        itemView.lifeStyleSectionHeaderTimeTextView.text =
             itemView.context.getString(R.string.userLifeStyleSectionHeaderTimeLabel)
-        lifeStyleBurnedCalorie.text =
+        itemView.lifeStyleSectionHeaderBurnedCalorieTextView.text =
             itemView.context.getString(R.string.userLifeStyleSectionHeaderBurnedCalorieLabel)
     }
 }

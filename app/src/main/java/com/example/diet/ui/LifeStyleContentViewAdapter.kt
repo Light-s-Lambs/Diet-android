@@ -1,16 +1,11 @@
 package com.example.diet.ui
 
-import android.content.Context
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.diet.R
 
-class LifeStyleContentViewAdapter(
-    private val context: Context
-) : ListAdapter<LifeStyle, RecyclerView.ViewHolder>(
+class LifeStyleContentViewAdapter : ListAdapter<LifeStyle, RecyclerView.ViewHolder>(
     object : DiffUtil.ItemCallback<LifeStyle>() {
         override fun areItemsTheSame(
             oldItem: LifeStyle,
@@ -25,8 +20,11 @@ class LifeStyleContentViewAdapter(
     }
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view =
-            LayoutInflater.from(context).inflate(R.layout.user_life_style_list_item, parent, false)
+        val view = LifeStyleContentView(parent.context)
+        view.layoutParams = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         return LifeStyleContentViewHolder(view)
     }
 

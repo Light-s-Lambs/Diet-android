@@ -1,22 +1,14 @@
 package com.example.diet.ui
 
-import android.view.View
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.diet.R
+import kotlinx.android.synthetic.main.user_life_style_list_item.view.*
 
-class LifeStyleContentViewHolder(itemView: View) :
-    RecyclerView.ViewHolder(itemView) {
-    private val lifeStyleName: TextView =
-        itemView.findViewById<TextView>(R.id.lifeStyleNameTextView)
-    private val lifeStyleTime: TextView =
-        itemView.findViewById<TextView>(R.id.lifeStyleTimeTextView)
-    private val lifeStyleBurnedCalorie: TextView =
-        itemView.findViewById<TextView>(R.id.lifeStyleBurnedCalorieTextView)
-
+class LifeStyleContentViewHolder(
+    itemView: LifeStyleContentView
+) : RecyclerView.ViewHolder(itemView) {
     fun bind(lifeStyle: LifeStyle) {
-        lifeStyleName.text = lifeStyle.name
-        lifeStyleTime.text = lifeStyle.time
-        lifeStyleBurnedCalorie.text = lifeStyle.burnedCalorie
+        itemView.lifeStyleNameTextView.text = lifeStyle.name
+        itemView.lifeStyleTimeTextView.text = lifeStyle.time
+        itemView.lifeStyleBurnedCalorieTextView.text = lifeStyle.burnedCalorie
     }
 }
