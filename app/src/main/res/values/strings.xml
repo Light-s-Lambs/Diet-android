@@ -13,9 +13,6 @@
     <string name="userWeightAmountOfMuscleLabel">Amount Of\nMuscle</string>
     <string name="userWeightUnitHint">Kg</string>
     <string name="userWeightPercentHint">%</string>
-    <string name="userLifeStyleInputExitButtonLabel">X</string>
-    <string name="userLifeStyleInputAddButtonLabel">Add Life Style</string>
-    <string name="userLifeStyleInputSaveButtonLabel">Save</string>
     <string name="userLifeStyleInputNameTextLabel">Name</string>
     <string name="userLifeStyleInputNameHint">Name</string>
     <string name="userLifeStyleInputCalorieTextLabel">Calorie per hours</string>
