@@ -20,12 +20,7 @@ class LifeStyleContentViewAdapter : ListAdapter<LifeStyle, RecyclerView.ViewHold
     }
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = LifeStyleContentView(parent.context)
-        view.layoutParams = ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        return LifeStyleContentViewHolder(view)
+        return LifeStyleContentViewHolder(parent)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
