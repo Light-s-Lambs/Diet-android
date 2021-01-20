@@ -10,12 +10,7 @@ class MealSectionHeaderViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = MealSectionHeaderView(parent.context)
-        view.layoutParams = ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        return MealSectionHeaderViewHolder(view)
+        return MealSectionHeaderViewHolder(parent)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

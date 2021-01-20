@@ -20,12 +20,7 @@ class MealContentsViewAdapter : ListAdapter<Meal, RecyclerView.ViewHolder>(
     }
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = MealContentsView(parent.context)
-        view.layoutParams = ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        return MealContentsViewHolder(view)
+        return MealContentsViewHolder(parent)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
