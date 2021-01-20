@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-class LifeStyleContentViewAdapter : ListAdapter<LifeStyle, RecyclerView.ViewHolder>(
+class LifeStyleContentsViewAdapter : ListAdapter<LifeStyle, RecyclerView.ViewHolder>(
     object : DiffUtil.ItemCallback<LifeStyle>() {
         override fun areItemsTheSame(
             oldItem: LifeStyle,
@@ -20,12 +20,12 @@ class LifeStyleContentViewAdapter : ListAdapter<LifeStyle, RecyclerView.ViewHold
     }
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return LifeStyleContentViewHolder(parent)
+        return LifeStyleContentsViewHolder(parent)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is LifeStyleContentViewHolder -> holder.bind(getItem(position))
+            is LifeStyleContentsViewHolder -> holder.bind(getItem(position))
         }
     }
 }

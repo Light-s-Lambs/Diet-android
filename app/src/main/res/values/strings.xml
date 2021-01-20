@@ -1,8 +1,5 @@
 <resources>
     <string name="app_name">Diet</string>
-    <string name="userProfileEntryButtonLabel">User Profile</string>
-    <string name="userLifeStyleEntryButtonLabel">User LifeStyle</string>
-    <string name="userLifeStyleInputEntryButtonLabel">Life Style Input</string>
     <string name="userProfileLogoLabel">Logo</string>
     <string name="userProfileNameLabel">Name</string>
     <string name="userProfileHeightLabel">Height</string>
@@ -13,9 +10,6 @@
     <string name="userWeightAmountOfMuscleLabel">Amount Of\nMuscle</string>
     <string name="userWeightUnitHint">Kg</string>
     <string name="userWeightPercentHint">%</string>
-    <string name="userLifeStyleInputExitButtonLabel">X</string>
-    <string name="userLifeStyleInputAddButtonLabel">Add Life Style</string>
-    <string name="userLifeStyleInputSaveButtonLabel">Save</string>
     <string name="userLifeStyleInputNameTextLabel">Name</string>
     <string name="userLifeStyleInputNameHint">Name</string>
     <string name="userLifeStyleInputCalorieTextLabel">Calorie per hours</string>

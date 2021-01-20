@@ -13,7 +13,7 @@ class UserLifeStyleActivity : AppCompatActivity() {
 
     private var lifeStyleList = listOf<LifeStyle>()
     private val lifeStyleSectionHeaderAdapter = LifeStyleSectionHeaderViewAdapter()
-    private val lifeStyleContentAdapter = LifeStyleContentViewAdapter()
+    private val lifeStyleContentAdapter = LifeStyleContentsViewAdapter()
     private val lifeStyleListRecyclerViewAdapter =
         ConcatAdapter(lifeStyleSectionHeaderAdapter, lifeStyleContentAdapter)
 
