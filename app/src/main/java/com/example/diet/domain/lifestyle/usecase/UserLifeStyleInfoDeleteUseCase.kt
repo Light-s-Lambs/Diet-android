@@ -6,7 +6,7 @@ class UserLifeStyleInfoDeleteUseCase constructor(
     private val date: String,
     private val repository: UserLifeStyleInfoRepository
 ) {
-    fun delete() {
-        repository.delete(date)
+    fun delete(): Boolean {
+        return repository.delete(date)
     }
 }

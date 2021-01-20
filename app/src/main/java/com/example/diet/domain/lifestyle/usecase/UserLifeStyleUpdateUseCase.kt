@@ -7,7 +7,7 @@ class UserLifeStyleUpdateUseCase constructor(
     private val userLifeStyleInfo: UserLifeStyleInfo,
     private val repository: UserLifeStyleInfoRepository
 ) {
-    fun update() {
-        repository.update(userLifeStyleInfo)
+    fun update(): Boolean {
+        return repository.update(userLifeStyleInfo)
     }
 }

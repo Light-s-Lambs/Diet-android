@@ -7,7 +7,7 @@ class UserLifeStyleInfoSaveUseCase constructor(
     private val userLifeStyleInfo: UserLifeStyleInfo,
     private val repository: UserLifeStyleInfoRepository
 ) {
-    fun save() {
-        repository.save(userLifeStyleInfo)
+    fun save(): Boolean {
+        return repository.save(userLifeStyleInfo)
     }
 }
