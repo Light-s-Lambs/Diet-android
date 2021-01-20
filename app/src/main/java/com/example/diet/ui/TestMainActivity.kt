@@ -16,7 +16,6 @@ class TestMainActivity : AppCompatActivity() {
         userLifeStyleInputEntryButton.setOnClickListener {
             startActivity(Intent(this, UserLifeStyleInputActivity::class.java))
         }
-        lifeStyleEntryButton.text = "User LifeStyle"
         lifeStyleEntryButton.setOnClickListener {
             startActivity(Intent(this, UserLifeStyleActivity::class.java))
         }
