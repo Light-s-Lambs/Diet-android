@@ -1,6 +1,6 @@
-package com.example.diet.domain.lifestyle.usecase
+package com.example.diet.lifestyle.domain
 
-import com.example.diet.domain.lifestyle.UserLifeStyleInfoRepository
+import com.example.diet.lifestyle.domain.UserLifeStyleInfoRepository
 
 class UserLifeStyleInfoDeleteUseCase {
     operator fun invoke(

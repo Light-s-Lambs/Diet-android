@@ -1,7 +1,7 @@
-package com.example.diet.domain.lifestyle.usecase
+package com.example.diet.lifestyle.domain
 
-import com.example.diet.domain.lifestyle.UserLifeStyleInfo
-import com.example.diet.domain.lifestyle.UserLifeStyleInfoRepository
+import com.example.diet.lifestyle.domain.UserLifeStyleInfo
+import com.example.diet.lifestyle.domain.UserLifeStyleInfoRepository
 
 class UserLifeStyleUpdateUseCase {
     operator fun invoke(

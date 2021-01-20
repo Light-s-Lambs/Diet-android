@@ -1,4 +1,4 @@
-package com.example.diet.domain.lifestyle
+package com.example.diet.lifestyle.domain
 
 interface UserLifeStyleInfoRepository {
     fun save(userLifeStyleInfo: UserLifeStyleInfo): Boolean
