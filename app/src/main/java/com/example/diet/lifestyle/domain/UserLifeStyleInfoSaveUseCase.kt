@@ -1,12 +1,10 @@
 package com.example.diet.lifestyle.domain
 
-import com.example.diet.lifestyle.domain.UserLifeStyleInfo
-import com.example.diet.lifestyle.domain.UserLifeStyleInfoRepository
-
-class UserLifeStyleInfoSaveUseCase {
+class UserLifeStyleInfoSaveUseCase(
+    private val repository: UserLifeStyleInfoRepository
+) {
     operator fun invoke(
-        userLifeStyleInfo: UserLifeStyleInfo,
-        repository: UserLifeStyleInfoRepository
+        userLifeStyleInfo: UserLifeStyleInfo
     ): Boolean {
         return repository.save(userLifeStyleInfo)
     }
