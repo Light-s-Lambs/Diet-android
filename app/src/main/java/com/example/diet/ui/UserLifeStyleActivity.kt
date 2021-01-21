@@ -5,22 +5,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diet.R
-import com.example.diet.lifestyle.domain.LifeStyle
-import kotlinx.android.synthetic.main.activity_user_lifestyle.*
+import kotlinx.android.synthetic.main.activity_user_life_style.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 class UserLifeStyleActivity : AppCompatActivity() {
 
     private var lifeStyleList = listOf<LifeStyle>()
-    private val lifeStyleSectionHeaderAdapter = LifeStyleSectionHeaderAdapter(this)
-    private val lifeStyleContentAdapter = LifeStyleContentAdapter(this)
+    private val lifeStyleSectionHeaderAdapter = LifeStyleSectionHeaderViewAdapter()
+    private val lifeStyleContentViewAdapter = LifeStyleContentViewAdapter()
     private val lifeStyleListRecyclerViewAdapter =
-        ConcatAdapter(lifeStyleSectionHeaderAdapter, lifeStyleContentAdapter)
+        ConcatAdapter(lifeStyleSectionHeaderAdapter, lifeStyleContentViewAdapter)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user_lifestyle)
+        setContentView(R.layout.activity_user_life_style)
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val currentDate = dateFormat.format(Date())
         dateTextView.text = currentDate.toString()
@@ -28,8 +27,7 @@ class UserLifeStyleActivity : AppCompatActivity() {
         activityMetabolismTextView.text = "0"
         basalMetabolismTextView.text = "0"
 
-        lifeStyleContentAdapter.submitList(lifeStyleList)
-        lifeStyleContentAdapter.notifyDataSetChanged()
+        lifeStyleContentViewAdapter.submitList(lifeStyleList)
 
         lifeStyleListRecyclerView.adapter = lifeStyleListRecyclerViewAdapter
         lifeStyleListRecyclerView.layoutManager = LinearLayoutManager(this)
