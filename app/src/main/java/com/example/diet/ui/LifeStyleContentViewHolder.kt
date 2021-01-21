@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.diet.R
 import kotlinx.android.synthetic.main.user_life_style_list_item.view.*
 
-class LifeStyleContentsViewHolder(
+class LifeStyleContentViewHolder(
     parent: ViewGroup
 ) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.user_life_style_list_item, parent, false)

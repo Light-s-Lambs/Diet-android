@@ -13,9 +13,9 @@ class UserLifeStyleActivity : AppCompatActivity() {
 
     private var lifeStyleList = listOf<LifeStyle>()
     private val lifeStyleSectionHeaderAdapter = LifeStyleSectionHeaderViewAdapter()
-    private val lifeStyleContentAdapter = LifeStyleContentsViewAdapter()
+    private val lifeStyleContentViewAdapter = LifeStyleContentViewAdapter()
     private val lifeStyleListRecyclerViewAdapter =
-        ConcatAdapter(lifeStyleSectionHeaderAdapter, lifeStyleContentAdapter)
+        ConcatAdapter(lifeStyleSectionHeaderAdapter, lifeStyleContentViewAdapter)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +27,7 @@ class UserLifeStyleActivity : AppCompatActivity() {
         activityMetabolismTextView.text = "0"
         basalMetabolismTextView.text = "0"
 
-        lifeStyleContentAdapter.submitList(lifeStyleList)
+        lifeStyleContentViewAdapter.submitList(lifeStyleList)
 
         lifeStyleListRecyclerView.adapter = lifeStyleListRecyclerViewAdapter
         lifeStyleListRecyclerView.layoutManager = LinearLayoutManager(this)
