@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/contentsGuideLineStart"
+        android:id="@+id/startContentsGuideLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -22,9 +22,9 @@
         android:autoSizeTextType="uniform"
         android:gravity="bottom|center"
         android:maxLines="1"
-        app:layout_constraintEnd_toStartOf="@+id/contentsGuideLineEnd"
+        app:layout_constraintEnd_toStartOf="@+id/endContentsGuideLine"
         app:layout_constraintHeight_percent="0.2"
-        app:layout_constraintStart_toStartOf="@+id/contentsGuideLineStart"
+        app:layout_constraintStart_toStartOf="@+id/startContentsGuideLine"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -39,7 +39,7 @@
         android:maxLines="2"
         android:text="@string/userLifeStyleActivityMetabolismLabel"
         app:layout_constraintHeight_percent="0.1"
-        app:layout_constraintStart_toStartOf="@+id/contentsGuideLineStart"
+        app:layout_constraintStart_toStartOf="@+id/startContentsGuideLine"
         app:layout_constraintTop_toBottomOf="@+id/dateTextView"
         app:layout_constraintWidth_percent="0.25" />
 
@@ -53,10 +53,10 @@
         android:autoSizeTextType="uniform"
         android:gravity="bottom|center_horizontal"
         android:maxLines="1"
-        app:layout_constraintEnd_toStartOf="@+id/contentsGuideLineEnd"
+        app:layout_constraintEnd_toStartOf="@+id/endContentsGuideLine"
         app:layout_constraintHeight_percent="0.25"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/contentsGuideLineStart"
+        app:layout_constraintStart_toStartOf="@+id/startContentsGuideLine"
         app:layout_constraintTop_toBottomOf="@+id/dateTextView" />
 
     <TextView
@@ -70,7 +70,7 @@
         android:gravity="center"
         android:maxLines="2"
         android:text="@string/userLifeStyleBasalMetabolismLabel"
-        app:layout_constraintEnd_toStartOf="@+id/contentsGuideLineEnd"
+        app:layout_constraintEnd_toStartOf="@+id/endContentsGuideLine"
         app:layout_constraintHeight_percent="0.1"
         app:layout_constraintTop_toBottomOf="@+id/dateTextView"
         app:layout_constraintWidth_percent="0.25" />
@@ -101,7 +101,7 @@
         android:gravity="center"
         android:maxLines="1"
         android:text="@string/userLifeStyleKiloCalorieLabel"
-        app:layout_constraintEnd_toStartOf="@+id/contentsGuideLineEnd"
+        app:layout_constraintEnd_toStartOf="@+id/endContentsGuideLine"
         app:layout_constraintHeight_percent="0.05"
         app:layout_constraintTop_toBottomOf="@+id/basalMetabolismLabelTextView"
         app:layout_constraintWidth_percent="0.075" />
@@ -118,7 +118,7 @@
         android:maxLines="1"
         android:text="@string/userLifeStyleKiloCalorieLabel"
         app:layout_constraintBottom_toBottomOf="@+id/activityMetabolismTextView"
-        app:layout_constraintEnd_toStartOf="@+id/contentsGuideLineEnd"
+        app:layout_constraintEnd_toStartOf="@+id/endContentsGuideLine"
         app:layout_constraintHeight_percent="0.05"
         app:layout_constraintWidth_percent="0.1" />
 
@@ -126,11 +126,11 @@
         android:id="@+id/lifeStyleListRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintEnd_toStartOf="@+id/contentsGuideLineEnd"
+        app:layout_constraintEnd_toStartOf="@+id/endContentsGuideLine"
         app:layout_constraintHeight_percent="0.55"
-        app:layout_constraintStart_toStartOf="@+id/contentsGuideLineStart"
+        app:layout_constraintStart_toStartOf="@+id/startContentsGuideLine"
         app:layout_constraintTop_toBottomOf="@+id/activityMetabolismTextView"
-        tools:listitem="@layout/user_lifestyle_listitem" />
+        tools:listitem="@layout/user_life_style_list_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/lifeStyleMenuListFloatingActionButton"
@@ -142,8 +142,8 @@
         android:backgroundTint="#ffffff"
         android:src="@drawable/ic_baseline_menu_24"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/contentsGuideLineEnd"
-        app:layout_constraintStart_toStartOf="@+id/contentsGuideLineEnd"
+        app:layout_constraintEnd_toStartOf="@+id/endContentsGuideLine"
+        app:layout_constraintStart_toStartOf="@+id/endContentsGuideLine"
         app:rippleColor="@color/colorPrimary" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -154,12 +154,12 @@
         android:backgroundTint="#ffffff"
         app:fabSize="mini"
         app:layout_constraintBottom_toTopOf="@+id/lifeStyleMenuListFloatingActionButton"
-        app:layout_constraintEnd_toStartOf="@+id/contentsGuideLineEnd"
-        app:layout_constraintStart_toStartOf="@+id/contentsGuideLineEnd"
+        app:layout_constraintEnd_toStartOf="@+id/endContentsGuideLine"
+        app:layout_constraintStart_toStartOf="@+id/endContentsGuideLine"
         app:srcCompat="@android:drawable/ic_input_add" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/contentsGuideLineEnd"
+        android:id="@+id/endContentsGuideLine"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
