@@ -6,9 +6,6 @@ import com.example.diet.lifestyle.domain.LifeStyleInfoRepository
 class LoadLifeStyleInfoUseCase(
     private val repository: LifeStyleInfoRepository
 ) {
-    operator fun invoke(
-        date: String
-    ): LifeStyleInfo {
-        return repository.load(date)
-    }
+    operator fun invoke(date: String): LifeStyleInfo = repository.load(date)
+
 }
