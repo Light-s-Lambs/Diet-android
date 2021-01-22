@@ -1,7 +1,7 @@
 package com.example.diet.lifestyle.domain
 
-class UserLifeStyleInfoDeleteUseCase(
-    private val repository: UserLifeStyleInfoRepository
+class DeleteLifeStyleInfoUseCase(
+    private val repository: LifeStyleInfoRepository
 ) {
     operator fun invoke(
         date: String

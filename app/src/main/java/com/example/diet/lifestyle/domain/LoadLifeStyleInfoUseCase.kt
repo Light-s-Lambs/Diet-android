@@ -1,11 +1,11 @@
 package com.example.diet.lifestyle.domain
 
-class UserLifeStyleInfoLoadUseCase(
-    private val repository: UserLifeStyleInfoRepository
+class LoadLifeStyleInfoUseCase(
+    private val repository: LifeStyleInfoRepository
 ) {
     operator fun invoke(
         date: String
-    ): UserLifeStyleInfo {
+    ): LifeStyleInfo {
         return repository.load(date)
     }
 }

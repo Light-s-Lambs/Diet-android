@@ -1,6 +1,6 @@
 package com.example.diet.lifestyle.domain
 
-data class UserLifeStyleInfo(
+data class LifeStyleInfo(
     val date: String,
     val basalMetabolism: Int,
     val activityMetabolism: Int,
