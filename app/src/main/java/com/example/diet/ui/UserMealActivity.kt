@@ -5,10 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diet.R
+import com.example.diet.mealInfo.domain.model.Meal
 import kotlinx.android.synthetic.main.activity_user_meal.*
 import java.text.SimpleDateFormat
 import java.util.*
-import com.example.diet.mealInfo.domain.model.Meal
 
 class UserMealActivity : AppCompatActivity() {
     private var mealList = listOf<Meal>()
