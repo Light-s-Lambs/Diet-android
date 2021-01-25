@@ -6,5 +6,6 @@ import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
 class UpdateLifeStyleInfoUseCase(
     private val repository: LifeStyleInfoRepository
 ) {
-    operator fun invoke(lifeStyleInfo: LifeStyleInfo): Boolean = repository.update(lifeStyleInfo)
+    operator fun invoke(date: String, lifeStyleInfo: LifeStyleInfo): Boolean =
+        repository.update(date, lifeStyleInfo)
 }
