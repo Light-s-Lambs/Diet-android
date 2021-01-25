@@ -1,6 +1,6 @@
 package com.example.diet.weightInfo.usecase
 
-import com.example.diet.weightInfo.domain.WeightInfoRepository
+import com.example.diet.weightInfo.model.WeightInfoRepository
 
 class DeleteWeightInfoUseCase(
     private val repository: WeightInfoRepository

@@ -1,4 +1,4 @@
-package com.example.diet.weightInfo.domain
+package com.example.diet.weightInfo.model
 
 interface WeightInfoRepository {
     fun save(weightInfo: WeightInfo): Boolean

@@ -1,4 +1,4 @@
-package com.example.diet.weightInfo.domain
+package com.example.diet.weightInfo.model
 
 data class WeightInfo(
     val data: String,
