@@ -6,5 +6,6 @@ import com.example.diet.weightInfo.repository.WeightInfoRepository
 class UpdateWeightInfoUseCase(
     private val repository: WeightInfoRepository
 ) {
-    operator fun invoke(weightInfo: WeightInfo): Boolean = repository.update(weightInfo)
+    operator fun invoke(date: String, weightInfo: WeightInfo): Boolean =
+        repository.update(date, weightInfo)
 }
