@@ -1,6 +1,6 @@
 package com.example.diet.lifestyle.usecase
 
-import com.example.diet.lifestyle.model.LifeStyleInfoRepository
+import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
 
 class DeleteLifeStyleInfoUseCase(
     private val repository: LifeStyleInfoRepository

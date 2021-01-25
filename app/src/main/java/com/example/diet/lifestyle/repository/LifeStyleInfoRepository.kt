@@ -1,4 +1,6 @@
-package com.example.diet.lifestyle.model
+package com.example.diet.lifestyle.repository
+
+import com.example.diet.lifestyle.model.LifeStyleInfo
 
 interface LifeStyleInfoRepository {
     fun save(lifeStyleInfo: LifeStyleInfo): Boolean
