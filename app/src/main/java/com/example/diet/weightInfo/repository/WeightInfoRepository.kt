@@ -1,4 +1,6 @@
-package com.example.diet.weightInfo.model
+package com.example.diet.weightInfo.repository
+
+import com.example.diet.weightInfo.model.WeightInfo
 
 interface WeightInfoRepository {
     fun save(weightInfo: WeightInfo): Boolean
