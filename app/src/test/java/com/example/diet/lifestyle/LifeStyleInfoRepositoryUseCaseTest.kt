@@ -12,7 +12,7 @@ import io.mockk.mockk
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class LifeStyleInfoRepositoryTest {
+class LifeStyleInfoRepositoryUseCaseTest {
     private val lifeStyleList = listOf<LifeStyle>(
         LifeStyle("Sleeping", "22 hr", "348 kcal"),
         LifeStyle("Running", "2 hr", "1510 kcal")
