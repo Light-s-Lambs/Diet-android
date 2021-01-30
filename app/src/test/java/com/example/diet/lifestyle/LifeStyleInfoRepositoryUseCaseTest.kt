@@ -11,17 +11,12 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Assert.assertEquals
-import org.junit.Before
 import org.junit.Test
 import java.text.SimpleDateFormat
 import java.util.*
 
 class LifeStyleInfoRepositoryUseCaseTest {
-    val repository: LifeStyleInfoRepository = mockk()
-
-    @Before
-    fun defineMockkBehavior() {
-    }
+    private val repository: LifeStyleInfoRepository = mockk()
 
     @Test
     fun deleteLifeStyleInfoUseCaseTest() {
@@ -55,6 +50,7 @@ class LifeStyleInfoRepositoryUseCaseTest {
         } returns lifeStyleInfo
 
         val loadLifeStyleInfoUseCase = LoadLifeStyleInfoUseCase(repository)
+
         assertEquals(lifeStyleInfo, loadLifeStyleInfoUseCase(dateString))
         verify {
             repository.load(dateString)
@@ -70,6 +66,7 @@ class LifeStyleInfoRepositoryUseCaseTest {
         val lifeStyleInfo = LifeStyleInfo(1900, 3758, lifeStyleList)
         val dateString =
             SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).toString()
+
         every {
             repository.save(dateString, lifeStyleInfo)
         } returns true
