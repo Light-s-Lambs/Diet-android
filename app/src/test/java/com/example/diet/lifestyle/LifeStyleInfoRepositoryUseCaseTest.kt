@@ -9,54 +9,98 @@ import com.example.diet.lifestyle.usecase.SaveLifeStyleInfoUseCase
 import com.example.diet.lifestyle.usecase.UpdateLifeStyleInfoUseCase
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
+import java.text.SimpleDateFormat
+import java.util.*
 
 class LifeStyleInfoRepositoryUseCaseTest {
-    private val lifeStyleList = listOf<LifeStyle>(
-        LifeStyle("Sleeping", "22 hr", "348 kcal"),
-        LifeStyle("Running", "2 hr", "1510 kcal")
-    )
-    private val lifeStyleInfo = LifeStyleInfo(1900, 3758, lifeStyleList)
-    private val repository: LifeStyleInfoRepository = mockk()
+    val repository: LifeStyleInfoRepository = mockk()
+
+    @Before
+    fun defineMockkBehavior() {
+    }
 
     @Test
-    fun deleteLifeStyleInfo() {
-        val deleteLifeStyleInfoUseCase = DeleteLifeStyleInfoUseCase(repository)
+    fun deleteLifeStyleInfoUseCaseTest() {
+        val dateString =
+            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).toString()
+
         every {
-            deleteLifeStyleInfoUseCase("2020-01-26")
+            repository.delete(dateString)
         } returns true
-        val result = deleteLifeStyleInfoUseCase("2020-01-26")
-        assertEquals(true, result)
+
+        val deleteLifeStyleInfoUseCase = DeleteLifeStyleInfoUseCase(repository)
+
+        assertEquals(deleteLifeStyleInfoUseCase(dateString), true)
+        verify {
+            repository.delete(dateString)
+        }
     }
 
     @Test
     fun loadLifeStyleInfo() {
-        val loadLifeStyleInfoUseCase = LoadLifeStyleInfoUseCase(repository)
+        val lifeStyleList = listOf<LifeStyle>(
+            LifeStyle("Sleeping", "22 hr", "348 kcal"),
+            LifeStyle("Running", "2 hr", "1510 kcal")
+        )
+        val lifeStyleInfo = LifeStyleInfo(1900, 3758, lifeStyleList)
+        val dateString =
+            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).toString()
+
         every {
-            loadLifeStyleInfoUseCase("2020-01-26")
+            repository.load(dateString)
         } returns lifeStyleInfo
-        val result = loadLifeStyleInfoUseCase("2020-01-26")
-        assertEquals(lifeStyleInfo, result)
+
+        val loadLifeStyleInfoUseCase = LoadLifeStyleInfoUseCase(repository)
+        assertEquals(lifeStyleInfo, loadLifeStyleInfoUseCase(dateString))
+        verify {
+            repository.load(dateString)
+        }
     }
 
     @Test
     fun saveTest() {
-        val saveLifeStyleInfoUseCase = SaveLifeStyleInfoUseCase(repository)
+        val lifeStyleList = listOf<LifeStyle>(
+            LifeStyle("Sleeping", "22 hr", "348 kcal"),
+            LifeStyle("Running", "2 hr", "1510 kcal")
+        )
+        val lifeStyleInfo = LifeStyleInfo(1900, 3758, lifeStyleList)
+        val dateString =
+            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).toString()
         every {
-            saveLifeStyleInfoUseCase("2020-01-26", lifeStyleInfo)
+            repository.save(dateString, lifeStyleInfo)
         } returns true
-        val result = saveLifeStyleInfoUseCase("2020-01-26", lifeStyleInfo)
-        assertEquals(true, result)
+
+        val saveLifeStyleInfoUseCase = SaveLifeStyleInfoUseCase(repository)
+
+        assertEquals(true, saveLifeStyleInfoUseCase(dateString, lifeStyleInfo))
+        verify {
+            repository.save(dateString, lifeStyleInfo)
+        }
     }
 
     @Test
     fun updateLifeStyleInfo() {
-        val updateLifeStyleInfoUseCase = UpdateLifeStyleInfoUseCase(repository)
+        val lifeStyleList = listOf<LifeStyle>(
+            LifeStyle("Sleeping", "22 hr", "348 kcal"),
+            LifeStyle("Running", "2 hr", "1510 kcal")
+        )
+        val lifeStyleInfo = LifeStyleInfo(1900, 3758, lifeStyleList)
+        val dateString =
+            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).toString()
+
         every {
-            updateLifeStyleInfoUseCase("2020-01-26", lifeStyleInfo)
+            repository.update(dateString, lifeStyleInfo)
         } returns true
-        val result = updateLifeStyleInfoUseCase("2020-01-26", lifeStyleInfo)
-        assertEquals(true, result)
+
+        val updateLifeStyleInfoUseCase = UpdateLifeStyleInfoUseCase(repository)
+
+        assertEquals(true, updateLifeStyleInfoUseCase(dateString, lifeStyleInfo))
+        verify {
+            repository.update(dateString, lifeStyleInfo)
+        }
     }
 }
