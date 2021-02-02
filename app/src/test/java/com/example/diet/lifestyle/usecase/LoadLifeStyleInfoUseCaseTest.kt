@@ -27,34 +27,34 @@ class LoadLifeStyleInfoUseCaseTest {
 
     @Test
     fun testInvoke_whenRepoHasMatchData_returnMatchInfo() {
+        val dateString =
+            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).toString()
         val lifeStyleList = listOf<LifeStyle>(
             LifeStyle("Sleeping", "22 hr", "348 kcal"),
             LifeStyle("Running", "2 hr", "1510 kcal")
         )
-        val lifeStyleInfo = LifeStyleInfo(1900, 3758, lifeStyleList)
-        val dateString =
-            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).toString()
+        val expected = LifeStyleInfo(1900, 3758, lifeStyleList)
 
-        every { repository.load(dateString) } returns lifeStyleInfo
+        every { repository.load(dateString) } returns expected
 
         val actual = loadUseCase(dateString)
 
-        assertEquals(actual, lifeStyleInfo)
+        assertEquals(actual, expected)
         verify { repository.load(dateString) }
     }
 
     @Test
     fun testInvoke_whenRepoHasNoMatchData_returnEmptyInfo() {
-        val lifeStyleList = listOf<LifeStyle>()
-        val lifeStyleInfo = LifeStyleInfo(0, 0, lifeStyleList)
         val dateString =
             SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).toString()
+        val lifeStyleList = emptyList<LifeStyle>()
+        val expected = LifeStyleInfo(0, 0, lifeStyleList)
 
-        every { repository.load(dateString) } returns lifeStyleInfo
+        every { repository.load(dateString) } returns expected
 
         val actual = loadUseCase(dateString)
 
-        assertEquals(actual, lifeStyleInfo)
+        assertEquals(actual, expected)
         verify { repository.load(dateString) }
     }
 }

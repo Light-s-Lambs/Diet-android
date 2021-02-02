@@ -7,6 +7,7 @@ import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.verify
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -27,19 +28,20 @@ class SaveLifeStyleInfoUseCaseTest {
 
     @Test
     fun testInvoke_whenSuccessSaveData_returnTrue() {
+        val dateString =
+            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).toString()
         val lifeStyleList = listOf<LifeStyle>(
             LifeStyle("Sleeping", "22 hr", "348 kcal"),
             LifeStyle("Running", "2 hr", "1510 kcal")
         )
         val lifeStyleInfo = LifeStyleInfo(1900, 3758, lifeStyleList)
-        val dateString =
-            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).toString()
+        val expected = true
 
-        every { repository.save(dateString, lifeStyleInfo) } returns true
+        every { repository.save(dateString, lifeStyleInfo) } returns expected
 
         val actual = saveUseCase(dateString, lifeStyleInfo)
 
-        assertTrue(actual)
+        assertEquals(actual, expected)
         verify { repository.save(dateString, lifeStyleInfo) }
     }
 }
