@@ -44,17 +44,17 @@ class LoadLifeStyleInfoUseCaseTest {
     }
 
     @Test
-    fun testInvoke_whenRepoHasNoMatchData_returnEmptyInfo() {
+    fun testInvoke_whenRepoHasNoMatchData_returnsEmptyInfo() {
         val dateString =
             SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).toString()
-        val lifeStyleList = emptyList<LifeStyle>()
-        val expected = LifeStyleInfo(0, 0, lifeStyleList)
+        val exception = Exception("Empty")
+        val expected = true
 
-        every { repository.load(dateString) } returns expected
+        every { repository.load(dateString) } throws exception
 
         val actual = loadUseCase(dateString)
 
-        assertEquals(actual, expected)
+        assertEquals(expected, actual.lifeStyleList.isEmpty())
         verify { repository.load(dateString) }
     }
 }
