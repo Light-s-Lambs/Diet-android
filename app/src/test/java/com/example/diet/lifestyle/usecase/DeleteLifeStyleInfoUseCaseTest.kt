@@ -10,6 +10,7 @@ import org.junit.Before
 import org.junit.Test
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.properties.Delegates
 
 class DeleteLifeStyleInfoUseCaseTest {
     lateinit var deleteUseCase: DeleteLifeStyleInfoUseCase
@@ -27,11 +28,17 @@ class DeleteLifeStyleInfoUseCaseTest {
     fun testInvoke_whenRepoHasMatchData_returnTrue() {
         val dateString =
             SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).toString()
+
         val expected = true
 
         every { repository.delete(dateString) } returns expected
 
-        val actual = deleteUseCase(dateString)
+        var actual by Delegates.notNull<Boolean>()
+        deleteUseCase(dateString, onSuccess = {
+            actual = it
+        }, onError = {
+            actual = false
+        })
 
         assertEquals(actual, expected)
         verify { repository.delete(dateString) }
@@ -41,11 +48,38 @@ class DeleteLifeStyleInfoUseCaseTest {
     fun testInvoke_whenRepoHasNoMatchData_returnFalse() {
         val dateString =
             SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).toString()
+
         val expected = false
 
         every { repository.delete(dateString) } returns expected
 
-        val actual = deleteUseCase(dateString)
+        var actual by Delegates.notNull<Boolean>()
+        deleteUseCase(dateString, onSuccess = {
+            actual = it
+        }, onError = {
+            actual = false
+        })
+
+        assertEquals(actual, expected)
+        verify { repository.delete(dateString) }
+    }
+
+    @Test
+    fun testInvoke_whenRepoOccursException_returnFalse() {
+        val dateString =
+            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).toString()
+        val exception = Exception()
+
+        val expected = false
+
+        every { repository.delete(dateString) } throws exception
+
+        var actual by Delegates.notNull<Boolean>()
+        deleteUseCase(dateString, onSuccess = {
+            actual = it
+        }, onError = {
+            actual = false
+        })
 
         assertEquals(actual, expected)
         verify { repository.delete(dateString) }

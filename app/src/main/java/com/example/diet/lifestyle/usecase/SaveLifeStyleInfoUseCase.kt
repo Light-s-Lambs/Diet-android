@@ -6,6 +6,15 @@ import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
 class SaveLifeStyleInfoUseCase(
     private val repository: LifeStyleInfoRepository
 ) {
-    operator fun invoke(date: String, lifeStyleInfo: LifeStyleInfo): Boolean =
-        repository.save(date, lifeStyleInfo)
+    operator fun invoke(
+        date: String, lifeStyleInfo: LifeStyleInfo,
+        onSuccess: (Boolean) -> Unit,
+        onError: (Throwable) -> Unit
+    ) {
+        try{
+            onSuccess(repository.save(date, lifeStyleInfo))
+        }catch (e : Exception){
+            onError(e)
+        }
+    }
 }

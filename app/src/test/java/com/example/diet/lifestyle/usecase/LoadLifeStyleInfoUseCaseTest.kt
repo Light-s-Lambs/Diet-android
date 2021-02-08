@@ -33,28 +33,64 @@ class LoadLifeStyleInfoUseCaseTest {
             LifeStyle("Sleeping", "22 hr", "348 kcal"),
             LifeStyle("Running", "2 hr", "1510 kcal")
         )
-        val expected = LifeStyleInfo(1900, 3758, lifeStyleList)
+        val lifeStyleInfo = LifeStyleInfo(1900, 3758, lifeStyleList)
+        val emptyLifeStyleInfo = LifeStyleInfo(0, 0, emptyList())
+
+        val expected = lifeStyleInfo
 
         every { repository.load(dateString) } returns expected
 
-        val actual = loadUseCase(dateString)
+        lateinit var actual: LifeStyleInfo
+        loadUseCase(dateString, onSuccess = {
+            actual = it
+        }, onError = {
+            actual = emptyLifeStyleInfo
+        })
+
+        assertEquals(actual, expected)
+        verify { repository.load(dateString) }
+    }
+
+
+    @Test
+    fun testInvoke_whenRepoHasNoMatchData_returnsEmptyInfo() {
+        val dateString =
+            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).toString()
+        val emptyLifeStyleInfo = LifeStyleInfo(0, 0, emptyList())
+
+        val expected = emptyLifeStyleInfo
+
+        every { repository.load(dateString) } returns expected
+
+        lateinit var actual: LifeStyleInfo
+        loadUseCase(dateString, onSuccess = {
+            actual = it
+        }, onError = {
+            actual = expected
+        })
 
         assertEquals(actual, expected)
         verify { repository.load(dateString) }
     }
 
     @Test
-    fun testInvoke_whenRepoHasNoMatchData_returnsEmptyInfo() {
+    fun testInvoke_whenRepoOccursError_returnEmptyInfo() {
         val dateString =
             SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).toString()
-        val exception = Exception("Empty")
-        val expected = true
+        val emptyLifeStyleInfo = LifeStyleInfo(0, 0, emptyList())
 
-        every { repository.load(dateString) } throws exception
+        val expected = emptyLifeStyleInfo
 
-        val actual = loadUseCase(dateString)
+        every { repository.load(dateString) } returns expected
 
-        assertEquals(expected, actual.lifeStyleList.isEmpty())
+        lateinit var actual: LifeStyleInfo
+        loadUseCase(dateString, onSuccess = {
+            actual = it
+        }, onError = {
+            actual = expected
+        })
+
+        assertEquals(actual, expected)
         verify { repository.load(dateString) }
     }
 }
