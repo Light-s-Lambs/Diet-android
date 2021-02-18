@@ -1,4 +1,4 @@
-package com.example.diet.mealInfo.domain.model
+package com.example.diet.mealInfo.model
 
 data class MealInfo(
     val date: String,

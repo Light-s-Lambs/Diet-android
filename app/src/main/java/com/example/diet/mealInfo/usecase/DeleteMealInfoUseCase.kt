@@ -1,6 +1,6 @@
-package com.example.diet.mealInfo.domain.usecase
+package com.example.diet.mealInfo.usecase
 
-import com.example.diet.mealInfo.domain.repository.MealInfoRepository
+import com.example.diet.mealInfo.repository.MealInfoRepository
 
 class DeleteMealInfoUseCase(
     private val repository: MealInfoRepository

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diet.R
 import kotlinx.android.synthetic.main.user_meal_list_item.view.*
-import com.example.diet.mealInfo.domain.model.Meal
+import com.example.diet.mealInfo.model.Meal
 
 class MealContentViewHolder(
     parent: ViewGroup
