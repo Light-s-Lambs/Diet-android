@@ -4,15 +4,16 @@ import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.model.LifeStyleInfo
 import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
 import io.mockk.MockKAnnotations
-import io.mockk.every
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
-import io.mockk.verify
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.properties.Delegates
 
 class SaveLifeStyleInfoUseCaseTest {
     lateinit var saveUseCase: SaveLifeStyleInfoUseCase
@@ -38,17 +39,19 @@ class SaveLifeStyleInfoUseCaseTest {
 
         val expected = true
 
-        every { repository.save(dateString, lifeStyleInfo) } returns expected
+        coEvery { repository.save(dateString, lifeStyleInfo) } returns flowOf(expected)
 
-        var actual by Delegates.notNull<Boolean>()
-        saveUseCase(dateString, lifeStyleInfo, onSuccess = {
-            actual = it
-        }, onError = {
-            actual = false
-        })
+        runBlocking {
+            saveUseCase(dateString, lifeStyleInfo, onSuccess = {
+                assertEquals(it, expected)
+            }, onFailed = {
+                assertEquals(it, expected)
+            }, onError = {
+                assertEquals(it, expected)
+            })
+        }
 
-        assertEquals(actual, expected)
-        verify { repository.save(dateString, lifeStyleInfo) }
+        coVerify { repository.save(dateString, lifeStyleInfo) }
     }
 
     @Test
@@ -63,21 +66,23 @@ class SaveLifeStyleInfoUseCaseTest {
 
         val expected = false
 
-        every { repository.save(dateString, lifeStyleInfo) } returns expected
+        coEvery { repository.save(dateString, lifeStyleInfo) } returns flowOf(expected)
 
-        var actual by Delegates.notNull<Boolean>()
-        saveUseCase(dateString, lifeStyleInfo, onSuccess = {
-            actual = it
-        }, onError = {
-            actual = false
-        })
+        runBlocking {
+            saveUseCase(dateString, lifeStyleInfo, onSuccess = {
+                assertEquals(it, expected)
+            }, onFailed = {
+                assertEquals(it, expected)
+            }, onError = {
+                assertEquals(it, expected)
+            })
+        }
 
-        assertEquals(actual, expected)
-        verify { repository.save(dateString, lifeStyleInfo) }
+        coVerify { repository.save(dateString, lifeStyleInfo) }
     }
 
     @Test
-    fun testInvoke_whenOccursError_returnFalse() {
+    fun testInvoke_whenOccursError_raiseException() {
         val dateString =
             SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).toString()
         val lifeStyleList = listOf<LifeStyle>(
@@ -87,18 +92,20 @@ class SaveLifeStyleInfoUseCaseTest {
         val lifeStyleInfo = LifeStyleInfo(1900, 3758, lifeStyleList)
         val exception = Exception()
 
-        val expected = false
+        val expected = exception
 
-        every { repository.save(dateString, lifeStyleInfo) } throws exception
+        coEvery { repository.save(dateString, lifeStyleInfo) } throws expected
 
-        var actual by Delegates.notNull<Boolean>()
-        saveUseCase(dateString, lifeStyleInfo, onSuccess = {
-            actual = it
-        }, onError = {
-            actual = false
-        })
+        runBlocking {
+            saveUseCase(dateString, lifeStyleInfo, onSuccess = {
+                assertEquals(it, expected)
+            }, onFailed = {
+                assertEquals(it, expected)
+            }, onError = {
+                assertEquals(it, expected)
+            })
+        }
 
-        assertEquals(actual, expected)
-        verify { repository.save(dateString, lifeStyleInfo) }
+        coVerify { repository.save(dateString, lifeStyleInfo) }
     }
 }

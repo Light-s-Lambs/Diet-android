@@ -2,15 +2,16 @@ package com.example.diet.lifestyle.usecase
 
 import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
 import io.mockk.MockKAnnotations
-import io.mockk.every
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
-import io.mockk.verify
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.properties.Delegates
 
 class DeleteLifeStyleInfoUseCaseTest {
     lateinit var deleteUseCase: DeleteLifeStyleInfoUseCase
@@ -31,17 +32,19 @@ class DeleteLifeStyleInfoUseCaseTest {
 
         val expected = true
 
-        every { repository.delete(dateString) } returns expected
+        coEvery { repository.delete(dateString) } returns flowOf(expected)
 
-        var actual by Delegates.notNull<Boolean>()
-        deleteUseCase(dateString, onSuccess = {
-            actual = it
-        }, onError = {
-            actual = false
-        })
+        runBlocking {
+            deleteUseCase(dateString, onSuccess = {
+                assertEquals(it, expected)
+            }, onFailed = {
+                assertEquals(it, expected)
+            }, onError = {
+                assertEquals(it, expected)
+            })
+        }
 
-        assertEquals(actual, expected)
-        verify { repository.delete(dateString) }
+        coVerify { repository.delete(dateString) }
     }
 
     @Test
@@ -51,37 +54,42 @@ class DeleteLifeStyleInfoUseCaseTest {
 
         val expected = false
 
-        every { repository.delete(dateString) } returns expected
+        coEvery { repository.delete(dateString) } returns flowOf(expected)
 
-        var actual by Delegates.notNull<Boolean>()
-        deleteUseCase(dateString, onSuccess = {
-            actual = it
-        }, onError = {
-            actual = false
-        })
+        runBlocking {
+            deleteUseCase(dateString, onSuccess = {
+                assertEquals(it, expected)
+            }, onFailed = {
+                assertEquals(it, expected)
+            }, onError = {
+                assertEquals(it, expected)
+            })
+        }
 
-        assertEquals(actual, expected)
-        verify { repository.delete(dateString) }
+        coVerify { repository.delete(dateString) }
     }
 
+
     @Test
-    fun testInvoke_whenRepoOccursException_returnFalse() {
+    fun testInvoke_whenRepoOccursException_raiseException() {
         val dateString =
             SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).toString()
         val exception = Exception()
 
-        val expected = false
+        val expected = exception
 
-        every { repository.delete(dateString) } throws exception
+        coEvery { repository.delete(dateString) } throws exception
 
-        var actual by Delegates.notNull<Boolean>()
-        deleteUseCase(dateString, onSuccess = {
-            actual = it
-        }, onError = {
-            actual = false
-        })
+        runBlocking {
+            deleteUseCase(dateString, onSuccess = {
+                assertEquals(it, expected)
+            }, onFailed = {
+                assertEquals(it, expected)
+            }, onError = {
+                assertEquals(it, expected)
+            })
+        }
 
-        assertEquals(actual, expected)
-        verify { repository.delete(dateString) }
+        coVerify { repository.delete(dateString) }
     }
 }

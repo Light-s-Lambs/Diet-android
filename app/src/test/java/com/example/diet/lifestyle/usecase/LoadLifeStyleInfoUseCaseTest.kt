@@ -4,9 +4,11 @@ import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.model.LifeStyleInfo
 import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
 import io.mockk.MockKAnnotations
-import io.mockk.every
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
-import io.mockk.verify
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -34,21 +36,22 @@ class LoadLifeStyleInfoUseCaseTest {
             LifeStyle("Running", "2 hr", "1510 kcal")
         )
         val lifeStyleInfo = LifeStyleInfo(1900, 3758, lifeStyleList)
-        val emptyLifeStyleInfo = LifeStyleInfo(0, 0, emptyList())
 
         val expected = lifeStyleInfo
 
-        every { repository.load(dateString) } returns expected
+        coEvery { repository.load(dateString) } returns flowOf(expected)
 
-        lateinit var actual: LifeStyleInfo
-        loadUseCase(dateString, onSuccess = {
-            actual = it
-        }, onError = {
-            actual = emptyLifeStyleInfo
-        })
+        runBlocking {
+            loadUseCase(dateString, onSuccess = {
+                assertEquals(it, expected)
+            }, onFailed = {
+                assertEquals(it, expected)
+            }, onError = {
+                assertEquals(it, expected)
+            })
+        }
 
-        assertEquals(actual, expected)
-        verify { repository.load(dateString) }
+        coVerify { repository.load(dateString) }
     }
 
 
@@ -60,37 +63,41 @@ class LoadLifeStyleInfoUseCaseTest {
 
         val expected = emptyLifeStyleInfo
 
-        every { repository.load(dateString) } returns expected
+        coEvery { repository.load(dateString) } returns flowOf(expected)
 
-        lateinit var actual: LifeStyleInfo
-        loadUseCase(dateString, onSuccess = {
-            actual = it
-        }, onError = {
-            actual = expected
-        })
+        runBlocking {
+            loadUseCase(dateString, onSuccess = {
+                assertEquals(it, expected)
+            }, onFailed = {
+                assertEquals(it, expected)
+            }, onError = {
+                assertEquals(it, expected)
+            })
+        }
 
-        assertEquals(actual, expected)
-        verify { repository.load(dateString) }
+        coVerify { repository.load(dateString) }
     }
 
     @Test
-    fun testInvoke_whenRepoOccursError_returnEmptyInfo() {
+    fun testInvoke_whenRepoOccursError_raiseException() {
         val dateString =
             SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).toString()
-        val emptyLifeStyleInfo = LifeStyleInfo(0, 0, emptyList())
+        val exception = Exception()
 
-        val expected = emptyLifeStyleInfo
+        val expected = exception
 
-        every { repository.load(dateString) } returns expected
+        coEvery { repository.load(dateString) } throws expected
 
-        lateinit var actual: LifeStyleInfo
-        loadUseCase(dateString, onSuccess = {
-            actual = it
-        }, onError = {
-            actual = expected
-        })
+        runBlocking {
+            loadUseCase(dateString, onSuccess = {
+                assertEquals(it, expected)
+            }, onFailed = {
+                assertEquals(it, expected)
+            }, onError = {
+                assertEquals(it, expected)
+            })
+        }
 
-        assertEquals(actual, expected)
-        verify { repository.load(dateString) }
+        coVerify { repository.load(dateString) }
     }
 }
