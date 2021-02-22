@@ -9,10 +9,11 @@ import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
+import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import java.text.SimpleDateFormat
 import java.util.*
 
 class SaveLifeStyleInfoUseCaseTest {
@@ -29,8 +30,8 @@ class SaveLifeStyleInfoUseCaseTest {
 
     @Test
     fun testInvoke_whenSaveDataSuccess_returnTrue() {
-        val dateString =
-            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).toString()
+        val dateString = DateTime.now()
+            .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
         val lifeStyleList = listOf<LifeStyle>(
             LifeStyle("Sleeping", "22 hr", "348 kcal"),
             LifeStyle("Running", "2 hr", "1510 kcal")
@@ -56,8 +57,8 @@ class SaveLifeStyleInfoUseCaseTest {
 
     @Test
     fun testInvoke_whenSaveDataFail_returnFalse() {
-        val dateString =
-            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).toString()
+        val dateString = DateTime.now()
+            .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
         val lifeStyleList = listOf<LifeStyle>(
             LifeStyle("Sleeping", "22 hr", "348 kcal"),
             LifeStyle("Running", "2 hr", "1510 kcal")
@@ -83,8 +84,8 @@ class SaveLifeStyleInfoUseCaseTest {
 
     @Test
     fun testInvoke_whenOccursError_raiseException() {
-        val dateString =
-            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).toString()
+        val dateString = DateTime.now()
+            .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
         val lifeStyleList = listOf<LifeStyle>(
             LifeStyle("Sleeping", "22 hr", "348 kcal"),
             LifeStyle("Running", "2 hr", "1510 kcal")

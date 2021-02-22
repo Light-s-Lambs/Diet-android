@@ -7,11 +7,13 @@ import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
+import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import java.text.SimpleDateFormat
 import java.util.*
+
 
 class DeleteLifeStyleInfoUseCaseTest {
     lateinit var deleteUseCase: DeleteLifeStyleInfoUseCase
@@ -27,8 +29,8 @@ class DeleteLifeStyleInfoUseCaseTest {
 
     @Test
     fun testInvoke_whenRepoHasMatchData_returnTrue() {
-        val dateString =
-            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).toString()
+        val dateString = DateTime.now()
+            .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
 
         val expected = true
 
@@ -49,8 +51,8 @@ class DeleteLifeStyleInfoUseCaseTest {
 
     @Test
     fun testInvoke_whenRepoHasNoMatchData_returnFalse() {
-        val dateString =
-            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).toString()
+        val dateString = DateTime.now()
+            .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
 
         val expected = false
 
@@ -72,8 +74,9 @@ class DeleteLifeStyleInfoUseCaseTest {
 
     @Test
     fun testInvoke_whenRepoOccursException_raiseException() {
-        val dateString =
-            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).toString()
+        val dateString = DateTime.now()
+            .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
+
         val exception = Exception()
 
         val expected = exception
