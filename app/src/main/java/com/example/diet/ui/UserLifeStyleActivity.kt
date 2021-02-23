@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diet.R
 import com.example.diet.lifestyle.model.LifeStyle
 import kotlinx.android.synthetic.main.activity_user_life_style.*
-import java.text.SimpleDateFormat
+import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 import java.util.*
 
 class UserLifeStyleActivity : AppCompatActivity() {
@@ -21,8 +22,8 @@ class UserLifeStyleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_life_style)
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val currentDate = dateFormat.format(Date())
+        val currentDate = DateTime.now()
+            .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
         dateTextView.text = currentDate.toString()
 
         activityMetabolismTextView.text = "0"
