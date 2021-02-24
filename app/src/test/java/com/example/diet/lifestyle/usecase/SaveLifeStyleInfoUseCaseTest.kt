@@ -7,7 +7,8 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
@@ -40,16 +41,17 @@ class SaveLifeStyleInfoUseCaseTest {
 
         val expected = true
 
-        coEvery { repository.save(dateString, lifeStyleInfo) } returns flowOf(expected)
+        coEvery { repository.save(dateString, lifeStyleInfo) } returns expected
 
         runBlocking {
-            saveUseCase(dateString, lifeStyleInfo, onSuccess = {
-                assertEquals(it, expected)
-            }, onFailed = {
-                assertEquals(it, expected)
-            }, onError = {
-                assertEquals(it, expected)
-            })
+            val saveFlow: Flow<Boolean> = saveUseCase(dateString, lifeStyleInfo)
+            try {
+                saveFlow.collect {
+                    assertEquals(it, expected)
+                }
+            } catch (e: Throwable) {
+                assertEquals(e, expected)
+            }
         }
 
         coVerify { repository.save(dateString, lifeStyleInfo) }
@@ -67,16 +69,17 @@ class SaveLifeStyleInfoUseCaseTest {
 
         val expected = false
 
-        coEvery { repository.save(dateString, lifeStyleInfo) } returns flowOf(expected)
+        coEvery { repository.save(dateString, lifeStyleInfo) } returns expected
 
         runBlocking {
-            saveUseCase(dateString, lifeStyleInfo, onSuccess = {
-                assertEquals(it, expected)
-            }, onFailed = {
-                assertEquals(it, expected)
-            }, onError = {
-                assertEquals(it, expected)
-            })
+            val saveFlow: Flow<Boolean> = saveUseCase(dateString, lifeStyleInfo)
+            try {
+                saveFlow.collect {
+                    assertEquals(it, expected)
+                }
+            } catch (e: Throwable) {
+                assertEquals(e, expected)
+            }
         }
 
         coVerify { repository.save(dateString, lifeStyleInfo) }
@@ -98,13 +101,14 @@ class SaveLifeStyleInfoUseCaseTest {
         coEvery { repository.save(dateString, lifeStyleInfo) } throws expected
 
         runBlocking {
-            saveUseCase(dateString, lifeStyleInfo, onSuccess = {
-                assertEquals(it, expected)
-            }, onFailed = {
-                assertEquals(it, expected)
-            }, onError = {
-                assertEquals(it, expected)
-            })
+            val saveFlow: Flow<Boolean> = saveUseCase(dateString, lifeStyleInfo)
+            try {
+                saveFlow.collect {
+                    assertEquals(it, expected)
+                }
+            } catch (e: Throwable) {
+                assertEquals(e, expected)
+            }
         }
 
         coVerify { repository.save(dateString, lifeStyleInfo) }

@@ -2,31 +2,19 @@ package com.example.diet.lifestyle.usecase
 
 import com.example.diet.lifestyle.model.LifeStyleInfo
 import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 class SaveLifeStyleInfoUseCase(
     private val repository: LifeStyleInfoRepository
 ) {
     operator fun invoke(
-        date: String, lifeStyleInfo: LifeStyleInfo,
-        onSuccess: (Boolean) -> Unit,
-        onFailed: (Boolean) -> Unit,
-        onError: (Throwable) -> Unit
-    ) {
-        CoroutineScope(Dispatchers.Default).launch {
-            try {
-                repository.save(date, lifeStyleInfo).collect {
-                    when (it) {
-                        true -> onSuccess(it)
-                        false -> onFailed(it)
-                    }
-                }
-            } catch (e: Exception) {
-                onError(e)
-            }
+        date: String,
+        lifeStyleInfo: LifeStyleInfo
+    ): Flow<Boolean> {
+        return flow {
+            val result = repository.save(date, lifeStyleInfo)
+            emit(result)
         }
     }
 }

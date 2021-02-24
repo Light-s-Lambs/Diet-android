@@ -5,7 +5,8 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
@@ -34,16 +35,17 @@ class DeleteLifeStyleInfoUseCaseTest {
 
         val expected = true
 
-        coEvery { repository.delete(dateString) } returns flowOf(expected)
+        coEvery { repository.delete(dateString) } returns expected
 
         runBlocking {
-            deleteUseCase(dateString, onSuccess = {
-                assertEquals(it, expected)
-            }, onFailed = {
-                assertEquals(it, expected)
-            }, onError = {
-                assertEquals(it, expected)
-            })
+            val deleteFlow: Flow<Boolean> = deleteUseCase(dateString)
+            try {
+                deleteFlow.collect {
+                    assertEquals(it, expected)
+                }
+            } catch (e: Throwable) {
+                assertEquals(e, expected)
+            }
         }
 
         coVerify { repository.delete(dateString) }
@@ -56,16 +58,17 @@ class DeleteLifeStyleInfoUseCaseTest {
 
         val expected = false
 
-        coEvery { repository.delete(dateString) } returns flowOf(expected)
+        coEvery { repository.delete(dateString) } returns expected
 
         runBlocking {
-            deleteUseCase(dateString, onSuccess = {
-                assertEquals(it, expected)
-            }, onFailed = {
-                assertEquals(it, expected)
-            }, onError = {
-                assertEquals(it, expected)
-            })
+            val deleteFlow: Flow<Boolean> = deleteUseCase(dateString)
+            try {
+                deleteFlow.collect {
+                    assertEquals(it, expected)
+                }
+            } catch (e: Throwable) {
+                assertEquals(e, expected)
+            }
         }
 
         coVerify { repository.delete(dateString) }
@@ -84,13 +87,14 @@ class DeleteLifeStyleInfoUseCaseTest {
         coEvery { repository.delete(dateString) } throws exception
 
         runBlocking {
-            deleteUseCase(dateString, onSuccess = {
-                assertEquals(it, expected)
-            }, onFailed = {
-                assertEquals(it, expected)
-            }, onError = {
-                assertEquals(it, expected)
-            })
+            val deleteFlow: Flow<Boolean> = deleteUseCase(dateString)
+            try {
+                deleteFlow.collect {
+                    assertEquals(it, expected)
+                }
+            } catch (e: Throwable) {
+                assertEquals(e, expected)
+            }
         }
 
         coVerify { repository.delete(dateString) }

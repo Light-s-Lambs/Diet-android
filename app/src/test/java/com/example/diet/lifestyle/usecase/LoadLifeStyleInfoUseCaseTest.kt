@@ -7,7 +7,8 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
@@ -40,16 +41,17 @@ class LoadLifeStyleInfoUseCaseTest {
 
         val expected = lifeStyleInfo
 
-        coEvery { repository.load(dateString) } returns flowOf(expected)
+        coEvery { repository.load(dateString) } returns expected
 
         runBlocking {
-            loadUseCase(dateString, onSuccess = {
-                assertEquals(it, expected)
-            }, onFailed = {
-                assertEquals(it, expected)
-            }, onError = {
-                assertEquals(it, expected)
-            })
+            val deleteFlow: Flow<LifeStyleInfo> = loadUseCase(dateString)
+            try {
+                deleteFlow.collect {
+                    assertEquals(it, expected)
+                }
+            } catch (e: Throwable) {
+                assertEquals(e, expected)
+            }
         }
 
         coVerify { repository.load(dateString) }
@@ -64,16 +66,17 @@ class LoadLifeStyleInfoUseCaseTest {
 
         val expected = emptyLifeStyleInfo
 
-        coEvery { repository.load(dateString) } returns flowOf(expected)
+        coEvery { repository.load(dateString) } returns expected
 
         runBlocking {
-            loadUseCase(dateString, onSuccess = {
-                assertEquals(it, expected)
-            }, onFailed = {
-                assertEquals(it, expected)
-            }, onError = {
-                assertEquals(it, expected)
-            })
+            val deleteFlow: Flow<LifeStyleInfo> = loadUseCase(dateString)
+            try {
+                deleteFlow.collect {
+                    assertEquals(it, expected)
+                }
+            } catch (e: Throwable) {
+                assertEquals(e, expected)
+            }
         }
 
         coVerify { repository.load(dateString) }
@@ -90,13 +93,14 @@ class LoadLifeStyleInfoUseCaseTest {
         coEvery { repository.load(dateString) } throws expected
 
         runBlocking {
-            loadUseCase(dateString, onSuccess = {
-                assertEquals(it, expected)
-            }, onFailed = {
-                assertEquals(it, expected)
-            }, onError = {
-                assertEquals(it, expected)
-            })
+            val deleteFlow: Flow<LifeStyleInfo> = loadUseCase(dateString)
+            try {
+                deleteFlow.collect {
+                    assertEquals(it, expected)
+                }
+            } catch (e: Throwable) {
+                assertEquals(e, expected)
+            }
         }
 
         coVerify { repository.load(dateString) }
