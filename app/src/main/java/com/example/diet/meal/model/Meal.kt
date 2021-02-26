@@ -1,6 +1,8 @@
 package com.example.diet.meal.model
 
-enum class MealType{
+import org.joda.time.DateTime
+
+enum class MealType {
     Breakfast,
     Lunch,
     Dinner,
@@ -9,7 +11,7 @@ enum class MealType{
     etc
 }
 
-enum class MealName{
+enum class MealName {
     Toast,
     Noodle,
     Steak,
@@ -20,8 +22,8 @@ enum class MealName{
 }
 
 data class Meal(
-    val date: String,
-    val mealType : MealType,
+    val date: DateTime,
+    val mealType: MealType,
     val menuName: MealName,
     val calorie: String
 )
