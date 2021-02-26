@@ -13,8 +13,8 @@ class MealContentViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.user_meal_list_item, parent, false)
 ) {
     fun bind(meal: Meal) {
-        itemView.mealTypeTextView.text = meal.mealType
-        itemView.mealMenuTextView.text = meal.menu
+        itemView.mealTypeTextView.text = meal.mealType.toString()
+        itemView.mealMenuTextView.text = meal.menuName.toString()
         itemView.mealCalorieTextView.text = meal.calorie
     }
 }
