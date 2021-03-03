@@ -7,11 +7,11 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
+import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -30,7 +30,7 @@ class SaveLifeStyleInfoUseCaseTest {
     }
 
     @Test
-    fun testInvoke_whenSaveDataSuccess_returnTrue() {
+    fun testInvoke_whenSaveDataSuccess() {
         val dateString = DateTime.now()
             .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
         val lifeStyleList = listOf<LifeStyle>(
@@ -39,18 +39,11 @@ class SaveLifeStyleInfoUseCaseTest {
         )
         val lifeStyleInfo = LifeStyleInfo(1900, 3758, lifeStyleList)
 
-        val expected = true
-
-        coEvery { repository.save(dateString, lifeStyleInfo) } returns expected
+        coEvery { repository.save(dateString, lifeStyleInfo) } returns flowOf(Unit)
 
         runBlocking {
-            val saveFlow: Flow<Boolean> = saveUseCase(dateString, lifeStyleInfo)
-            try {
-                saveFlow.collect {
-                    assertEquals(it, expected)
-                }
-            } catch (e: Throwable) {
-                assertEquals(e, expected)
+            kotlin.runCatching {
+                saveUseCase(dateString, lifeStyleInfo)
             }
         }
 
@@ -58,7 +51,7 @@ class SaveLifeStyleInfoUseCaseTest {
     }
 
     @Test
-    fun testInvoke_whenSaveDataFail_returnFalse() {
+    fun testInvoke_whenSaveFailedButRepoHasData_raiseFailedButFoundDataException() {
         val dateString = DateTime.now()
             .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
         val lifeStyleList = listOf<LifeStyle>(
@@ -67,47 +60,52 @@ class SaveLifeStyleInfoUseCaseTest {
         )
         val lifeStyleInfo = LifeStyleInfo(1900, 3758, lifeStyleList)
 
-        val expected = false
-
-        coEvery { repository.save(dateString, lifeStyleInfo) } returns expected
-
-        runBlocking {
-            val saveFlow: Flow<Boolean> = saveUseCase(dateString, lifeStyleInfo)
-            try {
-                saveFlow.collect {
-                    assertEquals(it, expected)
-                }
-            } catch (e: Throwable) {
-                assertEquals(e, expected)
-            }
-        }
-
-        coVerify { repository.save(dateString, lifeStyleInfo) }
-    }
-
-    @Test
-    fun testInvoke_whenOccursError_raiseException() {
-        val dateString = DateTime.now()
-            .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
-        val lifeStyleList = listOf<LifeStyle>(
-            LifeStyle("Sleeping", "22 hr", "348 kcal"),
-            LifeStyle("Running", "2 hr", "1510 kcal")
-        )
-        val lifeStyleInfo = LifeStyleInfo(1900, 3758, lifeStyleList)
-        val exception = Exception()
-
-        val expected = exception
+        val expected = FailedButFoundDataException("Save Failed. But Found Data")
 
         coEvery { repository.save(dateString, lifeStyleInfo) } throws expected
 
         runBlocking {
-            val saveFlow: Flow<Boolean> = saveUseCase(dateString, lifeStyleInfo)
-            try {
-                saveFlow.collect {
-                    assertEquals(it, expected)
+            kotlin.runCatching {
+                saveUseCase(dateString, lifeStyleInfo)
+                Assert.fail()
+            }.onFailure {
+                when (it) {
+                    is FailedButFoundDataException -> {
+                        assertEquals(expected, it)
+                        throw it
+                    }
                 }
-            } catch (e: Throwable) {
-                assertEquals(e, expected)
+            }
+        }
+
+        coVerify { repository.save(dateString, lifeStyleInfo) }
+    }
+
+    @Test
+    fun testInvoke_RepoHasNoMatchData_raiseNoMatchDataException() {
+        val dateString = DateTime.now()
+            .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
+        val lifeStyleList = listOf<LifeStyle>(
+            LifeStyle("Sleeping", "22 hr", "348 kcal"),
+            LifeStyle("Running", "2 hr", "1510 kcal")
+        )
+        val lifeStyleInfo = LifeStyleInfo(1900, 3758, lifeStyleList)
+
+        val expected = NoMatchDataException("Save Failed. There is No Match Date")
+
+        coEvery { repository.save(dateString, lifeStyleInfo) } throws expected
+
+        runBlocking {
+            kotlin.runCatching {
+                saveUseCase(dateString, lifeStyleInfo)
+                Assert.fail()
+            }.onFailure {
+                when (it) {
+                    is NoMatchDataException -> {
+                        assertEquals(expected, it)
+                        throw it
+                    }
+                }
             }
         }
 

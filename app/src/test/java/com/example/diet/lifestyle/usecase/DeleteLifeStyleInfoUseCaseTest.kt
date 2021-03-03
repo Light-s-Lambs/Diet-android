@@ -5,11 +5,11 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
+import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -29,22 +29,39 @@ class DeleteLifeStyleInfoUseCaseTest {
     }
 
     @Test
-    fun testInvoke_whenRepoHasMatchData_returnTrue() {
+    fun testInvoke_whenDeleteDataSuccess() {
         val dateString = DateTime.now()
             .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
 
-        val expected = true
-
-        coEvery { repository.delete(dateString) } returns expected
+        coEvery { repository.delete(dateString) } returns flowOf(Unit)
 
         runBlocking {
-            val deleteFlow: Flow<Boolean> = deleteUseCase(dateString)
-            try {
-                deleteFlow.collect {
-                    assertEquals(it, expected)
+            deleteUseCase(dateString)
+        }
+
+        coVerify { repository.delete(dateString) }
+    }
+
+    @Test
+    fun testInvoke_whenDeleteFailedButRepoHasData_raiseFailedButFoundDataException() {
+        val dateString = DateTime.now()
+            .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
+
+        val expected = FailedButFoundDataException("Delete Failed. But Found Data")
+
+        coEvery { repository.delete(dateString) } throws expected
+
+        runBlocking {
+            kotlin.runCatching {
+                deleteUseCase(dateString)
+                Assert.fail()
+            }.onFailure {
+                when (it) {
+                    is FailedButFoundDataException -> {
+                        assertEquals(expected, it)
+                        throw it
+                    }
                 }
-            } catch (e: Throwable) {
-                assertEquals(e, expected)
             }
         }
 
@@ -52,48 +69,51 @@ class DeleteLifeStyleInfoUseCaseTest {
     }
 
     @Test
-    fun testInvoke_whenRepoHasNoMatchData_returnFalse() {
+    fun testInvoke_whenRepoHasNoMatchData_raiseNoMatchDataException() {
         val dateString = DateTime.now()
             .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
 
-        val expected = false
+        val expected = NoMatchDataException("Delete Failed. There is No Match Date")
 
-        coEvery { repository.delete(dateString) } returns expected
+        coEvery { repository.delete(dateString) } throws expected
 
         runBlocking {
-            val deleteFlow: Flow<Boolean> = deleteUseCase(dateString)
-            try {
-                deleteFlow.collect {
-                    assertEquals(it, expected)
+            kotlin.runCatching {
+                deleteUseCase(dateString)
+                Assert.fail()
+            }.onFailure {
+                when (it) {
+                    is NoMatchDataException -> {
+                        assertEquals(expected, it)
+                        throw it
+                    }
                 }
-            } catch (e: Throwable) {
-                assertEquals(e, expected)
             }
         }
 
         coVerify { repository.delete(dateString) }
     }
 
-
     @Test
-    fun testInvoke_whenRepoOccursException_raiseException() {
+    fun testInvoke_whenUnexpectedErrorOccurs_raiseUnexpectedBehaviorException() {
         val dateString = DateTime.now()
             .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
 
-        val exception = Exception()
+        val expected = UnexpectedBehaviorException("Load Failed. Something weired happened.")
 
-        val expected = exception
-
-        coEvery { repository.delete(dateString) } throws exception
+        coEvery { repository.delete(dateString) } throws expected
 
         runBlocking {
-            val deleteFlow: Flow<Boolean> = deleteUseCase(dateString)
-            try {
-                deleteFlow.collect {
-                    assertEquals(it, expected)
+            kotlin.runCatching {
+                deleteUseCase(dateString)
+                Assert.fail()
+            }.onFailure {
+                when (it) {
+                    is UnexpectedBehaviorException -> {
+                        assertEquals(expected, it)
+                        throw it
+                    }
                 }
-            } catch (e: Throwable) {
-                assertEquals(e, expected)
             }
         }
 

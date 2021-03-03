@@ -7,11 +7,11 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
+import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -33,7 +33,7 @@ class LoadLifeStyleInfoUseCaseTest {
     fun testInvoke_whenRepoHasMatchData_returnMatchInfo() {
         val dateString = DateTime.now()
             .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
-        val lifeStyleList = listOf<LifeStyle>(
+        val lifeStyleList = listOf(
             LifeStyle("Sleeping", "22 hr", "348 kcal"),
             LifeStyle("Running", "2 hr", "1510 kcal")
         )
@@ -41,65 +41,96 @@ class LoadLifeStyleInfoUseCaseTest {
 
         val expected = lifeStyleInfo
 
-        coEvery { repository.load(dateString) } returns expected
+        coEvery { repository.load(dateString) } returns flowOf(lifeStyleInfo)
 
         runBlocking {
-            val deleteFlow: Flow<LifeStyleInfo> = loadUseCase(dateString)
-            try {
-                deleteFlow.collect {
-                    assertEquals(it, expected)
-                }
-            } catch (e: Throwable) {
-                assertEquals(e, expected)
+            kotlin.runCatching {
+                loadUseCase(dateString, onSuccess = {
+                    assertEquals(expected, it)
+                })
             }
         }
-
-        coVerify { repository.load(dateString) }
-    }
-
-
-    @Test
-    fun testInvoke_whenRepoHasNoMatchData_returnsEmptyInfo() {
-        val dateString = DateTime.now()
-            .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
-        val emptyLifeStyleInfo = LifeStyleInfo(0, 0, emptyList())
-
-        val expected = emptyLifeStyleInfo
-
-        coEvery { repository.load(dateString) } returns expected
-
-        runBlocking {
-            val deleteFlow: Flow<LifeStyleInfo> = loadUseCase(dateString)
-            try {
-                deleteFlow.collect {
-                    assertEquals(it, expected)
-                }
-            } catch (e: Throwable) {
-                assertEquals(e, expected)
-            }
-        }
-
         coVerify { repository.load(dateString) }
     }
 
     @Test
-    fun testInvoke_whenRepoOccursError_raiseException() {
+    fun testInvoke_whenLoadFailedButRepoHasData_raiseFailedButFoundDataException() {
         val dateString = DateTime.now()
             .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
-        val exception = Exception()
 
-        val expected = exception
+        val expected = FailedButFoundDataException("Load Failed. But Found Data")
 
         coEvery { repository.load(dateString) } throws expected
 
         runBlocking {
-            val deleteFlow: Flow<LifeStyleInfo> = loadUseCase(dateString)
-            try {
-                deleteFlow.collect {
-                    assertEquals(it, expected)
+            kotlin.runCatching {
+                loadUseCase(dateString, onSuccess = {
+                    Assert.fail()
+                })
+                Assert.fail()
+            }.onFailure {
+                when (it) {
+                    is FailedButFoundDataException -> {
+                        assertEquals(expected, it)
+                        throw it
+                    }
                 }
-            } catch (e: Throwable) {
-                assertEquals(e, expected)
+            }
+        }
+
+        coVerify { repository.load(dateString) }
+    }
+
+    @Test
+    fun testInvoke_whenRepoHasNoMatchData_raiseNoMatchDataException() {
+        val dateString = DateTime.now()
+            .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
+
+        val expected = NoMatchDataException("Load Failed. There is No Match Data")
+
+        coEvery { repository.load(dateString) } throws expected
+
+        runBlocking {
+            kotlin.runCatching {
+                loadUseCase(dateString, onSuccess = {
+                    Assert.fail()
+                })
+                Assert.fail()
+            }.onFailure {
+                when (it) {
+                    is NoMatchDataException -> {
+                        assertEquals(expected, it)
+                        throw it
+                    }
+                }
+            }
+        }
+
+        coVerify { repository.load(dateString) }
+    }
+
+    @Test
+    fun testInvoke_whenUnexpectedErrorOccurs_raiseUnexpectedBehaviorException() {
+        val dateString = DateTime.now()
+            .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
+
+        val expected = UnexpectedBehaviorException("Load Failed. Something weired happened.")
+
+        coEvery { repository.load(dateString) } throws expected
+
+        runBlocking {
+            kotlin.runCatching {
+                loadUseCase(dateString, onSuccess = {
+                    Assert.fail()
+                })
+                Assert.fail()
+            }.onFailure {
+                when (it) {
+                    is UnexpectedBehaviorException -> {
+                        assertEquals(expected, it)
+                        throw it
+                    }
+                }
             }
         }
 

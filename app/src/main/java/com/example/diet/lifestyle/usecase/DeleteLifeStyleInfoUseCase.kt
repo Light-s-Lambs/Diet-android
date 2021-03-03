@@ -1,18 +1,23 @@
 package com.example.diet.lifestyle.usecase
 
 import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class DeleteLifeStyleInfoUseCase(
     private val repository: LifeStyleInfoRepository
 ) {
     operator fun invoke(
-        date: String,
-    ): Flow<Boolean> {
-        return flow {
-            val result = repository.delete(date)
-            emit(result)
+        date: String
+    ) {
+        CoroutineScope(Dispatchers.Default).launch {
+            kotlin.runCatching {
+                repository.delete(date).collect()
+            }.onFailure {
+                throw it
+            }
         }
     }
 }
