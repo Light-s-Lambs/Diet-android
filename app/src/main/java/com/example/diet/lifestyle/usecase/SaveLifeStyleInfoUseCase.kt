@@ -2,6 +2,7 @@ package com.example.diet.lifestyle.usecase
 
 import com.example.diet.lifestyle.model.LifeStyleInfo
 import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
+import com.example.diet.lifestyle.usecase.exception.DataNoExistException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,9 +16,14 @@ class SaveLifeStyleInfoUseCase(
     ) {
         CoroutineScope(Dispatchers.Default).launch {
             kotlin.runCatching {
-                repository.save(date, lifeStyleInfo)
+                repository.update(date,lifeStyleInfo)
             }.onFailure {
-                throw it
+                when(it){
+                    is DataNoExistException ->{
+                        repository.create(date,lifeStyleInfo)
+                    }
+                    else -> throw it
+                }
             }
         }
     }
