@@ -3,6 +3,9 @@ package com.example.diet.lifestyle.usecase
 import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.model.LifeStyleInfo
 import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
+import com.example.diet.lifestyle.usecase.exception.FailedButFoundDataException
+import com.example.diet.lifestyle.usecase.exception.NoMatchDataException
+import com.example.diet.lifestyle.usecase.exception.UnexpectedBehaviorException
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify

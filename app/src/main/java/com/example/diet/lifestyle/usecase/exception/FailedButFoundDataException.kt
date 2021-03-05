@@ -1,4 +1,4 @@
-package com.example.diet.lifestyle.usecase
+package com.example.diet.lifestyle.usecase.exception
 
 import java.lang.Exception
 
