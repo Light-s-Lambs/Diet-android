@@ -3,8 +3,8 @@ package com.example.diet.lifestyle.usecase
 import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.model.LifeStyleInfo
 import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
-import com.example.diet.lifestyle.usecase.exception.FailedButFoundDataException
 import com.example.diet.lifestyle.usecase.exception.NoMatchDataException
+import com.example.diet.lifestyle.usecase.exception.RepositoryErrorException
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -53,7 +53,7 @@ class SaveLifeStyleInfoUseCaseTest {
     }
 
     @Test
-    fun testInvoke_whenSaveFailedButRepoHasData_raiseFailedButFoundDataException() {
+    fun testInvoke_whenSaveFailedButRepoHasData_raiseRepositoryErrorException() {
         val dateString = DateTime.now()
             .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
         val lifeStyleList = listOf<LifeStyle>(
@@ -62,7 +62,7 @@ class SaveLifeStyleInfoUseCaseTest {
         )
         val lifeStyleInfo = LifeStyleInfo(1900, 3758, lifeStyleList)
 
-        val expected = FailedButFoundDataException("Save Failed. But Found Data")
+        val expected = RepositoryErrorException("Save Failed. But Found Data. Check Repository.")
 
         coEvery { repository.save(dateString, lifeStyleInfo) } throws expected
 
@@ -72,7 +72,7 @@ class SaveLifeStyleInfoUseCaseTest {
                 Assert.fail()
             }.onFailure {
                 when (it) {
-                    is FailedButFoundDataException -> {
+                    is RepositoryErrorException -> {
                         assertEquals(expected, it)
                         throw it
                     }

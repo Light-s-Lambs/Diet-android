@@ -3,8 +3,8 @@ package com.example.diet.lifestyle.usecase
 import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.model.LifeStyleInfo
 import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
-import com.example.diet.lifestyle.usecase.exception.FailedButFoundDataException
 import com.example.diet.lifestyle.usecase.exception.NoMatchDataException
+import com.example.diet.lifestyle.usecase.exception.RepositoryErrorException
 import com.example.diet.lifestyle.usecase.exception.UnexpectedBehaviorException
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -57,11 +57,11 @@ class LoadLifeStyleInfoUseCaseTest {
     }
 
     @Test
-    fun testInvoke_whenLoadFailedButRepoHasData_raiseFailedButFoundDataException() {
+    fun testInvoke_whenLoadFailedButRepoHasData_raiseRepositoryErrorException() {
         val dateString = DateTime.now()
             .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
 
-        val expected = FailedButFoundDataException("Load Failed. But Found Data")
+        val expected = RepositoryErrorException("Load Failed. But Found Data. Check Repository.")
 
         coEvery { repository.load(dateString) } throws expected
 
@@ -73,7 +73,7 @@ class LoadLifeStyleInfoUseCaseTest {
                 Assert.fail()
             }.onFailure {
                 when (it) {
-                    is FailedButFoundDataException -> {
+                    is RepositoryErrorException -> {
                         assertEquals(expected, it)
                         throw it
                     }

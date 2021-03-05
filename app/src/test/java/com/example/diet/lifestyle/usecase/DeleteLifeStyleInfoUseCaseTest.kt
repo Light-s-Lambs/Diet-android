@@ -1,7 +1,7 @@
 package com.example.diet.lifestyle.usecase
 
 import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
-import com.example.diet.lifestyle.usecase.exception.FailedButFoundDataException
+import com.example.diet.lifestyle.usecase.exception.RepositoryErrorException
 import com.example.diet.lifestyle.usecase.exception.NoMatchDataException
 import com.example.diet.lifestyle.usecase.exception.UnexpectedBehaviorException
 import io.mockk.MockKAnnotations
@@ -46,11 +46,11 @@ class DeleteLifeStyleInfoUseCaseTest {
     }
 
     @Test
-    fun testInvoke_whenDeleteFailedButRepoHasData_raiseFailedButFoundDataException() {
+    fun testInvoke_whenDeleteFailedButRepoHasData_raiseRepositoryErrorException() {
         val dateString = DateTime.now()
             .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
 
-        val expected = FailedButFoundDataException("Delete Failed. But Found Data")
+        val expected = RepositoryErrorException("Delete Failed. But Found Data. Check Repository.")
 
         coEvery { repository.delete(dateString) } throws expected
 
@@ -60,7 +60,7 @@ class DeleteLifeStyleInfoUseCaseTest {
                 Assert.fail()
             }.onFailure {
                 when (it) {
-                    is FailedButFoundDataException -> {
+                    is RepositoryErrorException -> {
                         assertEquals(expected, it)
                         throw it
                     }
