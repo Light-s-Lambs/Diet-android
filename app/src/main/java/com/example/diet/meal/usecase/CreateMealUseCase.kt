@@ -2,10 +2,10 @@ package com.example.diet.meal.usecase
 
 import com.example.diet.meal.model.Meal
 import com.example.diet.meal.repository.MealRepository
-import org.joda.time.DateTime
+import kotlinx.coroutines.flow.Flow
 
 class CreateMealUseCase(
     private val repository: MealRepository
 ) {
-    operator fun invoke(meal: Meal): Boolean = repository.create(meal)
+    operator fun invoke(meal: Meal): Flow<Boolean> = repository.create(meal)
 }
