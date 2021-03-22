@@ -3,13 +3,11 @@ package com.example.diet.lifestyle.usecase
 import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.model.LifeStyleInfo
 import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
-import com.example.diet.lifestyle.usecase.exception.NoMatchDataException
-import com.example.diet.lifestyle.usecase.exception.RepositoryErrorException
-import com.example.diet.lifestyle.usecase.exception.UnexpectedBehaviorException
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
@@ -48,39 +46,13 @@ class LoadLifeStyleInfoUseCaseTest {
 
         runBlocking {
             kotlin.runCatching {
-                loadUseCase(dateString, onSuccess = {
+                loadUseCase(dateString).collect {
                     assertEquals(expected, it)
-                })
-            }
-        }
-        coVerify { repository.load(dateString) }
-    }
-
-    @Test
-    fun testInvoke_whenLoadFailedButRepoHasData_raiseRepositoryErrorException() {
-        val dateString = DateTime.now()
-            .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
-
-        val expected = RepositoryErrorException("Load Failed. But Found Data. Check Repository.")
-
-        coEvery { repository.load(dateString) } throws expected
-
-        runBlocking {
-            kotlin.runCatching {
-                loadUseCase(dateString, onSuccess = {
-                    Assert.fail()
-                })
-                Assert.fail()
-            }.onFailure {
-                when (it) {
-                    is RepositoryErrorException -> {
-                        assertEquals(expected, it)
-                        throw it
-                    }
                 }
+            }.onFailure {
+                Assert.fail()
             }
         }
-
         coVerify { repository.load(dateString) }
     }
 
@@ -89,23 +61,18 @@ class LoadLifeStyleInfoUseCaseTest {
         val dateString = DateTime.now()
             .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
 
-        val expected = NoMatchDataException("Load Failed. There is No Match Data")
+        val exception = loadUseCase.occurNoMatchDataException()
+        val expected = emptyList<LifeStyleInfo>()
 
-        coEvery { repository.load(dateString) } throws expected
+        coEvery { repository.load(dateString) } throws exception
 
         runBlocking {
             kotlin.runCatching {
-                loadUseCase(dateString, onSuccess = {
-                    Assert.fail()
-                })
-                Assert.fail()
-            }.onFailure {
-                when (it) {
-                    is NoMatchDataException -> {
-                        assertEquals(expected, it)
-                        throw it
-                    }
+                loadUseCase(dateString).collect {
+                    assertEquals(expected, it.lifeStyleList)
                 }
+            }.onFailure {
+                Assert.fail()
             }
         }
 
@@ -117,23 +84,18 @@ class LoadLifeStyleInfoUseCaseTest {
         val dateString = DateTime.now()
             .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
 
-        val expected = UnexpectedBehaviorException("Load Failed. Something weired happened.")
+        val exception = loadUseCase.occurUnexpectedBehaviorException()
+        val expected = emptyList<LifeStyleInfo>()
 
-        coEvery { repository.load(dateString) } throws expected
+        coEvery { repository.load(dateString) } throws exception
 
         runBlocking {
             kotlin.runCatching {
-                loadUseCase(dateString, onSuccess = {
-                    Assert.fail()
-                })
-                Assert.fail()
-            }.onFailure {
-                when (it) {
-                    is UnexpectedBehaviorException -> {
-                        assertEquals(expected, it)
-                        throw it
-                    }
+                loadUseCase(dateString).collect {
+                    assertEquals(expected, it.lifeStyleList)
                 }
+            }.onFailure {
+                Assert.fail()
             }
         }
 

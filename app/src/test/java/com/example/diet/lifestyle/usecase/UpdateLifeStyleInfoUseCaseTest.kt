@@ -3,12 +3,11 @@ package com.example.diet.lifestyle.usecase
 import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.model.LifeStyleInfo
 import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
-import com.example.diet.lifestyle.usecase.exception.DataNoExistException
-import com.example.diet.lifestyle.usecase.exception.UnexpectedBehaviorException
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
@@ -41,16 +40,23 @@ class UpdateLifeStyleInfoUseCaseTest {
         )
         val lifeStyleInfo = LifeStyleInfo(1900, 3758, lifeStyleList)
 
+        val expected = true
+
         coEvery { repository.update(dateString, lifeStyleInfo) } returns flowOf(Unit)
 
         runBlocking {
             kotlin.runCatching {
-                updateUseCase(dateString, lifeStyleInfo)
+                updateUseCase(dateString, lifeStyleInfo).collect {
+                    assertEquals(expected, it)
+                }
+            }.onFailure {
+                Assert.fail()
             }
         }
 
         coVerify { repository.update(dateString, lifeStyleInfo) }
     }
+
 
     @Test
     fun testInvoke_whenFailedWithDataNoExist_raiseDataNoExistException() {
@@ -62,21 +68,18 @@ class UpdateLifeStyleInfoUseCaseTest {
         )
         val lifeStyleInfo = LifeStyleInfo(1900, 3758, lifeStyleList)
 
-        val expected = DataNoExistException("Data Doesn't Exist. Use Create instead.")
+        val exception = updateUseCase.occurDataNoExistException()
+        val expected = false
 
-        coEvery { repository.update(dateString, lifeStyleInfo) } throws expected
+        coEvery { repository.update(dateString, lifeStyleInfo) } throws exception
 
         runBlocking {
             kotlin.runCatching {
-                updateUseCase(dateString, lifeStyleInfo)
-                Assert.fail()
-            }.onFailure {
-                when (it) {
-                    is DataNoExistException -> {
-                        assertEquals(expected, it)
-                        throw it
-                    }
+                updateUseCase(dateString, lifeStyleInfo).collect {
+                    assertEquals(expected, it)
                 }
+            }.onFailure {
+                Assert.fail()
             }
         }
 
@@ -93,21 +96,18 @@ class UpdateLifeStyleInfoUseCaseTest {
         )
         val lifeStyleInfo = LifeStyleInfo(1900, 3758, lifeStyleList)
 
-        val expected = UnexpectedBehaviorException("Update Failed. Something weired happened.")
+        val exception = updateUseCase.occurUnexpectedBehaviorException()
+        val expected = false
 
-        coEvery { repository.update(dateString, lifeStyleInfo) } throws expected
+        coEvery { repository.update(dateString, lifeStyleInfo) } throws exception
 
         runBlocking {
             kotlin.runCatching {
-                updateUseCase(dateString, lifeStyleInfo)
-                Assert.fail()
-            }.onFailure {
-                when (it) {
-                    is UnexpectedBehaviorException -> {
-                        assertEquals(expected, it)
-                        throw it
-                    }
+                updateUseCase(dateString, lifeStyleInfo).collect {
+                    assertEquals(expected, it)
                 }
+            }.onFailure {
+                Assert.fail()
             }
         }
 
