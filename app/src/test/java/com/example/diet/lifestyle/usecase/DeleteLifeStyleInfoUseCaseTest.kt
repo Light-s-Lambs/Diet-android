@@ -56,10 +56,11 @@ class DeleteLifeStyleInfoUseCaseTest {
         val dateString = DateTime.now()
             .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
 
-        val exception = deleteUseCase.occurNoMatchDataException()
         val expected = false
 
-        coEvery { repository.delete(dateString) } throws exception
+        coEvery { repository.delete(dateString) } coAnswers {
+            deleteUseCase.occurNoMatchDataException()
+        }
 
         runBlocking {
             kotlin.runCatching {
@@ -79,10 +80,11 @@ class DeleteLifeStyleInfoUseCaseTest {
         val dateString = DateTime.now()
             .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
 
-        val exception = deleteUseCase.occurUnexpectedBehaviorException()
         val expected = false
 
-        coEvery { repository.delete(dateString) } throws exception
+        coEvery { repository.delete(dateString) } coAnswers {
+            deleteUseCase.occurUnexpectedBehaviorException()
+        }
 
         runBlocking {
             kotlin.runCatching {

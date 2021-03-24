@@ -61,10 +61,11 @@ class LoadLifeStyleInfoUseCaseTest {
         val dateString = DateTime.now()
             .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
 
-        val exception = loadUseCase.occurNoMatchDataException()
         val expected = emptyList<LifeStyleInfo>()
 
-        coEvery { repository.load(dateString) } throws exception
+        coEvery { repository.load(dateString) } coAnswers {
+            loadUseCase.occurNoMatchDataException()
+        }
 
         runBlocking {
             kotlin.runCatching {
@@ -84,10 +85,11 @@ class LoadLifeStyleInfoUseCaseTest {
         val dateString = DateTime.now()
             .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
 
-        val exception = loadUseCase.occurUnexpectedBehaviorException()
         val expected = emptyList<LifeStyleInfo>()
 
-        coEvery { repository.load(dateString) } throws exception
+        coEvery { repository.load(dateString) } coAnswers {
+            loadUseCase.occurUnexpectedBehaviorException()
+        }
 
         runBlocking {
             kotlin.runCatching {

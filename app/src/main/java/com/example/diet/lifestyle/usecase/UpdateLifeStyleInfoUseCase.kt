@@ -4,7 +4,6 @@ import com.example.diet.lifestyle.model.LifeStyleInfo
 import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
 import com.example.diet.lifestyle.usecase.exception.DataNoExistException
 import com.example.diet.lifestyle.usecase.exception.UnexpectedBehaviorException
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 
@@ -15,17 +14,22 @@ class UpdateLifeStyleInfoUseCase(
         date: String,
         lifeStyleInfo: LifeStyleInfo
     ) = flow<Boolean> {
-        repository.update(date, lifeStyleInfo).collect {
-            emit(true)
+        try {
+            repository.update(date, lifeStyleInfo).collect {
+                println("Update Success!")
+                emit(true)
+            }
+        } catch (e: Throwable) {
+            println(e.message)
+            emit(false)
         }
-    }.catch {
-        println(it.message)
-        emit(false)
     }
 
-    fun occurDataNoExistException(): Throwable =
-        DataNoExistException("Data Doesn't Exist. Use Create instead.")
+    fun occurDataNoExistException() = flow<Unit> {
+        throw DataNoExistException("Data Doesn't Exist. Use Create instead.")
+    }
 
-    fun occurUnexpectedBehaviorException(): Throwable =
-        UnexpectedBehaviorException("Update Failed. Something weired happened.")
+    fun occurUnexpectedBehaviorException() = flow<Unit> {
+        throw UnexpectedBehaviorException("Update Failed. Something weired happened.")
+    }
 }

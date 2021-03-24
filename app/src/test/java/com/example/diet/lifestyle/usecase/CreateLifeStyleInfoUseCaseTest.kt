@@ -7,13 +7,13 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
-import org.junit.Assert.assertEquals
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import java.util.*
@@ -68,7 +68,6 @@ class CreateLifeStyleInfoUseCaseTest {
         )
         val lifeStyleInfo = LifeStyleInfo(1900, 3758, lifeStyleList)
 
-        val exception = createUseCase.occurDataAlreadyExistException()
         val expected = false
 
         coEvery {
@@ -76,13 +75,16 @@ class CreateLifeStyleInfoUseCaseTest {
                 dateString,
                 lifeStyleInfo
             )
-        } throws exception
+        } coAnswers {
+            createUseCase.occurDataAlreadyExistException()
+        }
 
         runBlocking {
             kotlin.runCatching {
-                createUseCase(dateString, lifeStyleInfo).collect {
-                    assertEquals(expected, it)
-                }
+                createUseCase(dateString, lifeStyleInfo)
+                    .collect {
+                        assertEquals(expected, it)
+                    }
             }.onFailure {
                 Assert.fail()
             }
@@ -101,10 +103,11 @@ class CreateLifeStyleInfoUseCaseTest {
         )
         val lifeStyleInfo = LifeStyleInfo(1900, 3758, lifeStyleList)
 
-        val exception = createUseCase.occurUnexpectedBehaviorException()
         val expected = false
 
-        coEvery { repository.create(dateString, lifeStyleInfo) } throws exception
+        coEvery { repository.create(dateString, lifeStyleInfo) } coAnswers {
+            createUseCase.occurUnexpectedBehaviorException()
+        }
 
         runBlocking {
             kotlin.runCatching {

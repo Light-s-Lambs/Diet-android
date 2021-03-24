@@ -68,10 +68,11 @@ class UpdateLifeStyleInfoUseCaseTest {
         )
         val lifeStyleInfo = LifeStyleInfo(1900, 3758, lifeStyleList)
 
-        val exception = updateUseCase.occurDataNoExistException()
         val expected = false
 
-        coEvery { repository.update(dateString, lifeStyleInfo) } throws exception
+        coEvery { repository.update(dateString, lifeStyleInfo) } coAnswers {
+            updateUseCase.occurDataNoExistException()
+        }
 
         runBlocking {
             kotlin.runCatching {
@@ -96,10 +97,11 @@ class UpdateLifeStyleInfoUseCaseTest {
         )
         val lifeStyleInfo = LifeStyleInfo(1900, 3758, lifeStyleList)
 
-        val exception = updateUseCase.occurUnexpectedBehaviorException()
         val expected = false
 
-        coEvery { repository.update(dateString, lifeStyleInfo) } throws exception
+        coEvery { repository.update(dateString, lifeStyleInfo) } coAnswers {
+            updateUseCase.occurUnexpectedBehaviorException()
+        }
 
         runBlocking {
             kotlin.runCatching {

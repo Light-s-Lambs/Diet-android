@@ -4,7 +4,7 @@ import com.example.diet.lifestyle.model.LifeStyleInfo
 import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
 import com.example.diet.lifestyle.usecase.exception.DataAlreadyExistException
 import com.example.diet.lifestyle.usecase.exception.UnexpectedBehaviorException
-import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 
@@ -15,17 +15,22 @@ class CreateLifeStyleInfoUseCase(
         date: String,
         lifeStyleInfo: LifeStyleInfo
     ) = flow<Boolean> {
-        repository.create(date, lifeStyleInfo).collect {
-            emit(true)
+        try {
+            repository.create(date, lifeStyleInfo).cancellable().collect {
+                println("Create Success!")
+                emit(true)
+            }
+        } catch (e: Throwable) {
+            println(e.message)
+            emit(false)
         }
-    }.catch {
-        println(it.message)
-        emit(false)
     }
 
-    fun occurDataAlreadyExistException(): Throwable =
-        DataAlreadyExistException("Data Already Exist. Use Update instead.")
+    fun occurDataAlreadyExistException() = flow<Unit> {
+        throw DataAlreadyExistException("Data Already Exist. Use Update instead.")
+    }
 
-    fun occurUnexpectedBehaviorException(): Throwable =
-        UnexpectedBehaviorException("Create Failed. Something weired happened.")
+    fun occurUnexpectedBehaviorException() = flow<Unit> {
+        throw UnexpectedBehaviorException("Create Failed. Something weired happened.")
+    }
 }
