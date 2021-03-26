@@ -4,33 +4,36 @@ import com.example.diet.lifestyle.model.LifeStyleInfo
 import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
 import com.example.diet.lifestyle.usecase.exception.DataAlreadyExistException
 import com.example.diet.lifestyle.usecase.exception.UnexpectedBehaviorException
-import kotlinx.coroutines.flow.cancellable
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
 
+@ExperimentalCoroutinesApi
 class CreateLifeStyleInfoUseCase(
     private val repository: LifeStyleInfoRepository
 ) {
     operator fun invoke(
         date: String,
         lifeStyleInfo: LifeStyleInfo
-    ) = flow<Boolean> {
+    ) = callbackFlow<Boolean> {
         try {
-            repository.create(date, lifeStyleInfo).cancellable().collect {
+            repository.create(date, lifeStyleInfo).collect {
                 println("Create Success!")
-                emit(true)
+                offer(true)
+                close()
             }
         } catch (e: Throwable) {
-            println(e.message)
-            emit(false)
+            println(e.cause)
+            offer(false)
+            close()
         }
     }
 
-    fun occurDataAlreadyExistException() = flow<Unit> {
-        throw DataAlreadyExistException("Data Already Exist. Use Update instead.")
+    fun occurDataAlreadyExistException() = callbackFlow<Unit> {
+        close(DataAlreadyExistException("Data Already Exist. Use Update instead."))
     }
 
-    fun occurUnexpectedBehaviorException() = flow<Unit> {
-        throw UnexpectedBehaviorException("Create Failed. Something weired happened.")
+    fun occurUnexpectedBehaviorException() = callbackFlow<Unit> {
+        close(UnexpectedBehaviorException("Create Failed. Something weired happened."))
     }
 }
