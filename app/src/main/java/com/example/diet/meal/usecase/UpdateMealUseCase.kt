@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 class UpdateMealUseCase(
     private val repository: MealRepository
 ) {
-    operator fun invoke(meal: Meal): Flow<Boolean> = repository.update(meal)
+    operator fun invoke(from: Meal, to: Meal): Flow<Meal> = repository.update(from, to)
 }
