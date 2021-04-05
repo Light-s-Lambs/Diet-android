@@ -4,7 +4,7 @@ import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.model.LifeStyleInfo
 import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
 import com.example.diet.lifestyle.usecase.exception.DataNoExistException
-import com.example.diet.lifestyle.usecase.exception.UnexpectedBehaviorException
+import com.example.diet.lifestyle.usecase.exception.ConnectionErrorException
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -86,7 +86,7 @@ class DeleteLifeStyleInfoUseCaseTest {
     fun `연결 문제_삭제 실패`() {
         val dateString = DateTime.now()
             .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
-        val expected = UnexpectedBehaviorException("No Connection")
+        val expected = ConnectionErrorException("No Connection")
         coEvery {
             repository.delete(dateString)
         } returns callbackFlow {

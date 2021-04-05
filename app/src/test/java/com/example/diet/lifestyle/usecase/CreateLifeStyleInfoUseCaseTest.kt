@@ -4,7 +4,7 @@ import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.model.LifeStyleInfo
 import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
 import com.example.diet.lifestyle.usecase.exception.DataAlreadyExistException
-import com.example.diet.lifestyle.usecase.exception.UnexpectedBehaviorException
+import com.example.diet.lifestyle.usecase.exception.ConnectionErrorException
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -108,7 +108,7 @@ class CreateLifeStyleInfoUseCaseTest {
             LifeStyle("Sleeping", "22 hr", "348 kcal"),
             LifeStyle("Running", "2 hr", "1510 kcal")
         )
-        val expected = UnexpectedBehaviorException("No Connection")
+        val expected = ConnectionErrorException("No Connection")
         coEvery {
             repository.create(
                 dateString,
