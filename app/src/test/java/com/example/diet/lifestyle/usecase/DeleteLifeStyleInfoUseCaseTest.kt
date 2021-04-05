@@ -3,8 +3,8 @@ package com.example.diet.lifestyle.usecase
 import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.model.LifeStyleInfo
 import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
-import com.example.diet.lifestyle.usecase.exception.DataNoExistException
 import com.example.diet.lifestyle.usecase.exception.ConnectionErrorException
+import com.example.diet.lifestyle.usecase.exception.DataNoExistException
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -15,12 +15,10 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
 import org.junit.Assert.assertEquals
 import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
-import java.util.*
 
 @ExperimentalCoroutinesApi
 class DeleteLifeStyleInfoUseCaseTest {
@@ -37,22 +35,21 @@ class DeleteLifeStyleInfoUseCaseTest {
 
     @Test
     fun `객체 있음_삭제 성공`() {
-        val dateString = DateTime.now()
-            .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
+        val date = DateTime.now()
         val basalMetabolism = 1900
         val activityMetabolism = 3758
         val lifeStyleList = listOf(
             LifeStyle("Sleeping", "22 hr", "348 kcal"),
             LifeStyle("Running", "2 hr", "1510 kcal")
         )
-        val lifeStyleInfo = LifeStyleInfo(basalMetabolism, activityMetabolism, lifeStyleList)
+        val lifeStyleInfo = LifeStyleInfo(date, basalMetabolism, activityMetabolism, lifeStyleList)
         val expected = lifeStyleInfo
         coEvery {
-            repository.delete(dateString)
+            repository.delete(date)
         } returns flowOf(expected)
 
         runBlocking {
-            deleteUseCase(dateString)
+            deleteUseCase(date)
                 .catch { fail() }
                 .collect {
                     assertEquals(expected, it)
@@ -62,17 +59,16 @@ class DeleteLifeStyleInfoUseCaseTest {
 
     @Test
     fun `객체 없음_삭제 실패`() {
-        val dateString = DateTime.now()
-            .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
+        val date = DateTime.now()
         val expected = DataNoExistException("Data No Exist. Create Before Delete.")
         coEvery {
-            repository.delete(dateString)
+            repository.delete(date)
         } returns callbackFlow {
             close(expected)
         }
 
         runBlocking {
-            deleteUseCase(dateString)
+            deleteUseCase(date)
                 .catch {
                     assertEquals(expected::class, it::class)
                 }
@@ -84,17 +80,16 @@ class DeleteLifeStyleInfoUseCaseTest {
 
     @Test
     fun `연결 문제_삭제 실패`() {
-        val dateString = DateTime.now()
-            .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
+        val date = DateTime.now()
         val expected = ConnectionErrorException("No Connection")
         coEvery {
-            repository.delete(dateString)
+            repository.delete(date)
         } returns callbackFlow {
             close(expected)
         }
 
         runBlocking {
-            deleteUseCase(dateString)
+            deleteUseCase(date)
                 .catch {
                     assertEquals(expected::class, it::class)
                 }

@@ -3,8 +3,8 @@ package com.example.diet.lifestyle.usecase
 import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.model.LifeStyleInfo
 import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
-import com.example.diet.lifestyle.usecase.exception.DataAlreadyExistException
 import com.example.diet.lifestyle.usecase.exception.ConnectionErrorException
+import com.example.diet.lifestyle.usecase.exception.DataAlreadyExistException
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -15,12 +15,10 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
 import org.junit.Assert.assertEquals
 import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
-import java.util.*
 
 @ExperimentalCoroutinesApi
 class CreateLifeStyleInfoUseCaseTest {
@@ -37,19 +35,18 @@ class CreateLifeStyleInfoUseCaseTest {
 
     @Test
     fun `동일한 객체 없음_객체 생성 성공`() {
-        val dateString = DateTime.now()
-            .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
+        val date = DateTime.now()
         val basalMetabolism = 1900
         val activityMetabolism = 3758
         val lifeStyleList = listOf(
             LifeStyle("Sleeping", "22 hr", "348 kcal"),
             LifeStyle("Running", "2 hr", "1510 kcal")
         )
-        val lifeStyleInfo = LifeStyleInfo(basalMetabolism, activityMetabolism, lifeStyleList)
+        val lifeStyleInfo = LifeStyleInfo(date, basalMetabolism, activityMetabolism, lifeStyleList)
         val expected = lifeStyleInfo
         coEvery {
             repository.create(
-                dateString,
+                date,
                 basalMetabolism,
                 activityMetabolism,
                 lifeStyleList
@@ -57,7 +54,7 @@ class CreateLifeStyleInfoUseCaseTest {
         } returns flowOf(expected)
 
         runBlocking {
-            createUseCase(dateString, basalMetabolism, activityMetabolism, lifeStyleList)
+            createUseCase(date, basalMetabolism, activityMetabolism, lifeStyleList)
                 .catch { fail() }
                 .collect {
                     assertEquals(expected, it)
@@ -67,8 +64,7 @@ class CreateLifeStyleInfoUseCaseTest {
 
     @Test
     fun `동일한 객체 있음_객체 생성 실패`() {
-        val dateString = DateTime.now()
-            .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
+        val date = DateTime.now()
         val basalMetabolism = 1900
         val activityMetabolism = 3758
         val lifeStyleList = listOf(
@@ -78,7 +74,7 @@ class CreateLifeStyleInfoUseCaseTest {
         val expected = DataAlreadyExistException("Data Already Exist. Use Update Instead.")
         coEvery {
             repository.create(
-                dateString,
+                date,
                 basalMetabolism,
                 activityMetabolism,
                 lifeStyleList
@@ -88,7 +84,7 @@ class CreateLifeStyleInfoUseCaseTest {
         }
 
         runBlocking {
-            createUseCase(dateString, basalMetabolism, activityMetabolism, lifeStyleList)
+            createUseCase(date, basalMetabolism, activityMetabolism, lifeStyleList)
                 .catch {
                     assertEquals(expected::class, it::class)
                 }
@@ -100,8 +96,7 @@ class CreateLifeStyleInfoUseCaseTest {
 
     @Test
     fun `연결 문제_객체 생성 실패`() {
-        val dateString = DateTime.now()
-            .toString(DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(Locale.getDefault()))
+        val date = DateTime.now()
         val basalMetabolism = 1900
         val activityMetabolism = 3758
         val lifeStyleList = listOf(
@@ -111,7 +106,7 @@ class CreateLifeStyleInfoUseCaseTest {
         val expected = ConnectionErrorException("No Connection")
         coEvery {
             repository.create(
-                dateString,
+                date,
                 basalMetabolism,
                 activityMetabolism,
                 lifeStyleList
@@ -121,7 +116,7 @@ class CreateLifeStyleInfoUseCaseTest {
         }
 
         runBlocking {
-            createUseCase(dateString, basalMetabolism, activityMetabolism, lifeStyleList)
+            createUseCase(date, basalMetabolism, activityMetabolism, lifeStyleList)
                 .catch {
                     assertEquals(expected::class, it::class)
                 }
