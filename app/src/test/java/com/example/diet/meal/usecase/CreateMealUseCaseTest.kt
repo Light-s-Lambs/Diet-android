@@ -20,7 +20,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
-import java.io.IOException
 
 class CreateMealUseCaseTest {
     lateinit var useCase: CreateMealUseCase
