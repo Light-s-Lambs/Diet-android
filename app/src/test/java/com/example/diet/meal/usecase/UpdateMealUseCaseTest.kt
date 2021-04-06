@@ -6,7 +6,7 @@ import com.example.diet.meal.model.MealType
 import com.example.diet.meal.repository.MealRepository
 import com.example.diet.meal.usecase.exception.ConnectionErrorException
 import com.example.diet.meal.usecase.exception.DataAlreadyExIstException
-import com.example.diet.meal.usecase.exception.DataNoExistException
+import com.example.diet.meal.usecase.exception.DataNotFoundException
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -90,7 +90,7 @@ class UpdateMealUseCaseTest {
     @ExperimentalCoroutinesApi
     @Test
     fun `변경 전 객체가 없어서 변경 실패`() {
-        val expected = DataNoExistException()
+        val expected = DataNotFoundException()
         val date = DateTime.now()
         val targetObject = Meal(
             date,
