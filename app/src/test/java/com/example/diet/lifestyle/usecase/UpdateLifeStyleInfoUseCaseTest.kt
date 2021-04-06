@@ -36,25 +36,21 @@ class UpdateLifeStyleInfoUseCaseTest {
     @Test
     fun `생성된 객체 있음_갱신 성공`() {
         val date = DateTime.now()
-        val basalMetabolism = 1900
-        val activityMetabolism = 3758
         val lifeStyleList = listOf(
             LifeStyle("Sleeping", "22 hr", "348 kcal"),
             LifeStyle("Running", "2 hr", "1510 kcal")
         )
-        val lifeStyleInfo = LifeStyleInfo(date, basalMetabolism, activityMetabolism, lifeStyleList)
+        val lifeStyleInfo = LifeStyleInfo(date, lifeStyleList)
         val expected = lifeStyleInfo
         coEvery {
             repository.update(
                 date,
-                basalMetabolism,
-                activityMetabolism,
                 lifeStyleList
             )
         } returns flowOf(expected)
 
         runBlocking {
-            updateUseCase(date, basalMetabolism, activityMetabolism, lifeStyleList)
+            updateUseCase(date, lifeStyleList)
                 .catch { fail() }
                 .collect {
                     assertEquals(expected, it)
@@ -65,8 +61,6 @@ class UpdateLifeStyleInfoUseCaseTest {
     @Test
     fun `생성된 객체 없음_갱신 실패`() {
         val date = DateTime.now()
-        val basalMetabolism = 1900
-        val activityMetabolism = 3758
         val lifeStyleList = listOf(
             LifeStyle("Sleeping", "22 hr", "348 kcal"),
             LifeStyle("Running", "2 hr", "1510 kcal")
@@ -75,8 +69,6 @@ class UpdateLifeStyleInfoUseCaseTest {
         coEvery {
             repository.update(
                 date,
-                basalMetabolism,
-                activityMetabolism,
                 lifeStyleList
             )
         } returns callbackFlow {
@@ -84,7 +76,7 @@ class UpdateLifeStyleInfoUseCaseTest {
         }
 
         runBlocking {
-            updateUseCase(date, basalMetabolism, activityMetabolism, lifeStyleList)
+            updateUseCase(date, lifeStyleList)
                 .catch {
                     assertEquals(expected::class, it::class)
                 }
@@ -97,8 +89,6 @@ class UpdateLifeStyleInfoUseCaseTest {
     @Test
     fun `연결 문제_갱신 실패`() {
         val date = DateTime.now()
-        val basalMetabolism = 1900
-        val activityMetabolism = 3758
         val lifeStyleList = listOf(
             LifeStyle("Sleeping", "22 hr", "348 kcal"),
             LifeStyle("Running", "2 hr", "1510 kcal")
@@ -107,8 +97,6 @@ class UpdateLifeStyleInfoUseCaseTest {
         coEvery {
             repository.update(
                 date,
-                basalMetabolism,
-                activityMetabolism,
                 lifeStyleList
             )
         } returns callbackFlow {
@@ -116,7 +104,7 @@ class UpdateLifeStyleInfoUseCaseTest {
         }
 
         runBlocking {
-            updateUseCase(date, basalMetabolism, activityMetabolism, lifeStyleList)
+            updateUseCase(date, lifeStyleList)
                 .catch {
                     assertEquals(expected::class, it::class)
                 }

@@ -9,8 +9,6 @@ class UpdateLifeStyleInfoUseCase(
 ) {
     operator fun invoke(
         date: DateTime,
-        basalMetabolism: Int,
-        activityMetabolism: Int,
         lifeStyleList: List<LifeStyle>
-    ) = repository.update(date, basalMetabolism, activityMetabolism, lifeStyleList)
+    ) = repository.update(date, lifeStyleList)
 }

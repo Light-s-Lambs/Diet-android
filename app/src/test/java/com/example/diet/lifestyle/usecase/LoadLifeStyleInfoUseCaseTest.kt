@@ -36,13 +36,11 @@ class LoadLifeStyleInfoUseCaseTest {
     @Test
     fun `객체 있음_불러오기 성공`() {
         val date = DateTime.now()
-        val basalMetabolism = 1900
-        val activityMetabolism = 3758
         val lifeStyleList = listOf(
             LifeStyle("Sleeping", "22 hr", "348 kcal"),
             LifeStyle("Running", "2 hr", "1510 kcal")
         )
-        val lifeStyleInfo = LifeStyleInfo(date, basalMetabolism, activityMetabolism, lifeStyleList)
+        val lifeStyleInfo = LifeStyleInfo(date, lifeStyleList)
         val expected = lifeStyleInfo
         coEvery {
             repository.load(date)

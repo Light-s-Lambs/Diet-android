@@ -36,25 +36,21 @@ class CreateLifeStyleInfoUseCaseTest {
     @Test
     fun `동일한 객체 없음_객체 생성 성공`() {
         val date = DateTime.now()
-        val basalMetabolism = 1900
-        val activityMetabolism = 3758
         val lifeStyleList = listOf(
             LifeStyle("Sleeping", "22 hr", "348 kcal"),
             LifeStyle("Running", "2 hr", "1510 kcal")
         )
-        val lifeStyleInfo = LifeStyleInfo(date, basalMetabolism, activityMetabolism, lifeStyleList)
+        val lifeStyleInfo = LifeStyleInfo(date, lifeStyleList)
         val expected = lifeStyleInfo
         coEvery {
             repository.create(
                 date,
-                basalMetabolism,
-                activityMetabolism,
                 lifeStyleList
             )
         } returns flowOf(expected)
 
         runBlocking {
-            createUseCase(date, basalMetabolism, activityMetabolism, lifeStyleList)
+            createUseCase(date, lifeStyleList)
                 .catch { fail() }
                 .collect {
                     assertEquals(expected, it)
@@ -65,8 +61,6 @@ class CreateLifeStyleInfoUseCaseTest {
     @Test
     fun `동일한 객체 있음_객체 생성 실패`() {
         val date = DateTime.now()
-        val basalMetabolism = 1900
-        val activityMetabolism = 3758
         val lifeStyleList = listOf(
             LifeStyle("Sleeping", "22 hr", "348 kcal"),
             LifeStyle("Running", "2 hr", "1510 kcal")
@@ -75,8 +69,6 @@ class CreateLifeStyleInfoUseCaseTest {
         coEvery {
             repository.create(
                 date,
-                basalMetabolism,
-                activityMetabolism,
                 lifeStyleList
             )
         } returns callbackFlow {
@@ -84,7 +76,7 @@ class CreateLifeStyleInfoUseCaseTest {
         }
 
         runBlocking {
-            createUseCase(date, basalMetabolism, activityMetabolism, lifeStyleList)
+            createUseCase(date, lifeStyleList)
                 .catch {
                     assertEquals(expected::class, it::class)
                 }
@@ -97,8 +89,6 @@ class CreateLifeStyleInfoUseCaseTest {
     @Test
     fun `연결 문제_객체 생성 실패`() {
         val date = DateTime.now()
-        val basalMetabolism = 1900
-        val activityMetabolism = 3758
         val lifeStyleList = listOf(
             LifeStyle("Sleeping", "22 hr", "348 kcal"),
             LifeStyle("Running", "2 hr", "1510 kcal")
@@ -107,8 +97,6 @@ class CreateLifeStyleInfoUseCaseTest {
         coEvery {
             repository.create(
                 date,
-                basalMetabolism,
-                activityMetabolism,
                 lifeStyleList
             )
         } returns callbackFlow {
@@ -116,7 +104,7 @@ class CreateLifeStyleInfoUseCaseTest {
         }
 
         runBlocking {
-            createUseCase(date, basalMetabolism, activityMetabolism, lifeStyleList)
+            createUseCase(date, lifeStyleList)
                 .catch {
                     assertEquals(expected::class, it::class)
                 }

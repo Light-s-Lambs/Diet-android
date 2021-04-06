@@ -9,8 +9,6 @@ class CreateLifeStyleInfoUseCase(
 ) {
     operator fun invoke(
         date: DateTime,
-        basalMetabolism: Int,
-        activityMetabolism: Int,
         lifeStyleList: List<LifeStyle>
-    ) = repository.create(date, basalMetabolism, activityMetabolism, lifeStyleList)
+    ) = repository.create(date, lifeStyleList)
 }
