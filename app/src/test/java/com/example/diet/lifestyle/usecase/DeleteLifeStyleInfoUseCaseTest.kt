@@ -4,7 +4,7 @@ import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.model.LifeStyleInfo
 import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
 import com.example.diet.lifestyle.usecase.exception.ConnectionErrorException
-import com.example.diet.lifestyle.usecase.exception.DataNoExistException
+import com.example.diet.lifestyle.usecase.exception.DataNotFoundException
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -60,7 +60,7 @@ class DeleteLifeStyleInfoUseCaseTest {
     @Test
     fun `객체 없음_삭제 실패`() {
         val date = DateTime.now()
-        val expected = DataNoExistException("Data No Exist. Create Before Delete.")
+        val expected = DataNotFoundException("Data No Exist. Create Before Delete.")
         coEvery {
             repository.delete(date)
         } returns callbackFlow {

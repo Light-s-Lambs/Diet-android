@@ -4,7 +4,7 @@ import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.model.LifeStyleInfo
 import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
 import com.example.diet.lifestyle.usecase.exception.ConnectionErrorException
-import com.example.diet.lifestyle.usecase.exception.DataNoExistException
+import com.example.diet.lifestyle.usecase.exception.DataNotFoundException
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -71,7 +71,7 @@ class UpdateLifeStyleInfoUseCaseTest {
             LifeStyle("Sleeping", "22 hr", "348 kcal"),
             LifeStyle("Running", "2 hr", "1510 kcal")
         )
-        val expected = DataNoExistException("Data No Exist. Create Before Delete.")
+        val expected = DataNotFoundException("Data No Exist. Create Before Delete.")
         coEvery {
             repository.update(
                 date,

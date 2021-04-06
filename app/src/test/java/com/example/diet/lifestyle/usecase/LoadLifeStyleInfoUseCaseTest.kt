@@ -4,7 +4,7 @@ import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.model.LifeStyleInfo
 import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
 import com.example.diet.lifestyle.usecase.exception.ConnectionErrorException
-import com.example.diet.lifestyle.usecase.exception.NoMatchDataException
+import com.example.diet.lifestyle.usecase.exception.DataNotFoundException
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -60,7 +60,7 @@ class LoadLifeStyleInfoUseCaseTest {
     @Test
     fun `객체 없음_불러오기 실패`() {
         val date = DateTime.now()
-        val expected = NoMatchDataException("Data No Exist. Create Before Load.")
+        val expected = DataNotFoundException("Data No Exist. Create Before Load.")
         coEvery {
             repository.load(date)
         } returns callbackFlow {
