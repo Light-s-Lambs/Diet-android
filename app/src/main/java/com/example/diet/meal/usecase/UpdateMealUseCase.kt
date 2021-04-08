@@ -10,10 +10,11 @@ import org.joda.time.DateTime
 class UpdateMealUseCase(
     private val repository: MealRepository
 ) {
-    operator fun invoke(from: Meal,
-                        date: DateTime,
-                        mealType: MealType,
-                        mealName: MealName,
-                        calorie: String
-    ):Flow<Meal> = repository.update(from, date, mealType, mealName, calorie)
+    operator fun invoke(
+        from: Meal,
+        date: DateTime,
+        mealType: MealType,
+        mealName: MealName,
+        calorie: String
+    ): Flow<Meal> = repository.update(from, date, mealType, mealName, calorie)
 }
