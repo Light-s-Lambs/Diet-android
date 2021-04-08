@@ -34,7 +34,7 @@ class UpdateMealUseCaseTest {
     }
 
     @Test
-    fun `변경 전 객체가 있고 변경 후 객제가 없으므로 변경 성공`() {
+    fun `선택된 객제를 입력 데이터로 변경`() {
         val date = DateTime.now()
         val targetObject = Meal(
             date,
@@ -48,10 +48,10 @@ class UpdateMealUseCaseTest {
             MealName.Noodle,
             "495"
         )
-        every { repository.update(targetObject, expected) } returns flowOf(expected)
+        every { repository.update(targetObject, date, MealType.Lunch, MealName.Noodle, "495") } returns flowOf(expected)
 
         runBlocking {
-            useCase(targetObject, expected)
+            useCase(targetObject, date, MealType.Lunch, MealName.Noodle, "495")
                 .catch { Assert.fail() }
                 .collect { Assert.assertEquals(expected, it) }
         }
@@ -68,20 +68,14 @@ class UpdateMealUseCaseTest {
             MealName.Toast,
             "313"
         )
-        val resultObject = Meal(
-            date,
-            MealType.Lunch,
-            MealName.Noodle,
-            "495"
-        )
-        every { repository.update(targetObject, resultObject) } returns callbackFlow {
+        every { repository.update(targetObject, date, MealType.Lunch, MealName.Noodle, "495") } returns callbackFlow {
             close(
                 expected
             )
         }
 
         runBlocking {
-            useCase(targetObject, resultObject)
+            useCase(targetObject, date, MealType.Lunch, MealName.Noodle, "495")
                 .catch { Assert.assertEquals(expected::class, it::class) }
                 .collect { Assert.fail() }
         }
@@ -89,7 +83,7 @@ class UpdateMealUseCaseTest {
 
     @ExperimentalCoroutinesApi
     @Test
-    fun `변경 전 객체가 없어서 변경 실패`() {
+    fun `객체가 없어서 변경 실패`() {
         val expected = DataNotFoundException()
         val date = DateTime.now()
         val targetObject = Meal(
@@ -98,20 +92,14 @@ class UpdateMealUseCaseTest {
             MealName.Toast,
             "313"
         )
-        val resultObject = Meal(
-            date,
-            MealType.Lunch,
-            MealName.Noodle,
-            "495"
-        )
-        every { repository.update(targetObject, resultObject) } returns callbackFlow {
+        every { repository.update(targetObject, date, MealType.Lunch, MealName.Noodle, "495") } returns callbackFlow {
             close(
                 expected
             )
         }
 
         runBlocking {
-            useCase(targetObject, resultObject)
+            useCase(targetObject, date, MealType.Lunch, MealName.Noodle, "495")
                 .catch { Assert.assertEquals(expected::class, it::class) }
                 .collect { Assert.fail() }
         }
@@ -128,20 +116,14 @@ class UpdateMealUseCaseTest {
             MealName.Toast,
             "313"
         )
-        val resultObject = Meal(
-            date,
-            MealType.Lunch,
-            MealName.Noodle,
-            "495"
-        )
-        every { repository.update(targetObject, resultObject) } returns callbackFlow {
+        every { repository.update(targetObject, date, MealType.Lunch, MealName.Noodle, "495") } returns callbackFlow {
             close(
                 expected
             )
         }
 
         runBlocking {
-            useCase(targetObject, resultObject)
+            useCase(targetObject, date, MealType.Lunch, MealName.Noodle, "495")
                 .catch { Assert.assertEquals(expected::class, it::class) }
                 .collect { Assert.fail() }
         }

@@ -15,6 +15,13 @@ interface MealRepository {
     ): Flow<Meal>
 
     fun getList(date: DateTime): Flow<List<Meal>>
-    fun update(from: Meal, to: Meal): Flow<Meal>
+    fun update(
+        from: Meal,
+        date: DateTime,
+        mealType: MealType,
+        mealName: MealName,
+        calorie: String
+    ): Flow<Meal>
+
     fun delete(meal: Meal): Flow<Unit>
 }
