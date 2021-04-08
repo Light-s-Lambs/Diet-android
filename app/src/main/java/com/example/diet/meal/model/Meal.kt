@@ -7,8 +7,7 @@ enum class MealType {
     Lunch,
     Dinner,
     Dessert,
-    Snack,
-    etc
+    Snack
 }
 
 enum class MealName {
@@ -16,9 +15,7 @@ enum class MealName {
     Noodle,
     Steak,
     Apple,
-    Snack,
-    Chocolate,
-    etc
+    Chocolate
 }
 
 data class Meal(
