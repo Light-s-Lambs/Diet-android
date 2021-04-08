@@ -34,7 +34,7 @@ class CreateMealUseCaseTest {
     }
 
     @Test
-    fun `객체가 없고 생성 성공`() {
+    fun `사용자의 입력을 받아 식단 생성 성공`() {
         val date = DateTime.now()
         val expected = Meal(
             date,
@@ -77,7 +77,7 @@ class CreateMealUseCaseTest {
 
     @ExperimentalCoroutinesApi
     @Test
-    fun `객체가 이미 있어서 생성 실패`() {
+    fun `입력한 식단과 동일한 메뉴가 동일한 식사시간에 있음`() {
         val expected = DataAlreadyExIstException()
         val date = DateTime.now()
         every {

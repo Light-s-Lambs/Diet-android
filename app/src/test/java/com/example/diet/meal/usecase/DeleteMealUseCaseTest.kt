@@ -33,7 +33,7 @@ class DeleteMealUseCaseTest {
     }
 
     @Test
-    fun `객체가 있고 삭제 성공`() {
+    fun `선택한 객체 삭제 성공`() {
         val date = DateTime.now()
         val targetObject = Meal(
             date,
@@ -62,26 +62,6 @@ class DeleteMealUseCaseTest {
             "313"
         )
         every { repository.delete(targetObject) } returns callbackFlow { close(expected) }
-
-        runBlocking {
-            useCase(targetObject)
-                .catch { Assert.assertEquals(expected::class, it::class) }
-                .collect { Assert.fail() }
-        }
-    }
-
-    @ExperimentalCoroutinesApi
-    @Test
-    fun `객체가 없어서 삭제 실패`() {
-        val expected = DataNotFoundException()
-        val date = DateTime.now()
-        val targetObject = Meal(
-            date,
-            MealType.Breakfast,
-            MealName.Toast,
-            "313"
-        )
-        every { repository.delete(targetObject) } returns callbackFlow { close() }
 
         runBlocking {
             useCase(targetObject)

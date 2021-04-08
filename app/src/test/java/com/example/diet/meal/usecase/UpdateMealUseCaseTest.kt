@@ -34,7 +34,7 @@ class UpdateMealUseCaseTest {
     }
 
     @Test
-    fun `선택된 객제를 입력 데이터로 변경`() {
+    fun `선택된 객체를 입력 데이터로 변경`() {
         val date = DateTime.now()
         val targetObject = Meal(
             date,
@@ -48,7 +48,15 @@ class UpdateMealUseCaseTest {
             MealName.Noodle,
             "495"
         )
-        every { repository.update(targetObject, date, MealType.Lunch, MealName.Noodle, "495") } returns flowOf(expected)
+        every {
+            repository.update(
+                targetObject,
+                date,
+                MealType.Lunch,
+                MealName.Noodle,
+                "495"
+            )
+        } returns flowOf(expected)
 
         runBlocking {
             useCase(targetObject, date, MealType.Lunch, MealName.Noodle, "495")
@@ -68,7 +76,15 @@ class UpdateMealUseCaseTest {
             MealName.Toast,
             "313"
         )
-        every { repository.update(targetObject, date, MealType.Lunch, MealName.Noodle, "495") } returns callbackFlow {
+        every {
+            repository.update(
+                targetObject,
+                date,
+                MealType.Lunch,
+                MealName.Noodle,
+                "495"
+            )
+        } returns callbackFlow {
             close(
                 expected
             )
@@ -83,31 +99,7 @@ class UpdateMealUseCaseTest {
 
     @ExperimentalCoroutinesApi
     @Test
-    fun `객체가 없어서 변경 실패`() {
-        val expected = DataNotFoundException()
-        val date = DateTime.now()
-        val targetObject = Meal(
-            date,
-            MealType.Breakfast,
-            MealName.Toast,
-            "313"
-        )
-        every { repository.update(targetObject, date, MealType.Lunch, MealName.Noodle, "495") } returns callbackFlow {
-            close(
-                expected
-            )
-        }
-
-        runBlocking {
-            useCase(targetObject, date, MealType.Lunch, MealName.Noodle, "495")
-                .catch { Assert.assertEquals(expected::class, it::class) }
-                .collect { Assert.fail() }
-        }
-    }
-
-    @ExperimentalCoroutinesApi
-    @Test
-    fun `변경 후 객체가 이미 있어서 변경 실패`() {
+    fun `입력한 식단과 동일한 메뉴가 동일한 식사시간에 있음`() {
         val expected = DataAlreadyExIstException()
         val date = DateTime.now()
         val targetObject = Meal(
@@ -116,7 +108,15 @@ class UpdateMealUseCaseTest {
             MealName.Toast,
             "313"
         )
-        every { repository.update(targetObject, date, MealType.Lunch, MealName.Noodle, "495") } returns callbackFlow {
+        every {
+            repository.update(
+                targetObject,
+                date,
+                MealType.Lunch,
+                MealName.Noodle,
+                "495"
+            )
+        } returns callbackFlow {
             close(
                 expected
             )
