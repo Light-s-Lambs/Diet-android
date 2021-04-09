@@ -17,8 +17,8 @@ import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
 
-class GetMealListUseCaseTest {
-    lateinit var useCase: GetMealListUseCase
+class GetDailyMealListUseCaseTest {
+    lateinit var useCase: GetDailyMealListUseCase
 
     @MockK
     lateinit var repository: MealRepository
@@ -26,7 +26,7 @@ class GetMealListUseCaseTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        useCase = GetMealListUseCase(repository)
+        useCase = GetDailyMealListUseCase(repository)
     }
 
     @Test
@@ -49,7 +49,7 @@ class GetMealListUseCaseTest {
                 "495"
             )
         )
-        every { repository.getList(date) } returns flowOf(expected)
+        every { repository.getDailyMealList(date) } returns flowOf(expected)
 
         runBlocking {
             useCase(date)
