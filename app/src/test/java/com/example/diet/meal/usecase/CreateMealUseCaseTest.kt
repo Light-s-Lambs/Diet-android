@@ -5,7 +5,7 @@ import com.example.diet.meal.model.MealName
 import com.example.diet.meal.model.MealType
 import com.example.diet.meal.repository.MealRepository
 import com.example.diet.meal.usecase.exception.ConnectionErrorException
-import com.example.diet.meal.usecase.exception.DataAlreadyExIstException
+import com.example.diet.meal.usecase.exception.DataAlreadyExistException
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -36,18 +36,16 @@ class CreateMealUseCaseTest {
     @Test
     fun `사용자의 입력을 받아 식단 생성 성공`() {
         val date = DateTime.now()
-        val expected = Meal(
-            date,
-            MealType.Breakfast,
-            MealName.Toast,
-            "313"
-        )
-        every { repository.create(date, MealType.Breakfast, MealName.Toast, "313") } returns flowOf(
-            expected
-        )
+        val mealType = MealType.Breakfast
+        val menuName = MealName.Toast
+        val calorie = "313"
+        val expected = Meal(date, mealType, menuName, calorie)
+        every {
+            repository.create(date, mealType, menuName, calorie)
+        } returns flowOf(expected)
 
         runBlocking {
-            useCase(date, MealType.Breakfast, MealName.Toast, "313")
+            useCase(date, mealType, menuName, calorie)
                 .catch { fail() }
                 .collect { assertEquals(expected, it) }
         }
@@ -58,17 +56,15 @@ class CreateMealUseCaseTest {
     fun `연결 실패로 인해 생성 실패`() {
         val expected = ConnectionErrorException()
         val date = DateTime.now()
+        val mealType = MealType.Breakfast
+        val mealName = MealName.Toast
+        val calorie = "313"
         every {
-            repository.create(
-                date,
-                MealType.Breakfast,
-                MealName.Toast,
-                "313"
-            )
+            repository.create(date, mealType, mealName, calorie)
         } returns callbackFlow { close(expected) }
 
         runBlocking {
-            useCase(date, MealType.Breakfast, MealName.Toast, "313")
+            useCase(date, mealType, mealName, calorie)
                 .catch { assertEquals(expected::class, it::class) }
                 .collect { fail() }
         }
@@ -77,20 +73,18 @@ class CreateMealUseCaseTest {
 
     @ExperimentalCoroutinesApi
     @Test
-    fun `입력한 식단과 동일한 메뉴가 동일한 식사시간에 있음`() {
-        val expected = DataAlreadyExIstException()
+    fun `입력한 식단과 동일한 메뉴가 동일한 식사시간에 있어서 생성 실패`() {
+        val expected = DataAlreadyExistException()
         val date = DateTime.now()
+        val mealType = MealType.Breakfast
+        val mealName = MealName.Toast
+        val calorie = "313"
         every {
-            repository.create(
-                date,
-                MealType.Breakfast,
-                MealName.Toast,
-                "313"
-            )
+            repository.create(date, mealType, mealName, calorie)
         } returns callbackFlow { close(expected) }
 
         runBlocking {
-            useCase(date, MealType.Breakfast, MealName.Toast, "313")
+            useCase(date, mealType, mealName, calorie)
                 .catch { assertEquals(expected::class, it::class) }
                 .collect { fail() }
         }
