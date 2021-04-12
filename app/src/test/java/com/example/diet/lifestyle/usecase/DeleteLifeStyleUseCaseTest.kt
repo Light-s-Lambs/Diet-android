@@ -1,8 +1,7 @@
 package com.example.diet.lifestyle.usecase
 
 import com.example.diet.lifestyle.model.LifeStyle
-import com.example.diet.lifestyle.model.LifeStyleInfo
-import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
+import com.example.diet.lifestyle.repository.LifeStyleRepository
 import com.example.diet.lifestyle.usecase.exception.ConnectionErrorException
 import com.example.diet.lifestyle.usecase.exception.DataNotFoundException
 import io.mockk.MockKAnnotations
@@ -21,33 +20,36 @@ import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class LoadLifeStyleInfoUseCaseTest {
-    lateinit var loadUseCase: LoadLifeStyleInfoUseCase
+class DeleteLifeStyleUseCaseTest {
+    lateinit var deleteUseCase: DeleteLifeStyleUseCase
 
     @MockK
-    lateinit var repository: LifeStyleInfoRepository
+    lateinit var repository: LifeStyleRepository
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        loadUseCase = LoadLifeStyleInfoUseCase(repository)
+        deleteUseCase = DeleteLifeStyleUseCase(repository)
     }
 
     @Test
-    fun `객체 있음_불러오기 성공`() {
+    fun `삭제하고자 하는 활동과 동일한 활동이 있음_활동 삭제 성공`() {
         val date = DateTime.now()
-        val lifeStyleList = listOf(
-            LifeStyle("Sleeping", "22 hr", "348 kcal"),
-            LifeStyle("Running", "2 hr", "1510 kcal")
+        val lifeStyle = LifeStyle(date, "Running", "2 hr", "1510 kcal")
+        val lifeStyleRequestDto = LifeStyleRequestDto(
+            lifeStyle.date,
+            lifeStyle.name,
+            lifeStyle.time,
+            lifeStyle.burnedCalorie
         )
-        val lifeStyleInfo = LifeStyleInfo(date, lifeStyleList)
-        val expected = lifeStyleInfo
+
+        val expected = lifeStyle
         coEvery {
-            repository.load(date)
+            repository.delete(lifeStyleRequestDto)
         } returns flowOf(expected)
 
         runBlocking {
-            loadUseCase(date)
+            deleteUseCase(lifeStyleRequestDto)
                 .catch { fail() }
                 .collect {
                     assertEquals(expected, it)
@@ -56,17 +58,25 @@ class LoadLifeStyleInfoUseCaseTest {
     }
 
     @Test
-    fun `객체 없음_불러오기 실패`() {
+    fun `삭제하고자 하는 활동과 동일한 활동이 없음_삭제 실패`() {
         val date = DateTime.now()
-        val expected = DataNotFoundException("Data No Exist. Create Before Load.")
+        val lifeStyle = LifeStyle(date, "Running", "2 hr", "1510 kcal")
+        val lifeStyleRequestDto = LifeStyleRequestDto(
+            lifeStyle.date,
+            lifeStyle.name,
+            lifeStyle.time,
+            lifeStyle.burnedCalorie
+        )
+
+        val expected = DataNotFoundException("Data No Exist. Create Before Delete.")
         coEvery {
-            repository.load(date)
+            repository.delete(lifeStyleRequestDto)
         } returns callbackFlow {
             close(expected)
         }
 
         runBlocking {
-            loadUseCase(date)
+            deleteUseCase(lifeStyleRequestDto)
                 .catch {
                     assertEquals(expected::class, it::class)
                 }
@@ -77,17 +87,24 @@ class LoadLifeStyleInfoUseCaseTest {
     }
 
     @Test
-    fun `연결 문제_불러오기 실패`() {
+    fun `네트워크 문제_활동 삭제 실패`() {
         val date = DateTime.now()
+        val lifeStyle = LifeStyle(date, "Running", "2 hr", "1510 kcal")
+        val lifeStyleRequestDto = LifeStyleRequestDto(
+            lifeStyle.date,
+            lifeStyle.name,
+            lifeStyle.time,
+            lifeStyle.burnedCalorie
+        )
         val expected = ConnectionErrorException("No Connection")
         coEvery {
-            repository.load(date)
+            repository.delete(lifeStyleRequestDto)
         } returns callbackFlow {
             close(expected)
         }
 
         runBlocking {
-            loadUseCase(date)
+            deleteUseCase(lifeStyleRequestDto)
                 .catch {
                     assertEquals(expected::class, it::class)
                 }

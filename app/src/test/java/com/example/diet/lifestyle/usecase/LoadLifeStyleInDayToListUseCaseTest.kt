@@ -1,10 +1,9 @@
 package com.example.diet.lifestyle.usecase
 
 import com.example.diet.lifestyle.model.LifeStyle
-import com.example.diet.lifestyle.model.LifeStyleInfo
-import com.example.diet.lifestyle.repository.LifeStyleInfoRepository
+import com.example.diet.lifestyle.repository.LifeStyleRepository
 import com.example.diet.lifestyle.usecase.exception.ConnectionErrorException
-import com.example.diet.lifestyle.usecase.exception.DataAlreadyExistException
+import com.example.diet.lifestyle.usecase.exception.DataNotFoundException
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -21,36 +20,32 @@ import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class CreateLifeStyleInfoUseCaseTest {
-    lateinit var createUseCase: CreateLifeStyleInfoUseCase
+class LoadLifeStyleInDayToListUseCaseTest {
+    lateinit var loadInDayToListUseCase: LoadLifeStyleInDayToListUseCase
 
     @MockK
-    lateinit var repository: LifeStyleInfoRepository
+    lateinit var repository: LifeStyleRepository
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        createUseCase = CreateLifeStyleInfoUseCase(repository)
+        loadInDayToListUseCase = LoadLifeStyleInDayToListUseCase(repository)
     }
 
     @Test
-    fun `동일한 객체 없음_객체 생성 성공`() {
+    fun `해당 날짜에 저장된 활동들이 있음_해당 날짜의 활동 리스트 불러오기 성공`() {
         val date = DateTime.now()
         val lifeStyleList = listOf(
-            LifeStyle("Sleeping", "22 hr", "348 kcal"),
-            LifeStyle("Running", "2 hr", "1510 kcal")
+            LifeStyle(date, "Sleeping", "22 hr", "348 kcal"),
+            LifeStyle(date, "Running", "2 hr", "1510 kcal")
         )
-        val lifeStyleInfo = LifeStyleInfo(date, lifeStyleList)
-        val expected = lifeStyleInfo
+        val expected = lifeStyleList
         coEvery {
-            repository.create(
-                date,
-                lifeStyleList
-            )
+            repository.loadInDayToList(date)
         } returns flowOf(expected)
 
         runBlocking {
-            createUseCase(date, lifeStyleList)
+            loadInDayToListUseCase(date)
                 .catch { fail() }
                 .collect {
                     assertEquals(expected, it)
@@ -59,24 +54,17 @@ class CreateLifeStyleInfoUseCaseTest {
     }
 
     @Test
-    fun `동일한 객체 있음_객체 생성 실패`() {
+    fun `해당 날짜에 저장된 활동이 없음_해당 날짜의 활동 리스트 불러오기 실패`() {
         val date = DateTime.now()
-        val lifeStyleList = listOf(
-            LifeStyle("Sleeping", "22 hr", "348 kcal"),
-            LifeStyle("Running", "2 hr", "1510 kcal")
-        )
-        val expected = DataAlreadyExistException("Data Already Exist. Use Update Instead.")
+        val expected = DataNotFoundException("Data No Exist. Create Before Load.")
         coEvery {
-            repository.create(
-                date,
-                lifeStyleList
-            )
+            repository.loadInDayToList(date)
         } returns callbackFlow {
             close(expected)
         }
 
         runBlocking {
-            createUseCase(date, lifeStyleList)
+            loadInDayToListUseCase(date)
                 .catch {
                     assertEquals(expected::class, it::class)
                 }
@@ -87,24 +75,17 @@ class CreateLifeStyleInfoUseCaseTest {
     }
 
     @Test
-    fun `연결 문제_객체 생성 실패`() {
+    fun `네트워크 문제_해당 날짜의 활동 리스트 불러오기 실패`() {
         val date = DateTime.now()
-        val lifeStyleList = listOf(
-            LifeStyle("Sleeping", "22 hr", "348 kcal"),
-            LifeStyle("Running", "2 hr", "1510 kcal")
-        )
         val expected = ConnectionErrorException("No Connection")
         coEvery {
-            repository.create(
-                date,
-                lifeStyleList
-            )
+            repository.loadInDayToList(date)
         } returns callbackFlow {
             close(expected)
         }
 
         runBlocking {
-            createUseCase(date, lifeStyleList)
+            loadInDayToListUseCase(date)
                 .catch {
                     assertEquals(expected::class, it::class)
                 }
