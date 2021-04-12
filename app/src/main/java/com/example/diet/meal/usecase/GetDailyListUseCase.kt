@@ -5,8 +5,8 @@ import com.example.diet.meal.repository.MealRepository
 import kotlinx.coroutines.flow.Flow
 import org.joda.time.DateTime
 
-class GetDailyMealListUseCase(
+class GetDailyListUseCase(
     private val repository: MealRepository
 ) {
-    operator fun invoke(date: DateTime): Flow<List<Meal>> = repository.getDailyMealList(date)
+    operator fun invoke(date: DateTime): Flow<List<Meal>> = repository.getDailyList(date)
 }

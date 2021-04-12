@@ -16,7 +16,7 @@ interface MealRepository {
 
     fun delete(meal: Meal): Flow<Unit>
 
-    fun getDailyMealList(date: DateTime): Flow<List<Meal>>
+    fun getDailyList(date: DateTime): Flow<List<Meal>>
 
     fun update(
         from: Meal,
