@@ -1,7 +1,7 @@
 package com.example.diet.lifestyle.repository
 
 import com.example.diet.lifestyle.model.LifeStyle
-import com.example.diet.lifestyle.usecase.LifeStyleRequestDto
+import com.example.diet.lifestyle.usecase.dto.LifeStyleRequestDto
 import kotlinx.coroutines.flow.Flow
 import org.joda.time.DateTime
 

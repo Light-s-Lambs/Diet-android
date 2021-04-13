@@ -2,6 +2,7 @@ package com.example.diet.lifestyle.usecase
 
 import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.repository.LifeStyleRepository
+import com.example.diet.lifestyle.usecase.dto.LifeStyleRequestDto
 import com.example.diet.lifestyle.usecase.exception.ConnectionErrorException
 import com.example.diet.lifestyle.usecase.exception.DataAlreadyExistException
 import io.mockk.MockKAnnotations
