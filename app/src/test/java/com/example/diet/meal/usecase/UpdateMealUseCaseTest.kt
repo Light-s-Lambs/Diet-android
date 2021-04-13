@@ -4,7 +4,7 @@ import com.example.diet.meal.model.Meal
 import com.example.diet.meal.model.MealName
 import com.example.diet.meal.model.MealType
 import com.example.diet.meal.repository.MealRepository
-import com.example.diet.meal.usecase.exception.ConnectionErrorException
+import com.example.diet.meal.usecase.exception.ConnectErrorException
 import com.example.diet.meal.usecase.exception.DataAlreadyExistException
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -59,7 +59,7 @@ class UpdateMealUseCaseTest {
     @ExperimentalCoroutinesApi
     @Test
     fun `연결 실패로 인해 변경 실패`() {
-        val expected = ConnectionErrorException()
+        val expected = ConnectErrorException()
         val date = DateTime.now()
         val mealType = MealType.Lunch
         val mealName = MealName.Noodle
