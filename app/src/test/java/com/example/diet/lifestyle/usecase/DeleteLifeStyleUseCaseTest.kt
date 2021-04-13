@@ -34,7 +34,7 @@ class DeleteLifeStyleUseCaseTest {
     }
 
     @Test
-    fun `삭제하고자 하는 활동과 동일한 활동이 있음_활동 삭제 성공`() {
+    fun `선택한 활동과 동일한 활동이 있음_활동 삭제 성공`() {
         val date = DateTime.now()
         val lifeStyle = LifeStyle(date, "Running", "2 hr", "1510 kcal")
         val lifeStyleRequestDto = LifeStyleRequestDto(
@@ -59,7 +59,7 @@ class DeleteLifeStyleUseCaseTest {
     }
 
     @Test
-    fun `삭제하고자 하는 활동과 동일한 활동이 없음_삭제 실패`() {
+    fun `선택한 활동과 동일한 활동이 없음_활동 삭제 실패`() {
         val date = DateTime.now()
         val lifeStyle = LifeStyle(date, "Running", "2 hr", "1510 kcal")
         val lifeStyleRequestDto = LifeStyleRequestDto(
