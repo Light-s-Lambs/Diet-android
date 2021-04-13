@@ -34,12 +34,10 @@ class DeleteMealUseCaseTest {
     @Test
     fun `선택한 객체 삭제 성공`() {
         val date = DateTime.now()
-        val targetObject = Meal(
-            date,
-            MealType.Breakfast,
-            MealName.Toast,
-            "313"
-        )
+        val mealType = MealType.Breakfast
+        val menuName = MealName.Toast
+        val calorie = "313"
+        val targetObject = Meal(date, mealType, menuName, calorie)
         every { repository.delete(targetObject) } returns flowOf(Unit)
 
         runBlocking {
@@ -54,12 +52,10 @@ class DeleteMealUseCaseTest {
     fun `연결 실패로 인해 삭제 실패`() {
         val expected = ConnectErrorException()
         val date = DateTime.now()
-        val targetObject = Meal(
-            date,
-            MealType.Breakfast,
-            MealName.Toast,
-            "313"
-        )
+        val mealType = MealType.Breakfast
+        val menuName = MealName.Toast
+        val calorie = "313"
+        val targetObject = Meal(date, mealType, menuName, calorie)
         every { repository.delete(targetObject) } returns callbackFlow { close(expected) }
 
         runBlocking {

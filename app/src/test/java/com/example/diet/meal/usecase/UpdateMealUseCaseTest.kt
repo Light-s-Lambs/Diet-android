@@ -35,22 +35,20 @@ class UpdateMealUseCaseTest {
     @Test
     fun `선택된 객체를 새로 입력받은 데이터로 변경 성공`() {
         val date = DateTime.now()
-        val mealType = MealType.Lunch
-        val menuName = MealName.Noodle
-        val calorie = "495"
-        val targetObject = Meal(
-            date,
-            MealType.Breakfast,
-            MealName.Toast,
-            "313"
-        )
-        val expected = Meal(date, mealType, menuName, calorie)
+        val fromMealType = MealType.Breakfast
+        val fromMealName = MealName.Toast
+        val fromCalorie = "313"
+        val toMealType = MealType.Lunch
+        val toMealName = MealName.Noodle
+        val toCalorie = "495"
+        val targetObject = Meal(date, fromMealType, fromMealName, fromCalorie)
+        val expected = Meal(date, toMealType, toMealName, toCalorie)
         every {
-            repository.update(targetObject, date, mealType, menuName, calorie)
+            repository.update(targetObject, date, toMealType, toMealName, toCalorie)
         } returns flowOf(expected)
 
         runBlocking {
-            useCase(targetObject, date, mealType, menuName, calorie)
+            useCase(targetObject, date, toMealType, toMealName, toCalorie)
                 .catch { Assert.fail() }
                 .collect { Assert.assertEquals(expected, it) }
         }
@@ -61,21 +59,19 @@ class UpdateMealUseCaseTest {
     fun `연결 실패로 인해 변경 실패`() {
         val expected = ConnectErrorException()
         val date = DateTime.now()
-        val mealType = MealType.Lunch
-        val mealName = MealName.Noodle
-        val calorie = "495"
-        val targetObject = Meal(
-            date,
-            MealType.Breakfast,
-            MealName.Toast,
-            "313"
-        )
+        val fromMealType = MealType.Breakfast
+        val fromMealName = MealName.Toast
+        val fromCalorie = "313"
+        val toMealType = MealType.Lunch
+        val toMealName = MealName.Noodle
+        val toCalorie = "495"
+        val targetObject = Meal(date, fromMealType, fromMealName, fromCalorie)
         every {
-            repository.update(targetObject, date, mealType, mealName, calorie)
+            repository.update(targetObject, date, toMealType, toMealName, toCalorie)
         } returns callbackFlow { close(expected) }
 
         runBlocking {
-            useCase(targetObject, date, mealType, mealName, calorie)
+            useCase(targetObject, date, toMealType, toMealName, toCalorie)
                 .catch { Assert.assertEquals(expected::class, it::class) }
                 .collect { Assert.fail() }
         }
@@ -86,21 +82,19 @@ class UpdateMealUseCaseTest {
     fun `변경하고자 하는 식단과 동일한 메뉴가 동일한 식사시간에 있어서 변경 실패`() {
         val expected = DataAlreadyExistException()
         val date = DateTime.now()
-        val mealType = MealType.Lunch
-        val mealName = MealName.Noodle
-        val calorie = "495"
-        val targetObject = Meal(
-            date,
-            MealType.Breakfast,
-            MealName.Toast,
-            "313"
-        )
+        val fromMealType = MealType.Breakfast
+        val fromMealName = MealName.Toast
+        val fromCalorie = "313"
+        val toMealType = MealType.Lunch
+        val toMealName = MealName.Noodle
+        val toCalorie = "495"
+        val targetObject = Meal(date, fromMealType, fromMealName, fromCalorie)
         every {
-            repository.update(targetObject, date, mealType, mealName, calorie)
+            repository.update(targetObject, date, toMealType, toMealName, toCalorie)
         } returns callbackFlow { close(expected) }
 
         runBlocking {
-            useCase(targetObject, date, mealType, mealName, calorie)
+            useCase(targetObject, date, toMealType, toMealName, toCalorie)
                 .catch { Assert.assertEquals(expected::class, it::class) }
                 .collect { Assert.fail() }
         }
