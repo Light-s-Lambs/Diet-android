@@ -70,7 +70,6 @@ class CreateMealUseCaseTest {
         }
     }
 
-
     @ExperimentalCoroutinesApi
     @Test
     fun `입력한 식단과 동일한 메뉴가 동일한 식사시간에 있어서 생성 실패`() {
