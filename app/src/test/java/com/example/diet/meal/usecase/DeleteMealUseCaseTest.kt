@@ -36,7 +36,7 @@ class DeleteMealUseCaseTest {
         val date = DateTime.now()
         val mealType = MealType.Breakfast
         val menuName = MealName.Toast
-        val calorie = "313"
+        val calorie = 313.0
         val targetObject = Meal(date, mealType, menuName, calorie)
         every { repository.delete(targetObject) } returns flowOf(Unit)
 
@@ -54,7 +54,7 @@ class DeleteMealUseCaseTest {
         val date = DateTime.now()
         val mealType = MealType.Breakfast
         val menuName = MealName.Toast
-        val calorie = "313"
+        val calorie = 313.0
         val targetObject = Meal(date, mealType, menuName, calorie)
         every { repository.delete(targetObject) } returns callbackFlow { close(expected) }
 

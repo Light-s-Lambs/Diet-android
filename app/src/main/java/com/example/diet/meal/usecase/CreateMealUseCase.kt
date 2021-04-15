@@ -14,6 +14,6 @@ class CreateMealUseCase(
         date: DateTime,
         mealType: MealType,
         mealName: MealName,
-        calorie: String
+        calorie: Double
     ): Flow<Meal> = repository.create(date, mealType, mealName, calorie)
 }

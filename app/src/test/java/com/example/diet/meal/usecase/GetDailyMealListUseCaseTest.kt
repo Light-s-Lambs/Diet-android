@@ -37,10 +37,10 @@ class GetDailyMealListUseCaseTest {
         val date = DateTime.now()
         val mealType1 = MealType.Breakfast
         val mealName1 = MealName.Toast
-        val calorie1 = "313"
+        val calorie1 = 313.0
         val mealType2 = MealType.Lunch
         val menuName2 = MealName.Noodle
-        val calorie2 = "495"
+        val calorie2 = 495.0
         val meal1 = Meal(date, mealType1, mealName1, calorie1)
         val meal2 = Meal(date, mealType2, menuName2, calorie2)
         expected.add(meal1)
@@ -62,10 +62,10 @@ class GetDailyMealListUseCaseTest {
         val date = DateTime.now()
         val mealType1 = MealType.Breakfast
         val mealName1 = MealName.Toast
-        val calorie1 = "313"
+        val calorie1 = 313.0
         val mealType2 = MealType.Lunch
         val menuName2 = MealName.Noodle
-        val calorie2 = "495"
+        val calorie2 = 495.0
         val meal1 = Meal(date, mealType1, mealName1, calorie1)
         val meal2 = Meal(date, mealType2, menuName2, calorie2)
         targetList.add(meal1)

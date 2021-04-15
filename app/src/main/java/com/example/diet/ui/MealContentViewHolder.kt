@@ -15,6 +15,6 @@ class MealContentViewHolder(
     fun bind(meal: Meal) {
         itemView.mealTypeTextView.text = meal.mealType.toString()
         itemView.mealMenuTextView.text = meal.menuName.toString()
-        itemView.mealCalorieTextView.text = meal.calorie
+        itemView.mealCalorieTextView.text = meal.calorie.toString()
     }
 }

@@ -11,7 +11,7 @@ interface MealRepository {
         date: DateTime,
         mealType: MealType,
         mealName: MealName,
-        calorie: String
+        calorie: Double
     ): Flow<Meal>
 
     fun delete(meal: Meal): Flow<Unit>
@@ -23,6 +23,6 @@ interface MealRepository {
         date: DateTime,
         mealType: MealType,
         mealName: MealName,
-        calorie: String
+        calorie: Double
     ): Flow<Meal>
 }

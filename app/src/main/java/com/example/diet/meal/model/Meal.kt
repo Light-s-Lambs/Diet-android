@@ -22,5 +22,5 @@ data class Meal(
     val date: DateTime,
     val mealType: MealType,
     val menuName: MealName,
-    val calorie: String
+    val calorie: Double
 )

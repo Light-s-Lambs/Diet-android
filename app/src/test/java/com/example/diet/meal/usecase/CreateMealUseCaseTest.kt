@@ -38,7 +38,7 @@ class CreateMealUseCaseTest {
         val date = DateTime.now()
         val mealType = MealType.Breakfast
         val menuName = MealName.Toast
-        val calorie = "313"
+        val calorie = 313.0
         val expected = Meal(date, mealType, menuName, calorie)
         every {
             repository.create(date, mealType, menuName, calorie)
@@ -58,7 +58,7 @@ class CreateMealUseCaseTest {
         val date = DateTime.now()
         val mealType = MealType.Breakfast
         val mealName = MealName.Toast
-        val calorie = "313"
+        val calorie = 313.0
         every {
             repository.create(date, mealType, mealName, calorie)
         } returns callbackFlow { close(expected) }
@@ -77,7 +77,7 @@ class CreateMealUseCaseTest {
         val date = DateTime.now()
         val mealType = MealType.Breakfast
         val mealName = MealName.Toast
-        val calorie = "313"
+        val calorie = 313.0
         every {
             repository.create(date, mealType, mealName, calorie)
         } returns callbackFlow { close(expected) }

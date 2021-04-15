@@ -37,10 +37,10 @@ class UpdateMealUseCaseTest {
         val date = DateTime.now()
         val fromMealType = MealType.Breakfast
         val fromMealName = MealName.Toast
-        val fromCalorie = "313"
+        val fromCalorie = 313.0
         val toMealType = MealType.Lunch
         val toMealName = MealName.Noodle
-        val toCalorie = "495"
+        val toCalorie = 495.0
         val targetObject = Meal(date, fromMealType, fromMealName, fromCalorie)
         val expected = Meal(date, toMealType, toMealName, toCalorie)
         every {
@@ -61,10 +61,10 @@ class UpdateMealUseCaseTest {
         val date = DateTime.now()
         val fromMealType = MealType.Breakfast
         val fromMealName = MealName.Toast
-        val fromCalorie = "313"
+        val fromCalorie = 313.0
         val toMealType = MealType.Lunch
         val toMealName = MealName.Noodle
-        val toCalorie = "495"
+        val toCalorie = 495.0
         val targetObject = Meal(date, fromMealType, fromMealName, fromCalorie)
         every {
             repository.update(targetObject, date, toMealType, toMealName, toCalorie)
@@ -84,10 +84,10 @@ class UpdateMealUseCaseTest {
         val date = DateTime.now()
         val fromMealType = MealType.Breakfast
         val fromMealName = MealName.Toast
-        val fromCalorie = "313"
+        val fromCalorie = 313.0
         val toMealType = MealType.Lunch
         val toMealName = MealName.Noodle
-        val toCalorie = "495"
+        val toCalorie = 495.0
         val targetObject = Meal(date, fromMealType, fromMealName, fromCalorie)
         every {
             repository.update(targetObject, date, toMealType, toMealName, toCalorie)
