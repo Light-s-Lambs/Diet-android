@@ -8,5 +8,5 @@ class CreateLifeStyleUseCase(
 ) {
     operator fun invoke(
         lifeStyleRequestDto: LifeStyleRequestDto
-    ) = repository.create(lifeStyleRequestDto)
+    ) = repository.createLifeStyle(lifeStyleRequestDto)
 }

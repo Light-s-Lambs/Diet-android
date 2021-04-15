@@ -8,5 +8,5 @@ class LoadLifeStyleInDayToListUseCase(
 ) {
     operator fun invoke(
         date: DateTime,
-    ) = repository.loadInDayToList(date)
+    ) = repository.loadLifeStyleInDayToList(date)
 }

@@ -55,7 +55,7 @@ class UpdateLifeStyleUseCaseTest {
 
         val expected = lifeStyleRevision
         coEvery {
-            repository.update(
+            repository.updateLifeStyle(
                 lifeStyleOriginRequestDto,
                 lifeStyleRevisionRequestDto
             )
@@ -94,7 +94,7 @@ class UpdateLifeStyleUseCaseTest {
 
         val expected = IdenticalDataException()
         coEvery {
-            repository.update(
+            repository.updateLifeStyle(
                 lifeStyleOriginRequestDto,
                 lifeStyleRevisionRequestDto
             )
@@ -135,7 +135,7 @@ class UpdateLifeStyleUseCaseTest {
 
         val expected = DataNotFoundException()
         coEvery {
-            repository.update(
+            repository.updateLifeStyle(
                 lifeStyleOriginRequestDto,
                 lifeStyleRevisionRequestDto
             )
@@ -176,7 +176,7 @@ class UpdateLifeStyleUseCaseTest {
 
         val expected = NetworkFailureException()
         coEvery {
-            repository.update(
+            repository.updateLifeStyle(
                 lifeStyleOriginRequestDto,
                 lifeStyleRevisionRequestDto
             )

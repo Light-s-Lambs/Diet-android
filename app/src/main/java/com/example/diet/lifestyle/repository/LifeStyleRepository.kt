@@ -6,18 +6,18 @@ import kotlinx.coroutines.flow.Flow
 import org.joda.time.DateTime
 
 interface LifeStyleRepository {
-    fun loadInDayToList(date: DateTime): Flow<List<LifeStyle>>
+    fun loadLifeStyleInDayToList(date: DateTime): Flow<List<LifeStyle>>
 
-    fun delete(
+    fun deleteLifeStyle(
         lifeStyleRequestDto: LifeStyleRequestDto
     ): Flow<LifeStyle>
 
-    fun update(
+    fun updateLifeStyle(
         from: LifeStyleRequestDto,
         to: LifeStyleRequestDto
     ): Flow<LifeStyle>
 
-    fun create(
+    fun createLifeStyle(
         lifeStyleRequestDto: LifeStyleRequestDto
     ): Flow<LifeStyle>
 }

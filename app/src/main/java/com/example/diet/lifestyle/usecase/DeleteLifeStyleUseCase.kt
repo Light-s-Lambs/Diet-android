@@ -8,5 +8,5 @@ class DeleteLifeStyleUseCase(
 ) {
     operator fun invoke(
         lifeStyleRequestDto: LifeStyleRequestDto
-    ) = repository.delete(lifeStyleRequestDto)
+    ) = repository.deleteLifeStyle(lifeStyleRequestDto)
 }

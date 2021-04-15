@@ -41,7 +41,7 @@ class LoadLifeStyleInDayToListUseCaseTest {
         )
         val expected = lifeStyleList
         coEvery {
-            repository.loadInDayToList(date)
+            repository.loadLifeStyleInDayToList(date)
         } returns flowOf(expected)
 
         runBlocking {
@@ -58,7 +58,7 @@ class LoadLifeStyleInDayToListUseCaseTest {
         val date = DateTime.now()
         val expected = DataNotFoundException()
         coEvery {
-            repository.loadInDayToList(date)
+            repository.loadLifeStyleInDayToList(date)
         } returns callbackFlow {
             close(expected)
         }
@@ -79,7 +79,7 @@ class LoadLifeStyleInDayToListUseCaseTest {
         val date = DateTime.now()
         val expected = NetworkFailureException()
         coEvery {
-            repository.loadInDayToList(date)
+            repository.loadLifeStyleInDayToList(date)
         } returns callbackFlow {
             close(expected)
         }

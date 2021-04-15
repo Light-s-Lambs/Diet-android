@@ -9,5 +9,5 @@ class UpdateLifeStyleUseCase(
     operator fun invoke(
         from: LifeStyleRequestDto,
         to: LifeStyleRequestDto
-    ) = repository.update(from, to)
+    ) = repository.updateLifeStyle(from, to)
 }

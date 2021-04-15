@@ -46,7 +46,7 @@ class DeleteLifeStyleUseCaseTest {
 
         val expected = lifeStyle
         coEvery {
-            repository.delete(lifeStyleRequestDto)
+            repository.deleteLifeStyle(lifeStyleRequestDto)
         } returns flowOf(expected)
 
         runBlocking {
@@ -71,7 +71,7 @@ class DeleteLifeStyleUseCaseTest {
 
         val expected = DataNotFoundException()
         coEvery {
-            repository.delete(lifeStyleRequestDto)
+            repository.deleteLifeStyle(lifeStyleRequestDto)
         } returns callbackFlow {
             close(expected)
         }
@@ -99,7 +99,7 @@ class DeleteLifeStyleUseCaseTest {
         )
         val expected = NetworkFailureException()
         coEvery {
-            repository.delete(lifeStyleRequestDto)
+            repository.deleteLifeStyle(lifeStyleRequestDto)
         } returns callbackFlow {
             close(expected)
         }

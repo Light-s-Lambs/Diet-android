@@ -46,7 +46,7 @@ class CreateLifeStyleUseCaseTest {
 
         val expected = lifeStyle
         coEvery {
-            repository.create(
+            repository.createLifeStyle(
                 lifeStyleRequestDto
             )
         } returns flowOf(expected)
@@ -73,7 +73,7 @@ class CreateLifeStyleUseCaseTest {
 
         val expected = DataAlreadyExistException()
         coEvery {
-            repository.create(
+            repository.createLifeStyle(
                 lifeStyleRequestDto
             )
         } returns callbackFlow {
@@ -104,7 +104,7 @@ class CreateLifeStyleUseCaseTest {
 
         val expected = NetworkFailureException()
         coEvery {
-            repository.create(
+            repository.createLifeStyle(
                 lifeStyleRequestDto
             )
         } returns callbackFlow {
