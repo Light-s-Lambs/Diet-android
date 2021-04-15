@@ -71,7 +71,7 @@ class CreateLifeStyleUseCaseTest {
             lifeStyle.burnedCalorie
         )
 
-        val expected = DataAlreadyExistException("Data Already Exist. Use Update Instead.")
+        val expected = DataAlreadyExistException()
         coEvery {
             repository.create(
                 lifeStyleRequestDto
@@ -102,7 +102,7 @@ class CreateLifeStyleUseCaseTest {
             lifeStyle.burnedCalorie
         )
 
-        val expected = ConnectionErrorException("No Connection")
+        val expected = ConnectionErrorException()
         coEvery {
             repository.create(
                 lifeStyleRequestDto

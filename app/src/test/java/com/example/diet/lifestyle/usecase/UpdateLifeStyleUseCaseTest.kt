@@ -92,7 +92,7 @@ class UpdateLifeStyleUseCaseTest {
             lifeStyleRevision.burnedCalorie
         )
 
-        val expected = IdenticalDataException("No Change in data. Update Fail.")
+        val expected = IdenticalDataException()
         coEvery {
             repository.update(
                 lifeStyleOriginRequestDto,
@@ -133,7 +133,7 @@ class UpdateLifeStyleUseCaseTest {
             lifeStyleRevision.burnedCalorie
         )
 
-        val expected = DataNotFoundException("Data No Exist. Create Before Delete.")
+        val expected = DataNotFoundException()
         coEvery {
             repository.update(
                 lifeStyleOriginRequestDto,
@@ -174,7 +174,7 @@ class UpdateLifeStyleUseCaseTest {
             lifeStyleRevision.burnedCalorie
         )
 
-        val expected = ConnectionErrorException("No Connection")
+        val expected = ConnectionErrorException()
         coEvery {
             repository.update(
                 lifeStyleOriginRequestDto,

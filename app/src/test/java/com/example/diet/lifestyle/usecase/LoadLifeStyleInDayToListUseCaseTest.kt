@@ -56,7 +56,7 @@ class LoadLifeStyleInDayToListUseCaseTest {
     @Test
     fun `해당 날짜에 저장된 활동이 없음_해당 날짜의 활동 리스트 불러오기 실패`() {
         val date = DateTime.now()
-        val expected = DataNotFoundException("Data No Exist. Create Before Load.")
+        val expected = DataNotFoundException()
         coEvery {
             repository.loadInDayToList(date)
         } returns callbackFlow {
@@ -77,7 +77,7 @@ class LoadLifeStyleInDayToListUseCaseTest {
     @Test
     fun `네트워크 문제_해당 날짜의 활동 리스트 불러오기 실패`() {
         val date = DateTime.now()
-        val expected = ConnectionErrorException("No Connection")
+        val expected = ConnectionErrorException()
         coEvery {
             repository.loadInDayToList(date)
         } returns callbackFlow {

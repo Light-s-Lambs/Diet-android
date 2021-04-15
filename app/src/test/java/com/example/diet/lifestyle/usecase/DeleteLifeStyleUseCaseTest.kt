@@ -69,7 +69,7 @@ class DeleteLifeStyleUseCaseTest {
             lifeStyle.burnedCalorie
         )
 
-        val expected = DataNotFoundException("Data No Exist. Create Before Delete.")
+        val expected = DataNotFoundException()
         coEvery {
             repository.delete(lifeStyleRequestDto)
         } returns callbackFlow {
@@ -97,7 +97,7 @@ class DeleteLifeStyleUseCaseTest {
             lifeStyle.time,
             lifeStyle.burnedCalorie
         )
-        val expected = ConnectionErrorException("No Connection")
+        val expected = ConnectionErrorException()
         coEvery {
             repository.delete(lifeStyleRequestDto)
         } returns callbackFlow {
