@@ -14,7 +14,7 @@ class LifeStyleContentViewHolder(
 ) {
     fun bind(lifeStyle: LifeStyle) {
         itemView.lifeStyleNameTextView.text = lifeStyle.name
-        itemView.lifeStyleTimeTextView.text = lifeStyle.time
-        itemView.lifeStyleBurnedCalorieTextView.text = lifeStyle.burnedCalorie
+        itemView.lifeStyleTimeTextView.text = lifeStyle.time.toString()
+        itemView.lifeStyleBurnedCalorieTextView.text = lifeStyle.burnedCalorie.toString()
     }
 }

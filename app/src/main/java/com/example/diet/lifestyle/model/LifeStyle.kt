@@ -5,6 +5,6 @@ import org.joda.time.DateTime
 data class LifeStyle(
     val date: DateTime,
     val name: String,
-    val time: String,
-    val burnedCalorie: String
+    val time: Double,
+    val burnedCalorie: Double
 )

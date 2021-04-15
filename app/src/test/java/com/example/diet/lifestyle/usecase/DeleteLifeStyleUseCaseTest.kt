@@ -36,7 +36,7 @@ class DeleteLifeStyleUseCaseTest {
     @Test
     fun `선택한 활동과 동일한 활동이 있음_활동 삭제 성공`() {
         val date = DateTime.now()
-        val lifeStyle = LifeStyle(date, "Running", "2 hr", "1510 kcal")
+        val lifeStyle = LifeStyle(date, "Running", 2.0, 1510.0)
         val lifeStyleRequestDto = LifeStyleRequestDto(
             lifeStyle.date,
             lifeStyle.name,
@@ -61,7 +61,7 @@ class DeleteLifeStyleUseCaseTest {
     @Test
     fun `선택한 활동과 동일한 활동이 없음_활동 삭제 실패`() {
         val date = DateTime.now()
-        val lifeStyle = LifeStyle(date, "Running", "2 hr", "1510 kcal")
+        val lifeStyle = LifeStyle(date, "Running", 2.0, 1510.0)
         val lifeStyleRequestDto = LifeStyleRequestDto(
             lifeStyle.date,
             lifeStyle.name,
@@ -90,7 +90,7 @@ class DeleteLifeStyleUseCaseTest {
     @Test
     fun `네트워크 문제_활동 삭제 실패`() {
         val date = DateTime.now()
-        val lifeStyle = LifeStyle(date, "Running", "2 hr", "1510 kcal")
+        val lifeStyle = LifeStyle(date, "Running", 2.0, 1510.0)
         val lifeStyleRequestDto = LifeStyleRequestDto(
             lifeStyle.date,
             lifeStyle.name,

@@ -36,8 +36,8 @@ class LoadLifeStyleInDayToListUseCaseTest {
     fun `해당 날짜에 저장된 활동들이 있음_해당 날짜의 활동 리스트 불러오기 성공`() {
         val date = DateTime.now()
         val lifeStyleList = listOf(
-            LifeStyle(date, "Sleeping", "22 hr", "348 kcal"),
-            LifeStyle(date, "Running", "2 hr", "1510 kcal")
+            LifeStyle(date, "Sleeping", 22.0, 348.0),
+            LifeStyle(date, "Running", 2.0, 1510.0)
         )
         val expected = lifeStyleList
         coEvery {

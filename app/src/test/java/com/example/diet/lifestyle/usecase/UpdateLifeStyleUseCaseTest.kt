@@ -37,8 +37,8 @@ class UpdateLifeStyleUseCaseTest {
     @Test
     fun `기존 활동에 변경 사항이 있음_활동 갱신 성공`() {
         val date = DateTime.now()
-        val lifeStyleOrigin = LifeStyle(date, "Running", "2 hr", "1510 kcal")
-        val lifeStyleRevision = LifeStyle(date, "Sleeping", "22 hr", "348 kcal")
+        val lifeStyleOrigin = LifeStyle(date, "Running", 2.0, 1510.0)
+        val lifeStyleRevision = LifeStyle(date, "Sleeping", 22.0, 348.0)
 
         val lifeStyleOriginRequestDto = LifeStyleRequestDto(
             lifeStyleOrigin.date,
@@ -76,8 +76,8 @@ class UpdateLifeStyleUseCaseTest {
     @Test
     fun `기존 활동에 변경 사항이 없음_활동 갱신 실패`() {
         val date = DateTime.now()
-        val lifeStyleOrigin = LifeStyle(date, "Running", "2 hr", "1510 kcal")
-        val lifeStyleRevision = LifeStyle(date, "Running", "2 hr", "1510 kcal")
+        val lifeStyleOrigin = LifeStyle(date, "Running", 2.0, 1510.0)
+        val lifeStyleRevision = LifeStyle(date, "Running", 22.0, 348.0)
 
         val lifeStyleOriginRequestDto = LifeStyleRequestDto(
             lifeStyleOrigin.date,
@@ -117,8 +117,8 @@ class UpdateLifeStyleUseCaseTest {
     @Test
     fun `기존 활동이 없음_활동 갱신 실패`() {
         val date = DateTime.now()
-        val lifeStyleOrigin = LifeStyle(date, "Running", "2 hr", "1510 kcal")
-        val lifeStyleRevision = LifeStyle(date, "Sleeping", "22 hr", "348 kcal")
+        val lifeStyleOrigin = LifeStyle(date, "Running", 2.0, 1510.0)
+        val lifeStyleRevision = LifeStyle(date, "Sleeping", 22.0, 348.0)
 
         val lifeStyleOriginRequestDto = LifeStyleRequestDto(
             lifeStyleOrigin.date,
@@ -158,8 +158,8 @@ class UpdateLifeStyleUseCaseTest {
     @Test
     fun `네트워크 문제_활동 갱신 실패`() {
         val date = DateTime.now()
-        val lifeStyleOrigin = LifeStyle(date, "Running", "2 hr", "1510 kcal")
-        val lifeStyleRevision = LifeStyle(date, "Sleeping", "22 hr", "348 kcal")
+        val lifeStyleOrigin = LifeStyle(date, "Running", 2.0, 1510.0)
+        val lifeStyleRevision = LifeStyle(date, "Sleeping", 22.0, 348.0)
 
         val lifeStyleOriginRequestDto = LifeStyleRequestDto(
             lifeStyleOrigin.date,

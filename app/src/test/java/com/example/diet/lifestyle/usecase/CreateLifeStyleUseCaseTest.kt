@@ -36,7 +36,7 @@ class CreateLifeStyleUseCaseTest {
     @Test
     fun `사용자의 입력과 동일한 활동 없음_활동 생성 성공`() {
         val date = DateTime.now()
-        val lifeStyle = LifeStyle(date, "Running", "2 hr", "1510 kcal")
+        val lifeStyle = LifeStyle(date, "Running", 2.0, 1510.0)
         val lifeStyleRequestDto = LifeStyleRequestDto(
             lifeStyle.date,
             lifeStyle.name,
@@ -63,7 +63,7 @@ class CreateLifeStyleUseCaseTest {
     @Test
     fun `사용자 입력과 동일한 활동 있음_활동 생성 실패`() {
         val date = DateTime.now()
-        val lifeStyle = LifeStyle(date, "Running", "2 hr", "1510 kcal")
+        val lifeStyle = LifeStyle(date, "Running", 2.0, 1510.0)
         val lifeStyleRequestDto = LifeStyleRequestDto(
             lifeStyle.date,
             lifeStyle.name,
@@ -94,7 +94,7 @@ class CreateLifeStyleUseCaseTest {
     @Test
     fun `네트워크 문제_활동 생성 실패`() {
         val date = DateTime.now()
-        val lifeStyle = LifeStyle(date, "Running", "2 hr", "1510 kcal")
+        val lifeStyle = LifeStyle(date, "Running", 2.0, 1510.0)
         val lifeStyleRequestDto = LifeStyleRequestDto(
             lifeStyle.date,
             lifeStyle.name,
