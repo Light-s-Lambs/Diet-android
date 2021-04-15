@@ -7,18 +7,18 @@ import kotlinx.coroutines.flow.Flow
 import org.joda.time.DateTime
 
 interface MealRepository {
-    fun create(
+    fun createMeal(
         date: DateTime,
         mealType: MealType,
         mealName: MealName,
         calorie: Double
     ): Flow<Meal>
 
-    fun delete(meal: Meal): Flow<Unit>
+    fun deleteMeal(meal: Meal): Flow<Unit>
 
-    fun getDailyList(date: DateTime): Flow<List<Meal>>
+    fun getDailyMealList(date: DateTime): Flow<List<Meal>>
 
-    fun update(
+    fun updateMeal(
         from: Meal,
         date: DateTime,
         mealType: MealType,

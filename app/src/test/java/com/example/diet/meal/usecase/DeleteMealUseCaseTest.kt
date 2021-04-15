@@ -38,7 +38,7 @@ class DeleteMealUseCaseTest {
         val menuName = MealName.Toast
         val calorie = 313.0
         val targetObject = Meal(date, mealType, menuName, calorie)
-        every { repository.delete(targetObject) } returns flowOf(Unit)
+        every { repository.deleteMeal(targetObject) } returns flowOf(Unit)
 
         runBlocking {
             useCase(targetObject)
@@ -56,7 +56,7 @@ class DeleteMealUseCaseTest {
         val menuName = MealName.Toast
         val calorie = 313.0
         val targetObject = Meal(date, mealType, menuName, calorie)
-        every { repository.delete(targetObject) } returns callbackFlow { close(expected) }
+        every { repository.deleteMeal(targetObject) } returns callbackFlow { close(expected) }
 
         runBlocking {
             useCase(targetObject)

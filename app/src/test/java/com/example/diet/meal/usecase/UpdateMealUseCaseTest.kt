@@ -44,7 +44,7 @@ class UpdateMealUseCaseTest {
         val targetObject = Meal(date, fromMealType, fromMealName, fromCalorie)
         val expected = Meal(date, toMealType, toMealName, toCalorie)
         every {
-            repository.update(targetObject, date, toMealType, toMealName, toCalorie)
+            repository.updateMeal(targetObject, date, toMealType, toMealName, toCalorie)
         } returns flowOf(expected)
 
         runBlocking {
@@ -67,7 +67,7 @@ class UpdateMealUseCaseTest {
         val toCalorie = 495.0
         val targetObject = Meal(date, fromMealType, fromMealName, fromCalorie)
         every {
-            repository.update(targetObject, date, toMealType, toMealName, toCalorie)
+            repository.updateMeal(targetObject, date, toMealType, toMealName, toCalorie)
         } returns callbackFlow { close(expected) }
 
         runBlocking {
@@ -90,7 +90,7 @@ class UpdateMealUseCaseTest {
         val toCalorie = 495.0
         val targetObject = Meal(date, fromMealType, fromMealName, fromCalorie)
         every {
-            repository.update(targetObject, date, toMealType, toMealName, toCalorie)
+            repository.updateMeal(targetObject, date, toMealType, toMealName, toCalorie)
         } returns callbackFlow { close(expected) }
 
         runBlocking {

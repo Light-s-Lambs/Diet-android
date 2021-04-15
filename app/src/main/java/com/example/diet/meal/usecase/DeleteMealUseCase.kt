@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 class DeleteMealUseCase(
     private val repository: MealRepository
 ) {
-    operator fun invoke(meal: Meal): Flow<Unit> = repository.delete(meal)
+    operator fun invoke(meal: Meal): Flow<Unit> = repository.deleteMeal(meal)
 }

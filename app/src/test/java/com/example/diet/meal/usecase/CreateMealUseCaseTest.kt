@@ -41,7 +41,7 @@ class CreateMealUseCaseTest {
         val calorie = 313.0
         val expected = Meal(date, mealType, menuName, calorie)
         every {
-            repository.create(date, mealType, menuName, calorie)
+            repository.createMeal(date, mealType, menuName, calorie)
         } returns flowOf(expected)
 
         runBlocking {
@@ -60,7 +60,7 @@ class CreateMealUseCaseTest {
         val mealName = MealName.Toast
         val calorie = 313.0
         every {
-            repository.create(date, mealType, mealName, calorie)
+            repository.createMeal(date, mealType, mealName, calorie)
         } returns callbackFlow { close(expected) }
 
         runBlocking {
@@ -79,7 +79,7 @@ class CreateMealUseCaseTest {
         val mealName = MealName.Toast
         val calorie = 313.0
         every {
-            repository.create(date, mealType, mealName, calorie)
+            repository.createMeal(date, mealType, mealName, calorie)
         } returns callbackFlow { close(expected) }
 
         runBlocking {

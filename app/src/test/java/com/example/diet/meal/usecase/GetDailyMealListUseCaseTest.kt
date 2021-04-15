@@ -20,7 +20,7 @@ import org.junit.Before
 import org.junit.Test
 
 class GetDailyMealListUseCaseTest {
-    lateinit var useCase: GetDailyListUseCase
+    lateinit var useCase: GetDailyMealListUseCase
 
     @MockK
     lateinit var repository: MealRepository
@@ -28,7 +28,7 @@ class GetDailyMealListUseCaseTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        useCase = GetDailyListUseCase(repository)
+        useCase = GetDailyMealListUseCase(repository)
     }
 
     @Test
@@ -45,7 +45,7 @@ class GetDailyMealListUseCaseTest {
         val meal2 = Meal(date, mealType2, menuName2, calorie2)
         expected.add(meal1)
         expected.add(meal2)
-        every { repository.getDailyList(date) } returns flowOf(expected)
+        every { repository.getDailyMealList(date) } returns flowOf(expected)
 
         runBlocking {
             useCase(date)
@@ -70,7 +70,7 @@ class GetDailyMealListUseCaseTest {
         val meal2 = Meal(date, mealType2, menuName2, calorie2)
         targetList.add(meal1)
         targetList.add(meal2)
-        every { repository.getDailyList(date) } returns callbackFlow { close(expected) }
+        every { repository.getDailyMealList(date) } returns callbackFlow { close(expected) }
 
         runBlocking {
             useCase(date)

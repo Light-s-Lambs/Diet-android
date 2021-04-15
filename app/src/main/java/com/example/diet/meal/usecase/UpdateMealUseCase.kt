@@ -16,5 +16,5 @@ class UpdateMealUseCase(
         mealType: MealType,
         mealName: MealName,
         calorie: Double
-    ): Flow<Meal> = repository.update(from, date, mealType, mealName, calorie)
+    ): Flow<Meal> = repository.updateMeal(from, date, mealType, mealName, calorie)
 }
