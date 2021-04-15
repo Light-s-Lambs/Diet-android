@@ -3,7 +3,7 @@ package com.example.diet.lifestyle.usecase
 import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.repository.LifeStyleRepository
 import com.example.diet.lifestyle.usecase.dto.LifeStyleRequestDto
-import com.example.diet.lifestyle.usecase.exception.ConnectionErrorException
+import com.example.diet.lifestyle.usecase.exception.NetworkFailureException
 import com.example.diet.lifestyle.usecase.exception.DataNotFoundException
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -97,7 +97,7 @@ class DeleteLifeStyleUseCaseTest {
             lifeStyle.time,
             lifeStyle.burnedCalorie
         )
-        val expected = ConnectionErrorException()
+        val expected = NetworkFailureException()
         coEvery {
             repository.delete(lifeStyleRequestDto)
         } returns callbackFlow {

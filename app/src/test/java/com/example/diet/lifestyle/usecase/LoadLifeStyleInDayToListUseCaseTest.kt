@@ -2,7 +2,7 @@ package com.example.diet.lifestyle.usecase
 
 import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.repository.LifeStyleRepository
-import com.example.diet.lifestyle.usecase.exception.ConnectionErrorException
+import com.example.diet.lifestyle.usecase.exception.NetworkFailureException
 import com.example.diet.lifestyle.usecase.exception.DataNotFoundException
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -77,7 +77,7 @@ class LoadLifeStyleInDayToListUseCaseTest {
     @Test
     fun `네트워크 문제_해당 날짜의 활동 리스트 불러오기 실패`() {
         val date = DateTime.now()
-        val expected = ConnectionErrorException()
+        val expected = NetworkFailureException()
         coEvery {
             repository.loadInDayToList(date)
         } returns callbackFlow {

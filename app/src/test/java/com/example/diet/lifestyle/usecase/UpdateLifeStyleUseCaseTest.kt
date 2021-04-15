@@ -3,7 +3,7 @@ package com.example.diet.lifestyle.usecase
 import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.repository.LifeStyleRepository
 import com.example.diet.lifestyle.usecase.dto.LifeStyleRequestDto
-import com.example.diet.lifestyle.usecase.exception.ConnectionErrorException
+import com.example.diet.lifestyle.usecase.exception.NetworkFailureException
 import com.example.diet.lifestyle.usecase.exception.DataNotFoundException
 import com.example.diet.lifestyle.usecase.exception.IdenticalDataException
 import io.mockk.MockKAnnotations
@@ -174,7 +174,7 @@ class UpdateLifeStyleUseCaseTest {
             lifeStyleRevision.burnedCalorie
         )
 
-        val expected = ConnectionErrorException()
+        val expected = NetworkFailureException()
         coEvery {
             repository.update(
                 lifeStyleOriginRequestDto,
