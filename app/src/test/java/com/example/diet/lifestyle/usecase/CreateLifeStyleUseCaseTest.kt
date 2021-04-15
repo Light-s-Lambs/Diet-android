@@ -2,9 +2,8 @@ package com.example.diet.lifestyle.usecase
 
 import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.repository.LifeStyleRepository
-import com.example.diet.lifestyle.usecase.dto.LifeStyleRequestDto
-import com.example.diet.lifestyle.usecase.exception.NetworkFailureException
 import com.example.diet.lifestyle.usecase.exception.DataAlreadyExistException
+import com.example.diet.lifestyle.usecase.exception.NetworkFailureException
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -36,23 +35,22 @@ class CreateLifeStyleUseCaseTest {
     @Test
     fun `사용자의 입력과 동일한 활동 없음_활동 생성 성공`() {
         val date = DateTime.now()
-        val lifeStyle = LifeStyle(date, "Running", 2.0, 1510.0)
-        val lifeStyleRequestDto = LifeStyleRequestDto(
-            lifeStyle.date,
-            lifeStyle.name,
-            lifeStyle.time,
-            lifeStyle.burnedCalorie
+        val lifeStyleRequest = LifeStyleRequest(date, "Running", 2.0, 1510.0)
+        val lifeStyle = LifeStyle(
+            lifeStyleRequest.date,
+            lifeStyleRequest.name,
+            lifeStyleRequest.time,
+            lifeStyleRequest.burnedCalorie
         )
-
         val expected = lifeStyle
         coEvery {
             repository.createLifeStyle(
-                lifeStyleRequestDto
+                lifeStyleRequest
             )
         } returns flowOf(expected)
 
         runBlocking {
-            createUseCase(lifeStyleRequestDto)
+            createUseCase(lifeStyleRequest)
                 .catch { fail() }
                 .collect {
                     assertEquals(expected, it)
@@ -63,25 +61,18 @@ class CreateLifeStyleUseCaseTest {
     @Test
     fun `사용자 입력과 동일한 활동 있음_활동 생성 실패`() {
         val date = DateTime.now()
-        val lifeStyle = LifeStyle(date, "Running", 2.0, 1510.0)
-        val lifeStyleRequestDto = LifeStyleRequestDto(
-            lifeStyle.date,
-            lifeStyle.name,
-            lifeStyle.time,
-            lifeStyle.burnedCalorie
-        )
-
+        val lifeStyleRequest = LifeStyleRequest(date, "Running", 2.0, 1510.0)
         val expected = DataAlreadyExistException()
         coEvery {
             repository.createLifeStyle(
-                lifeStyleRequestDto
+                lifeStyleRequest
             )
         } returns callbackFlow {
             close(expected)
         }
 
         runBlocking {
-            createUseCase(lifeStyleRequestDto)
+            createUseCase(lifeStyleRequest)
                 .catch {
                     assertEquals(expected::class, it::class)
                 }
@@ -94,25 +85,18 @@ class CreateLifeStyleUseCaseTest {
     @Test
     fun `네트워크 문제_활동 생성 실패`() {
         val date = DateTime.now()
-        val lifeStyle = LifeStyle(date, "Running", 2.0, 1510.0)
-        val lifeStyleRequestDto = LifeStyleRequestDto(
-            lifeStyle.date,
-            lifeStyle.name,
-            lifeStyle.time,
-            lifeStyle.burnedCalorie
-        )
-
+        val lifeStyleRequest = LifeStyleRequest(date, "Running", 2.0, 1510.0)
         val expected = NetworkFailureException()
         coEvery {
             repository.createLifeStyle(
-                lifeStyleRequestDto
+                lifeStyleRequest
             )
         } returns callbackFlow {
             close(expected)
         }
 
         runBlocking {
-            createUseCase(lifeStyleRequestDto)
+            createUseCase(lifeStyleRequest)
                 .catch {
                     assertEquals(expected::class, it::class)
                 }

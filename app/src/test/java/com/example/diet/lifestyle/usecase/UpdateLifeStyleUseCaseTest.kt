@@ -2,10 +2,9 @@ package com.example.diet.lifestyle.usecase
 
 import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.repository.LifeStyleRepository
-import com.example.diet.lifestyle.usecase.dto.LifeStyleRequestDto
-import com.example.diet.lifestyle.usecase.exception.NetworkFailureException
 import com.example.diet.lifestyle.usecase.exception.DataNotFoundException
 import com.example.diet.lifestyle.usecase.exception.IdenticalDataException
+import com.example.diet.lifestyle.usecase.exception.NetworkFailureException
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -37,34 +36,26 @@ class UpdateLifeStyleUseCaseTest {
     @Test
     fun `기존 활동에 변경 사항이 있음_활동 갱신 성공`() {
         val date = DateTime.now()
-        val lifeStyleOrigin = LifeStyle(date, "Running", 2.0, 1510.0)
-        val lifeStyleRevision = LifeStyle(date, "Sleeping", 22.0, 348.0)
-
-        val lifeStyleOriginRequestDto = LifeStyleRequestDto(
-            lifeStyleOrigin.date,
-            lifeStyleOrigin.name,
-            lifeStyleOrigin.time,
-            lifeStyleOrigin.burnedCalorie
+        val lifeStyleOriginRequest = LifeStyleRequest(date, "Running", 2.0, 1510.0)
+        val lifeStyleRevisionRequest = LifeStyleRequest(date, "Sleeping", 22.0, 348.0)
+        val lifeStyleRevision = LifeStyle(
+            lifeStyleRevisionRequest.date,
+            lifeStyleRevisionRequest.name,
+            lifeStyleRevisionRequest.time,
+            lifeStyleRevisionRequest.burnedCalorie
         )
-        val lifeStyleRevisionRequestDto = LifeStyleRequestDto(
-            lifeStyleRevision.date,
-            lifeStyleRevision.name,
-            lifeStyleRevision.time,
-            lifeStyleRevision.burnedCalorie
-        )
-
         val expected = lifeStyleRevision
         coEvery {
             repository.updateLifeStyle(
-                lifeStyleOriginRequestDto,
-                lifeStyleRevisionRequestDto
+                lifeStyleOriginRequest,
+                lifeStyleRevisionRequest
             )
         } returns flowOf(expected)
 
         runBlocking {
             updateUseCase(
-                lifeStyleOriginRequestDto,
-                lifeStyleRevisionRequestDto
+                lifeStyleOriginRequest,
+                lifeStyleRevisionRequest
             ).catch {
                 fail()
             }.collect {
@@ -76,27 +67,13 @@ class UpdateLifeStyleUseCaseTest {
     @Test
     fun `기존 활동에 변경 사항이 없음_활동 갱신 실패`() {
         val date = DateTime.now()
-        val lifeStyleOrigin = LifeStyle(date, "Running", 2.0, 1510.0)
-        val lifeStyleRevision = LifeStyle(date, "Running", 22.0, 348.0)
-
-        val lifeStyleOriginRequestDto = LifeStyleRequestDto(
-            lifeStyleOrigin.date,
-            lifeStyleOrigin.name,
-            lifeStyleOrigin.time,
-            lifeStyleOrigin.burnedCalorie
-        )
-        val lifeStyleRevisionRequestDto = LifeStyleRequestDto(
-            lifeStyleRevision.date,
-            lifeStyleRevision.name,
-            lifeStyleRevision.time,
-            lifeStyleRevision.burnedCalorie
-        )
-
+        val lifeStyleOriginRequest = LifeStyleRequest(date, "Running", 2.0, 1510.0)
+        val lifeStyleRevisionRequest = LifeStyleRequest(date, "Sleeping", 22.0, 348.0)
         val expected = IdenticalDataException()
         coEvery {
             repository.updateLifeStyle(
-                lifeStyleOriginRequestDto,
-                lifeStyleRevisionRequestDto
+                lifeStyleOriginRequest,
+                lifeStyleRevisionRequest
             )
         } returns callbackFlow {
             close(expected)
@@ -104,8 +81,8 @@ class UpdateLifeStyleUseCaseTest {
 
         runBlocking {
             updateUseCase(
-                lifeStyleOriginRequestDto,
-                lifeStyleRevisionRequestDto
+                lifeStyleOriginRequest,
+                lifeStyleRevisionRequest
             ).catch {
                 assertEquals(expected::class, it::class)
             }.collect {
@@ -117,27 +94,13 @@ class UpdateLifeStyleUseCaseTest {
     @Test
     fun `기존 활동이 없음_활동 갱신 실패`() {
         val date = DateTime.now()
-        val lifeStyleOrigin = LifeStyle(date, "Running", 2.0, 1510.0)
-        val lifeStyleRevision = LifeStyle(date, "Sleeping", 22.0, 348.0)
-
-        val lifeStyleOriginRequestDto = LifeStyleRequestDto(
-            lifeStyleOrigin.date,
-            lifeStyleOrigin.name,
-            lifeStyleOrigin.time,
-            lifeStyleOrigin.burnedCalorie
-        )
-        val lifeStyleRevisionRequestDto = LifeStyleRequestDto(
-            lifeStyleRevision.date,
-            lifeStyleRevision.name,
-            lifeStyleRevision.time,
-            lifeStyleRevision.burnedCalorie
-        )
-
+        val lifeStyleOriginRequest = LifeStyleRequest(date, "Running", 2.0, 1510.0)
+        val lifeStyleRevisionRequest = LifeStyleRequest(date, "Sleeping", 22.0, 348.0)
         val expected = DataNotFoundException()
         coEvery {
             repository.updateLifeStyle(
-                lifeStyleOriginRequestDto,
-                lifeStyleRevisionRequestDto
+                lifeStyleOriginRequest,
+                lifeStyleRevisionRequest
             )
         } returns callbackFlow {
             close(expected)
@@ -145,8 +108,8 @@ class UpdateLifeStyleUseCaseTest {
 
         runBlocking {
             updateUseCase(
-                lifeStyleOriginRequestDto,
-                lifeStyleRevisionRequestDto
+                lifeStyleOriginRequest,
+                lifeStyleRevisionRequest
             ).catch {
                 assertEquals(expected::class, it::class)
             }.collect {
@@ -158,27 +121,13 @@ class UpdateLifeStyleUseCaseTest {
     @Test
     fun `네트워크 문제_활동 갱신 실패`() {
         val date = DateTime.now()
-        val lifeStyleOrigin = LifeStyle(date, "Running", 2.0, 1510.0)
-        val lifeStyleRevision = LifeStyle(date, "Sleeping", 22.0, 348.0)
-
-        val lifeStyleOriginRequestDto = LifeStyleRequestDto(
-            lifeStyleOrigin.date,
-            lifeStyleOrigin.name,
-            lifeStyleOrigin.time,
-            lifeStyleOrigin.burnedCalorie
-        )
-        val lifeStyleRevisionRequestDto = LifeStyleRequestDto(
-            lifeStyleRevision.date,
-            lifeStyleRevision.name,
-            lifeStyleRevision.time,
-            lifeStyleRevision.burnedCalorie
-        )
-
+        val lifeStyleOriginRequest = LifeStyleRequest(date, "Running", 2.0, 1510.0)
+        val lifeStyleRevisionRequest = LifeStyleRequest(date, "Sleeping", 22.0, 348.0)
         val expected = NetworkFailureException()
         coEvery {
             repository.updateLifeStyle(
-                lifeStyleOriginRequestDto,
-                lifeStyleRevisionRequestDto
+                lifeStyleOriginRequest,
+                lifeStyleRevisionRequest
             )
         } returns callbackFlow {
             close(expected)
@@ -186,8 +135,8 @@ class UpdateLifeStyleUseCaseTest {
 
         runBlocking {
             updateUseCase(
-                lifeStyleOriginRequestDto,
-                lifeStyleRevisionRequestDto
+                lifeStyleOriginRequest,
+                lifeStyleRevisionRequest
             ).catch {
                 assertEquals(expected::class, it::class)
             }.collect {
