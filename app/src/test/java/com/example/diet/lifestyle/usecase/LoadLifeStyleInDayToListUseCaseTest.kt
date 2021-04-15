@@ -2,8 +2,8 @@ package com.example.diet.lifestyle.usecase
 
 import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.repository.LifeStyleRepository
-import com.example.diet.lifestyle.usecase.exception.NetworkFailureException
 import com.example.diet.lifestyle.usecase.exception.DataNotFoundException
+import com.example.diet.lifestyle.usecase.exception.NetworkFailureException
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
