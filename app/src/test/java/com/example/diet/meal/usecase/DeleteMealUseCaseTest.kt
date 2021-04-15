@@ -4,7 +4,7 @@ import com.example.diet.meal.model.Meal
 import com.example.diet.meal.model.MealName
 import com.example.diet.meal.model.MealType
 import com.example.diet.meal.repository.MealRepository
-import com.example.diet.meal.usecase.exception.ConnectErrorException
+import com.example.diet.meal.usecase.exception.ConnectionFailureException
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -50,7 +50,7 @@ class DeleteMealUseCaseTest {
     @ExperimentalCoroutinesApi
     @Test
     fun `연결 실패로 인해 삭제 실패`() {
-        val expected = ConnectErrorException()
+        val expected = ConnectionFailureException()
         val date = DateTime.now()
         val mealType = MealType.Breakfast
         val menuName = MealName.Toast
