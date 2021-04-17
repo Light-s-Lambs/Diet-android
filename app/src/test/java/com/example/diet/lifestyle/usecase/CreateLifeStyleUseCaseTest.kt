@@ -33,7 +33,7 @@ class CreateLifeStyleUseCaseTest {
     }
 
     @Test
-    fun `사용자의 입력과 동일한 활동 없음_활동 생성 성공`() {
+    fun `사용자가 하단의 완료 버튼을 눌렀을때_사용자가 입력한 활동 정보가 저장된 활동 정보와 동일하지 않음_활동 생성 성공_화면 종료`() {
         val date = DateTime.now()
         val lifeStyleRequest = LifeStyleRequest(date, "Running", 2.0, 1510.0)
         val lifeStyle = LifeStyle(
@@ -59,7 +59,7 @@ class CreateLifeStyleUseCaseTest {
     }
 
     @Test
-    fun `사용자 입력과 동일한 활동 있음_활동 생성 실패`() {
+    fun `사용자가 하단의 완료 버튼을 눌렀을때_사용자가 입력한 활동 정보가 저장된 활동 정보와 동일함_활동 생성 실패_토스트로 에러 출력`() {
         val date = DateTime.now()
         val lifeStyleRequest = LifeStyleRequest(date, "Running", 2.0, 1510.0)
         val expected = DataAlreadyExistException()
@@ -83,7 +83,7 @@ class CreateLifeStyleUseCaseTest {
     }
 
     @Test
-    fun `네트워크 문제_활동 생성 실패`() {
+    fun `사용자가 하단의 완료 버튼을 눌렀을때_네트워크 문제로 50ms를 기다림을 3번 재시도_3회 실패_활동 생성 실패_토스트로 에러 출력`() {
         val date = DateTime.now()
         val lifeStyleRequest = LifeStyleRequest(date, "Running", 2.0, 1510.0)
         val expected = NetworkFailureException()
@@ -104,5 +104,13 @@ class CreateLifeStyleUseCaseTest {
                     fail()
                 }
         }
+    }
+
+    @Test
+    fun `사용자가 하단의 완료 버튼을 눌렀을때_네트워크 문제로 50ms를 기다림을 3번 재시도_1회 연결 성공_활동 생성 성공_화면종료`() {
+    }
+
+    @Test
+    fun `사용자가 하단의 완료 버튼을 눌렀을때_네트워크 문제로 50ms를 기다림을 3번 재시도_3회 연결 성공_활동 생성 성공_화면 종료`() {
     }
 }
