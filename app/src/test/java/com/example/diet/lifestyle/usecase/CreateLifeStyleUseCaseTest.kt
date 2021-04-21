@@ -8,7 +8,6 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
@@ -83,7 +82,7 @@ class CreateLifeStyleUseCaseTest {
     }
 
     @Test
-    fun `사용자가 입력한 정보로 만든 LifeStyleRequest를 보낼때, 네트워크 문제로 50ms를 기다림_3번 재시도_1회차 연결 성공_활동 생성 성공`() {
+    fun `사용자가 입력한 정보로 만든 LifeStyleRequest를 보낼때, 네트워크 문제로 3번 재시도_1회차 연결 성공_활동 생성 성공`() {
         val date = DateTime.now()
         val lifeStyleRequest = LifeStyleRequest(date, "Running", 2.0, 1510.0)
         val lifeStyle = LifeStyle(
@@ -105,7 +104,7 @@ class CreateLifeStyleUseCaseTest {
                 offer(expected)
                 close()
             } else {
-                retryUntilZero -= 1
+                retryUntilZero--
                 close(exception)
             }
         }
@@ -113,23 +112,19 @@ class CreateLifeStyleUseCaseTest {
         runBlocking {
             createUseCase(
                 lifeStyleRequest
-            ).retry(maxRetries) { cause ->
-                if (cause::class == exception::class) {
-                    delay(50)
-                    return@retry true
-                } else {
-                    return@retry false
-                }
-            }.catch {
+            ).retry(
+                maxRetries
+            ).catch {
                 fail()
             }.collect {
                 assertEquals(expected, it)
             }
+
         }
     }
 
     @Test
-    fun `LifeStyleRequest를 보낼 때, 네트워크 문제로 50ms를 기다림_3번 재시도_3회차 연결 성공_활동 생성 성공`() {
+    fun `LifeStyleRequest를 보낼 때, 네트워크 문제로 3번 재시도_3회차 연결 성공_활동 생성 성공`() {
         val date = DateTime.now()
         val lifeStyleRequest = LifeStyleRequest(date, "Running", 2.0, 1510.0)
         val lifeStyle = LifeStyle(
@@ -151,7 +146,7 @@ class CreateLifeStyleUseCaseTest {
                 offer(expected)
                 close()
             } else {
-                retryUntilZero -= 1
+                retryUntilZero--
                 close(exception)
             }
         }
@@ -159,14 +154,9 @@ class CreateLifeStyleUseCaseTest {
         runBlocking {
             createUseCase(
                 lifeStyleRequest
-            ).retry(maxRetries) { cause ->
-                if (cause::class == exception::class) {
-                    delay(50)
-                    return@retry true
-                } else {
-                    return@retry false
-                }
-            }.catch {
+            ).retry(
+                maxRetries
+            ).catch {
                 fail()
             }.collect {
                 assertEquals(expected, it)
@@ -175,7 +165,7 @@ class CreateLifeStyleUseCaseTest {
     }
 
     @Test
-    fun `LifeStyleRequest를 보낼 때, 네트워크 문제로 50ms를 기다림_3번 재시도_3회 연결 실패_활동 생성 실패`() {
+    fun `LifeStyleRequest를 보낼 때, 네트워크 문제로 3번 재시도_모든 재시도 연결 실패_활동 생성 실패`() {
         val date = DateTime.now()
         val lifeStyleRequest = LifeStyleRequest(date, "Running", 2.0, 1510.0)
         var retryUntilZero = 4
@@ -188,9 +178,9 @@ class CreateLifeStyleUseCaseTest {
             )
         } returns callbackFlow {
             if (retryUntilZero == 0) {
-                close()
+                close(exception)
             } else {
-                retryUntilZero -= 1
+                retryUntilZero--
                 close(exception)
             }
         }
@@ -198,14 +188,9 @@ class CreateLifeStyleUseCaseTest {
         runBlocking {
             createUseCase(
                 lifeStyleRequest
-            ).retry(maxRetries) { cause ->
-                if (cause::class == exception::class) {
-                    delay(50)
-                    return@retry true
-                } else {
-                    return@retry false
-                }
-            }.catch {
+            ).retry(
+                maxRetries
+            ).catch {
                 assertEquals(expected::class, it::class)
             }.collect {
                 fail()
