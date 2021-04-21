@@ -37,15 +37,15 @@ class CreateMealUseCaseTest {
     fun `사용자의 입력을 받아 식단 생성 성공`() {
         val date = DateTime.now()
         val mealType = MealType.Breakfast
-        val menuName = MealName.Toast
+        val mealName = MealName.Toast
         val calorie = 313.0
-        val expected = Meal(date, mealType, menuName, calorie)
+        val expected = Meal(date, mealType, mealName, calorie)
         every {
-            repository.createMeal(date, mealType, menuName, calorie)
+            repository.createMeal(date, mealType, mealName, calorie)
         } returns flowOf(expected)
 
         runBlocking {
-            useCase(date, mealType, menuName, calorie)
+            useCase(date, mealType, mealName, calorie)
                 .catch { fail() }
                 .collect { assertEquals(expected, it) }
         }
