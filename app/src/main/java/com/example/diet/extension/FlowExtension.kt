@@ -8,5 +8,9 @@ import kotlinx.coroutines.withTimeout
 
 @FlowPreview
 suspend fun <T> Flow<T>.timeout(timeMillis: Long): Flow<T> = flow {
-    withTimeout(timeMillis) { collect { value -> emit(value) } }
+    withTimeout(timeMillis) {
+        collect { value ->
+            emit(value)
+        }
+    }
 }
