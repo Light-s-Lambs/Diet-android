@@ -9,11 +9,11 @@ class CalculateBasalMetabolismUseCase {
             "Weight, Height, Age Must Be non-negative"
         }
         return when (gender) {
-            Gender.male -> {
+            Gender.Male -> {
                 val basalMetabolism: Double = 66.47 + (13.75 * weight) + (5 * height) - (6.76 * age)
                 roundHundredthsPlace(basalMetabolism)
             }
-            Gender.female -> {
+            Gender.Female -> {
                 val basalMetabolism: Double =
                     655.1 + (9.56 * weight) + (1.85 * height) - (4.68 * age)
                 roundHundredthsPlace(basalMetabolism)
