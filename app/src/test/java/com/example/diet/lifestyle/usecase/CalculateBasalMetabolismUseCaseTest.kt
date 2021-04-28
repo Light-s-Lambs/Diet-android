@@ -1,5 +1,6 @@
 package com.example.diet.lifestyle.usecase
 
+import com.example.diet.lifestyle.model.Gender
 import junit.framework.TestCase.assertEquals
 import org.junit.Test
 
@@ -11,7 +12,7 @@ class CalculateBasalMetabolismUseCaseTest {
     fun `남성 사용자가 입력한 체중 신장 나이가 모두 음수가 아닐경우_기초대사랑 전달`() {
         val expected = 1979.2
 
-        val result = calculateBasalMetabolismUseCase(84.0, 184.0, 24, true)
+        val result = calculateBasalMetabolismUseCase(84.0, 184.0, 24, Gender.male)
 
         assertEquals(expected, result)
     }
@@ -20,7 +21,7 @@ class CalculateBasalMetabolismUseCaseTest {
     fun `여성 사용자가 입력한 체중 신장 나이가 모두 음수가 아닐경우_기초대사량 전달`() {
         val expected = 1686.2
 
-        val result = calculateBasalMetabolismUseCase(84.0, 184.0, 24, false)
+        val result = calculateBasalMetabolismUseCase(84.0, 184.0, 24, Gender.female)
 
         assertEquals(expected, result)
     }
@@ -30,7 +31,7 @@ class CalculateBasalMetabolismUseCaseTest {
         val expected = IllegalArgumentException()
 
         try {
-            calculateBasalMetabolismUseCase(-84.0, 184.0, 24, true)
+            calculateBasalMetabolismUseCase(-84.0, 184.0, 24, Gender.male)
         } catch (e: Exception) {
             assertEquals(expected::class, e::class)
         }
@@ -41,7 +42,7 @@ class CalculateBasalMetabolismUseCaseTest {
         val expected = IllegalArgumentException()
 
         try {
-            calculateBasalMetabolismUseCase(84.0, -184.0, 24, true)
+            calculateBasalMetabolismUseCase(84.0, -184.0, 24, Gender.male)
         } catch (e: Exception) {
             assertEquals(expected::class, e::class)
         }
@@ -52,7 +53,7 @@ class CalculateBasalMetabolismUseCaseTest {
         val expected = IllegalArgumentException()
 
         try {
-            calculateBasalMetabolismUseCase(84.0, 184.0, -24, true)
+            calculateBasalMetabolismUseCase(84.0, 184.0, -24, Gender.male)
         } catch (e: Exception) {
             assertEquals(expected::class, e::class)
         }
