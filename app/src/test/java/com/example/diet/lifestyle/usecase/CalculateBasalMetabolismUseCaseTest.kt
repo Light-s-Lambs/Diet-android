@@ -9,7 +9,7 @@ class CalculateBasalMetabolismUseCaseTest {
     val calculateBasalMetabolismUseCase = CalculateBasalMetabolismUseCase()
 
     @Test
-    fun `남성 사용자가 입력한 체중 신장 나이가 모두 음수가 아닐경우_기초대사랑 전달`() {
+    fun `남성 사용자가 입력한 체중 신장 나이가 모두 음수가 아닐경우_기초대사랑을 계산함`() {
         val expected = 1979.2
 
         val result = calculateBasalMetabolismUseCase(84.0, 184.0, 24, Gender.male)
@@ -18,7 +18,7 @@ class CalculateBasalMetabolismUseCaseTest {
     }
 
     @Test
-    fun `여성 사용자가 입력한 체중 신장 나이가 모두 음수가 아닐경우_기초대사량 전달`() {
+    fun `여성 사용자가 입력한 체중 신장 나이가 모두 음수가 아닐경우_기초대사랑을 계산함`() {
         val expected = 1686.2
 
         val result = calculateBasalMetabolismUseCase(84.0, 184.0, 24, Gender.female)
