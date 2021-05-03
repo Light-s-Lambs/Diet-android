@@ -1,7 +1,6 @@
 package com.example.diet.meal.usecase
 
 import com.example.diet.meal.model.Meal
-import com.example.diet.meal.model.MealName
 import com.example.diet.meal.model.MealType
 import com.example.diet.meal.repository.MealRepository
 import com.example.diet.meal.usecase.exception.ConnectionFailureException
@@ -37,15 +36,16 @@ class CreateMealUseCaseTest {
     fun `사용자의 입력을 받아 식단 생성 성공`() {
         val date = DateTime.now()
         val mealType = MealType.Breakfast
-        val mealName = MealName.Toast
+        val mealName = "Toast"
         val calorie = 313.0
+        val mealRequestModel = MealRequestModel(date, mealType, mealName, calorie)
         val expected = Meal(date, mealType, mealName, calorie)
         every {
-            repository.createMeal(date, mealType, mealName, calorie)
+            repository.createMeal(mealRequestModel)
         } returns flowOf(expected)
 
         runBlocking {
-            useCase(date, mealType, mealName, calorie)
+            useCase(mealRequestModel)
                 .catch { fail() }
                 .collect { assertEquals(expected, it) }
         }
@@ -57,14 +57,15 @@ class CreateMealUseCaseTest {
         val expected = ConnectionFailureException()
         val date = DateTime.now()
         val mealType = MealType.Breakfast
-        val mealName = MealName.Toast
+        val mealName = "Toast"
         val calorie = 313.0
+        val mealRequestModel = MealRequestModel(date, mealType, mealName, calorie)
         every {
-            repository.createMeal(date, mealType, mealName, calorie)
+            repository.createMeal(mealRequestModel)
         } returns callbackFlow { close(expected) }
 
         runBlocking {
-            useCase(date, mealType, mealName, calorie)
+            useCase(mealRequestModel)
                 .catch { assertEquals(expected::class, it::class) }
                 .collect { fail() }
         }
@@ -76,14 +77,15 @@ class CreateMealUseCaseTest {
         val expected = DataAlreadyExistException()
         val date = DateTime.now()
         val mealType = MealType.Breakfast
-        val mealName = MealName.Toast
+        val mealName = "Toast"
         val calorie = 313.0
+        val mealRequestModel = MealRequestModel(date, mealType, mealName, calorie)
         every {
-            repository.createMeal(date, mealType, mealName, calorie)
+            repository.createMeal(mealRequestModel)
         } returns callbackFlow { close(expected) }
 
         runBlocking {
-            useCase(date, mealType, mealName, calorie)
+            useCase(mealRequestModel)
                 .catch { assertEquals(expected::class, it::class) }
                 .collect { fail() }
         }

@@ -1,7 +1,5 @@
 package com.example.diet.meal.usecase
 
-import com.example.diet.meal.model.Meal
-import com.example.diet.meal.model.MealName
 import com.example.diet.meal.model.MealType
 import com.example.diet.meal.repository.MealRepository
 import com.example.diet.meal.usecase.exception.ConnectionFailureException
@@ -35,9 +33,9 @@ class DeleteMealUseCaseTest {
     fun `선택한 객체 삭제 성공`() {
         val date = DateTime.now()
         val mealType = MealType.Breakfast
-        val mealName = MealName.Toast
+        val mealName = "Toast"
         val calorie = 313.0
-        val targetObject = Meal(date, mealType, mealName, calorie)
+        val targetObject = MealRequestModel(date, mealType, mealName, calorie)
         every { repository.deleteMeal(targetObject) } returns flowOf(Unit)
 
         runBlocking {
@@ -53,9 +51,9 @@ class DeleteMealUseCaseTest {
         val expected = ConnectionFailureException()
         val date = DateTime.now()
         val mealType = MealType.Breakfast
-        val mealName = MealName.Toast
+        val mealName = "Toast"
         val calorie = 313.0
-        val targetObject = Meal(date, mealType, mealName, calorie)
+        val targetObject = MealRequestModel(date, mealType, mealName, calorie)
         every { repository.deleteMeal(targetObject) } returns callbackFlow { close(expected) }
 
         runBlocking {

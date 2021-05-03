@@ -1,7 +1,6 @@
 package com.example.diet.meal.usecase
 
 import com.example.diet.meal.model.Meal
-import com.example.diet.meal.model.MealName
 import com.example.diet.meal.model.MealType
 import com.example.diet.meal.repository.MealRepository
 import com.example.diet.meal.usecase.exception.ConnectionFailureException
@@ -36,19 +35,20 @@ class UpdateMealUseCaseTest {
     fun `선택된 객체를 새로 입력받은 데이터로 변경 성공`() {
         val date = DateTime.now()
         val fromMealType = MealType.Breakfast
-        val fromMealName = MealName.Toast
+        val fromMealName = "Toast"
         val fromCalorie = 313.0
         val toMealType = MealType.Lunch
-        val toMealName = MealName.Noodle
+        val toMealName = "Noodle"
         val toCalorie = 495.0
-        val targetObject = Meal(date, fromMealType, fromMealName, fromCalorie)
+        val fromObject = MealRequestModel(date, fromMealType, fromMealName, fromCalorie)
+        val toObject = MealRequestModel(date, toMealType, toMealName, toCalorie)
         val expected = Meal(date, toMealType, toMealName, toCalorie)
         every {
-            repository.updateMeal(targetObject, date, toMealType, toMealName, toCalorie)
+            repository.updateMeal(fromObject, toObject)
         } returns flowOf(expected)
 
         runBlocking {
-            useCase(targetObject, date, toMealType, toMealName, toCalorie)
+            useCase(fromObject, toObject)
                 .catch { Assert.fail() }
                 .collect { Assert.assertEquals(expected, it) }
         }
@@ -60,18 +60,19 @@ class UpdateMealUseCaseTest {
         val expected = ConnectionFailureException()
         val date = DateTime.now()
         val fromMealType = MealType.Breakfast
-        val fromMealName = MealName.Toast
+        val fromMealName = "Toast"
         val fromCalorie = 313.0
         val toMealType = MealType.Lunch
-        val toMealName = MealName.Noodle
+        val toMealName = "Noodle"
         val toCalorie = 495.0
-        val targetObject = Meal(date, fromMealType, fromMealName, fromCalorie)
+        val fromObject = MealRequestModel(date, fromMealType, fromMealName, fromCalorie)
+        val toObject = MealRequestModel(date, toMealType, toMealName, toCalorie)
         every {
-            repository.updateMeal(targetObject, date, toMealType, toMealName, toCalorie)
+            repository.updateMeal(fromObject, toObject)
         } returns callbackFlow { close(expected) }
 
         runBlocking {
-            useCase(targetObject, date, toMealType, toMealName, toCalorie)
+            useCase(fromObject, toObject)
                 .catch { Assert.assertEquals(expected::class, it::class) }
                 .collect { Assert.fail() }
         }
@@ -83,18 +84,19 @@ class UpdateMealUseCaseTest {
         val expected = DataAlreadyExistException()
         val date = DateTime.now()
         val fromMealType = MealType.Breakfast
-        val fromMealName = MealName.Toast
+        val fromMealName = "Toast"
         val fromCalorie = 313.0
         val toMealType = MealType.Lunch
-        val toMealName = MealName.Noodle
+        val toMealName = "Noodle"
         val toCalorie = 495.0
-        val targetObject = Meal(date, fromMealType, fromMealName, fromCalorie)
+        val fromObject = MealRequestModel(date, fromMealType, fromMealName, fromCalorie)
+        val toObject = MealRequestModel(date, toMealType, toMealName, toCalorie)
         every {
-            repository.updateMeal(targetObject, date, toMealType, toMealName, toCalorie)
+            repository.updateMeal(fromObject, toObject)
         } returns callbackFlow { close(expected) }
 
         runBlocking {
-            useCase(targetObject, date, toMealType, toMealName, toCalorie)
+            useCase(fromObject, toObject)
                 .catch { Assert.assertEquals(expected::class, it::class) }
                 .collect { Assert.fail() }
         }

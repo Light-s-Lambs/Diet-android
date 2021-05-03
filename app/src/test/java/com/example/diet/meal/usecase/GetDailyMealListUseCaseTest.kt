@@ -1,7 +1,6 @@
 package com.example.diet.meal.usecase
 
 import com.example.diet.meal.model.Meal
-import com.example.diet.meal.model.MealName
 import com.example.diet.meal.model.MealType
 import com.example.diet.meal.repository.MealRepository
 import com.example.diet.meal.usecase.exception.ConnectionFailureException
@@ -36,10 +35,10 @@ class GetDailyMealListUseCaseTest {
         val expected = mutableListOf<Meal>()
         val date = DateTime.now()
         val mealType1 = MealType.Breakfast
-        val mealName1 = MealName.Toast
+        val mealName1 = "Toast"
         val calorie1 = 313.0
         val mealType2 = MealType.Lunch
-        val menuName2 = MealName.Noodle
+        val menuName2 = "Noodle"
         val calorie2 = 495.0
         val meal1 = Meal(date, mealType1, mealName1, calorie1)
         val meal2 = Meal(date, mealType2, menuName2, calorie2)
@@ -61,10 +60,10 @@ class GetDailyMealListUseCaseTest {
         val targetList = mutableListOf<Meal>()
         val date = DateTime.now()
         val mealType1 = MealType.Breakfast
-        val mealName1 = MealName.Toast
+        val mealName1 = "Toast"
         val calorie1 = 313.0
         val mealType2 = MealType.Lunch
-        val menuName2 = MealName.Noodle
+        val menuName2 = "Noodle"
         val calorie2 = 495.0
         val meal1 = Meal(date, mealType1, mealName1, calorie1)
         val meal2 = Meal(date, mealType2, menuName2, calorie2)
