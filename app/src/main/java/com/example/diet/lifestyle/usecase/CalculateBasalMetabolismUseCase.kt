@@ -14,8 +14,12 @@ class CalculateBasalMetabolismUseCase {
             }
             when (gender) {
                 Gender.Male -> {
+                    val baseHeatProduction = 66.47
+                    val variationAboutWeight = 13.75
+                    val variationAboutHeight = 5.0
+                    val variationAboutAge = 6.76
                     val basalMetabolism: Double =
-                        66.47 + (13.75 * weight) + (5 * height) - (6.76 * age)
+                        baseHeatProduction + (variationAboutWeight * weight) + (variationAboutHeight * height) - (variationAboutAge * age)
 
                     roundHundredthsPlace(
                         basalMetabolism
@@ -24,8 +28,12 @@ class CalculateBasalMetabolismUseCase {
                     }
                 }
                 Gender.Female -> {
+                    val baseHeatProduction = 655.1
+                    val variationAboutWeight = 9.56
+                    val variationAboutHeight = 1.85
+                    val variationAboutAge = 4.68
                     val basalMetabolism: Double =
-                        655.1 + (9.56 * weight) + (1.85 * height) - (4.68 * age)
+                        baseHeatProduction + (variationAboutWeight * weight) + (variationAboutHeight * height) - (variationAboutAge * age)
 
                     roundHundredthsPlace(
                         basalMetabolism
