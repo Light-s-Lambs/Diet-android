@@ -7,19 +7,27 @@ import kotlinx.coroutines.flow.flow
 import kotlin.math.roundToInt
 
 class CalculateBasalMetabolismUseCase {
+    companion object {
+        private const val baseHeatProductionMale = 66.47
+        private const val variationAboutWeightMale = 13.75
+        private const val variationAboutHeightMale = 5.0
+        private const val variationAboutAgeMale = 6.76
+        private const val baseHeatProductionFemale = 655.1
+        private const val variationAboutWeightFemale = 9.56
+        private const val variationAboutHeightFemale = 1.85
+        private const val variationAboutAgeFemale = 4.68
+    }
+
     operator fun invoke(weight: Double, height: Double, age: Int, gender: Gender): Flow<Double> =
         flow {
             require(weight > 0 && height > 0 && age > 0) {
                 "Weight, Height, Age Must Be non-negative"
             }
+
             when (gender) {
                 Gender.Male -> {
-                    val baseHeatProduction = 66.47
-                    val variationAboutWeight = 13.75
-                    val variationAboutHeight = 5.0
-                    val variationAboutAge = 6.76
                     val basalMetabolism: Double =
-                        baseHeatProduction + (variationAboutWeight * weight) + (variationAboutHeight * height) - (variationAboutAge * age)
+                        baseHeatProductionMale + (variationAboutWeightMale * weight) + (variationAboutHeightMale * height) - (variationAboutAgeMale * age)
 
                     roundHundredthsPlace(
                         basalMetabolism
@@ -28,12 +36,8 @@ class CalculateBasalMetabolismUseCase {
                     }
                 }
                 Gender.Female -> {
-                    val baseHeatProduction = 655.1
-                    val variationAboutWeight = 9.56
-                    val variationAboutHeight = 1.85
-                    val variationAboutAge = 4.68
                     val basalMetabolism: Double =
-                        baseHeatProduction + (variationAboutWeight * weight) + (variationAboutHeight * height) - (variationAboutAge * age)
+                        baseHeatProductionFemale + (variationAboutWeightFemale * weight) + (variationAboutHeightFemale * height) - (variationAboutAgeFemale * age)
 
                     roundHundredthsPlace(
                         basalMetabolism
