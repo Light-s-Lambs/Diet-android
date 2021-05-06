@@ -1,13 +1,15 @@
 package com.example.diet.lifestyle.usecase
 
+import com.example.diet.extension.timeout
 import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.repository.LifeStyleRepository
 import com.example.diet.lifestyle.usecase.exception.DataAlreadyExistException
-import com.example.diet.lifestyle.usecase.exception.NetworkFailureException
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.TimeoutCancellationException
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
@@ -16,6 +18,7 @@ import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
 
+@kotlinx.coroutines.FlowPreview
 @ExperimentalCoroutinesApi
 class CreateLifeStyleUseCaseTest {
     lateinit var createUseCase: CreateLifeStyleUseCase
@@ -82,7 +85,7 @@ class CreateLifeStyleUseCaseTest {
     }
 
     @Test
-    fun `사용자가 입력한 정보로 만든 LifeStyleRequest를 보낼때, 네트워크 문제로 3번 재시도_1회차 연결 성공_활동 생성 성공`() {
+    fun `사용자가 입력한 정보로 만든 LifeStyleRequest를 보낼때, 네트워크 문제로 1000ms를 기다림을 3번 재시도_1회차 연결 성공_활동 생성 성공`() {
         val date = DateTime.now()
         val lifeStyleRequest = LifeStyleRequest(date, "Running", 2.0, 1510.0)
         val lifeStyle = LifeStyle(
@@ -93,7 +96,6 @@ class CreateLifeStyleUseCaseTest {
         )
         var retryUntilZero = 1
         val maxRetries: Long = 3
-        val exception = NetworkFailureException()
         val expected = lifeStyle
         coEvery {
             repository.createLifeStyle(
@@ -105,13 +107,15 @@ class CreateLifeStyleUseCaseTest {
                 close()
             } else {
                 retryUntilZero--
-                close(exception)
+                delay(2000)
             }
         }
 
         runBlocking {
             createUseCase(
                 lifeStyleRequest
+            ).timeout(
+                1000
             ).retry(
                 maxRetries
             ).catch {
@@ -119,12 +123,11 @@ class CreateLifeStyleUseCaseTest {
             }.collect {
                 assertEquals(expected, it)
             }
-
         }
     }
 
     @Test
-    fun `LifeStyleRequest를 보낼 때, 네트워크 문제로 3번 재시도_3회차 연결 성공_활동 생성 성공`() {
+    fun `사용자가 입력한 정보로 만든 LifeStyleRequest를 보낼 때, 네트워크 문제로 1000ms를 기다림을 3번 재시도_3회차 연결 성공_활동 생성 성공`() {
         val date = DateTime.now()
         val lifeStyleRequest = LifeStyleRequest(date, "Running", 2.0, 1510.0)
         val lifeStyle = LifeStyle(
@@ -135,7 +138,6 @@ class CreateLifeStyleUseCaseTest {
         )
         var retryUntilZero = 3
         val maxRetries: Long = 3
-        val exception = NetworkFailureException()
         val expected = lifeStyle
         coEvery {
             repository.createLifeStyle(
@@ -147,13 +149,15 @@ class CreateLifeStyleUseCaseTest {
                 close()
             } else {
                 retryUntilZero--
-                close(exception)
+                delay(2000)
             }
         }
 
         runBlocking {
             createUseCase(
                 lifeStyleRequest
+            ).timeout(
+                1000
             ).retry(
                 maxRetries
             ).catch {
@@ -165,33 +169,33 @@ class CreateLifeStyleUseCaseTest {
     }
 
     @Test
-    fun `LifeStyleRequest를 보낼 때, 네트워크 문제로 3번 재시도_모든 재시도 연결 실패_활동 생성 실패`() {
+    fun `사용자가 입력한 정보로 만든 LifeStyleRequest를 보낼 때, 네트워크 문제로 1000ms를 기다림을 3번 재시도_모든 재시도 연결 실패_활동 생성 실패`() {
         val date = DateTime.now()
         val lifeStyleRequest = LifeStyleRequest(date, "Running", 2.0, 1510.0)
         var retryUntilZero = 4
         val maxRetries: Long = 3
-        val exception = NetworkFailureException()
+        val exception = TimeoutCancellationException::class
         val expected = exception
         coEvery {
             repository.createLifeStyle(
                 lifeStyleRequest
             )
         } returns callbackFlow {
-            if (retryUntilZero == 0) {
-                close(exception)
-            } else {
+            if (retryUntilZero != 0) {
                 retryUntilZero--
-                close(exception)
+                delay(2000)
             }
         }
 
         runBlocking {
             createUseCase(
                 lifeStyleRequest
+            ).timeout(
+                1000
             ).retry(
                 maxRetries
             ).catch {
-                assertEquals(expected::class, it::class)
+                assertEquals(expected, it::class)
             }.collect {
                 fail()
             }

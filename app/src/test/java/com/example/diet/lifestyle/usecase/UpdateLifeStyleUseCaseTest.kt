@@ -1,14 +1,16 @@
 package com.example.diet.lifestyle.usecase
 
+import com.example.diet.extension.timeout
 import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.repository.LifeStyleRepository
 import com.example.diet.lifestyle.usecase.exception.DataNotFoundException
 import com.example.diet.lifestyle.usecase.exception.IdenticalDataException
-import com.example.diet.lifestyle.usecase.exception.NetworkFailureException
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.TimeoutCancellationException
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
@@ -17,6 +19,7 @@ import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
 
+@kotlinx.coroutines.FlowPreview
 @ExperimentalCoroutinesApi
 class UpdateLifeStyleUseCaseTest {
     lateinit var updateUseCase: UpdateLifeStyleUseCase
@@ -116,7 +119,7 @@ class UpdateLifeStyleUseCaseTest {
     }
 
     @Test
-    fun `기존에 저장된 정보로 만든 LifeStyleRequest와 사용자가 입력한 정보로 만든 LifeStyleRequest를 보낼때, 네트워크 문제로_3번 재시도_1회차 연결 성공_갱신 성공`() {
+    fun `기존에 저장된 정보로 만든 LifeStyleRequest와 사용자가 입력한 정보로 만든 LifeStyleRequest를 보낼때, 네트워크 문제로 1000ms를 기다림을 3번 재시도_1회차 연결 성공_갱신 성공`() {
         val date = DateTime.now()
         val lifeStyleOriginRequest = LifeStyleRequest(date, "Running", 2.0, 1510.0)
         val lifeStyleRevisionRequest = LifeStyleRequest(date, "Sleeping", 22.0, 348.0)
@@ -128,7 +131,6 @@ class UpdateLifeStyleUseCaseTest {
         )
         var retryUntilZero = 1
         val maxRetries: Long = 3
-        val exception = NetworkFailureException()
         val expected = lifeStyleRevision
         coEvery {
             repository.updateLifeStyle(
@@ -140,8 +142,8 @@ class UpdateLifeStyleUseCaseTest {
                 offer(expected)
                 close()
             } else {
-                retryUntilZero -= 1
-                close(exception)
+                retryUntilZero--
+                delay(2000)
             }
         }
 
@@ -149,6 +151,8 @@ class UpdateLifeStyleUseCaseTest {
             updateUseCase(
                 lifeStyleOriginRequest,
                 lifeStyleRevisionRequest
+            ).timeout(
+                1000
             ).retry(
                 maxRetries
             ).catch {
@@ -160,7 +164,7 @@ class UpdateLifeStyleUseCaseTest {
     }
 
     @Test
-    fun `기존에 저장된 정보로 만든 LifeStyleRequest와 사용자가 입력한 정보로 만든 LifeStyleRequest를 보낼때, 네트워크 문제로_3번 재시도_3회차 연결 성공_갱신 성공`() {
+    fun `기존에 저장된 정보로 만든 LifeStyleRequest와 사용자가 입력한 정보로 만든 LifeStyleRequest를 보낼때, 네트워크 문제로 1000ms를 기다림을 3번 재시도_3회차 연결 성공_갱신 성공`() {
         val date = DateTime.now()
         val lifeStyleOriginRequest = LifeStyleRequest(date, "Running", 2.0, 1510.0)
         val lifeStyleRevisionRequest = LifeStyleRequest(date, "Sleeping", 22.0, 348.0)
@@ -172,7 +176,6 @@ class UpdateLifeStyleUseCaseTest {
         )
         var retryUntilZero = 3
         val maxRetries: Long = 3
-        val exception = NetworkFailureException()
         val expected = lifeStyleRevision
         coEvery {
             repository.updateLifeStyle(
@@ -184,8 +187,8 @@ class UpdateLifeStyleUseCaseTest {
                 offer(expected)
                 close()
             } else {
-                retryUntilZero -= 1
-                close(exception)
+                retryUntilZero--
+                delay(2000)
             }
         }
 
@@ -193,6 +196,8 @@ class UpdateLifeStyleUseCaseTest {
             updateUseCase(
                 lifeStyleOriginRequest,
                 lifeStyleRevisionRequest
+            ).timeout(
+                1000
             ).retry(
                 maxRetries
             ).catch {
@@ -204,13 +209,13 @@ class UpdateLifeStyleUseCaseTest {
     }
 
     @Test
-    fun `기존에 저장된 정보로 만든 LifeStyleRequest와 사용자가 입력한 정보로 만든 LifeStyleRequest를 보낼때, 네트워크 문제로 3번 재시도_모든 재시도 연결 실패_갱신 실패`() {
+    fun `기존에 저장된 정보로 만든 LifeStyleRequest와 사용자가 입력한 정보로 만든 LifeStyleRequest를 보낼때, 네트워크 문제로 1000ms를 기다림을 3번 재시도_모든 재시도 연결 실패_갱신 실패`() {
         val date = DateTime.now()
         val lifeStyleOriginRequest = LifeStyleRequest(date, "Running", 2.0, 1510.0)
         val lifeStyleRevisionRequest = LifeStyleRequest(date, "Sleeping", 22.0, 348.0)
         var retryUntilZero = 4
         val maxRetries: Long = 3
-        val exception = NetworkFailureException()
+        val exception = TimeoutCancellationException::class
         val expected = exception
         coEvery {
             repository.updateLifeStyle(
@@ -218,11 +223,9 @@ class UpdateLifeStyleUseCaseTest {
                 lifeStyleRevisionRequest
             )
         } returns callbackFlow {
-            if (retryUntilZero == 0) {
-                close(exception)
-            } else {
-                retryUntilZero -= 1
-                close(exception)
+            if (retryUntilZero != 0) {
+                retryUntilZero--
+                delay(2000)
             }
         }
 
@@ -230,10 +233,12 @@ class UpdateLifeStyleUseCaseTest {
             updateUseCase(
                 lifeStyleOriginRequest,
                 lifeStyleRevisionRequest
+            ).timeout(
+                1000
             ).retry(
                 maxRetries
             ).catch {
-                assertEquals(expected::class, it::class)
+                assertEquals(expected, it::class)
             }.collect {
                 fail()
             }

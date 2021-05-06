@@ -1,13 +1,15 @@
 package com.example.diet.lifestyle.usecase
 
+import com.example.diet.extension.timeout
 import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.repository.LifeStyleRepository
 import com.example.diet.lifestyle.usecase.exception.DataNotFoundException
-import com.example.diet.lifestyle.usecase.exception.NetworkFailureException
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.TimeoutCancellationException
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
@@ -16,6 +18,7 @@ import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
 
+@kotlinx.coroutines.FlowPreview
 @ExperimentalCoroutinesApi
 class LoadLifeStyleInDayToListUseCaseTest {
     lateinit var loadInDayToListUseCase: LoadLifeStyleInDayToListUseCase
@@ -78,7 +81,7 @@ class LoadLifeStyleInDayToListUseCaseTest {
     }
 
     @Test
-    fun `지정된 날짜를 보낼때, 네트워크 문제로 3번 재시도_1회차 연결 성공_해당 날짜의 활동 리스트 불러오기 성공`() {
+    fun `지정된 날짜를 보낼때, 네트워크 문제로 1000ms를 기다림을 3번 재시도_1회차 연결 성공_해당 날짜의 활동 리스트 불러오기 성공`() {
         val date = DateTime.now()
         val lifeStyleList = listOf(
             LifeStyle(date, "Sleeping", 22.0, 348.0),
@@ -86,7 +89,6 @@ class LoadLifeStyleInDayToListUseCaseTest {
         )
         var retryUntilZero = 1
         val maxRetries: Long = 3
-        val exception = NetworkFailureException()
         val expected = lifeStyleList
         coEvery {
             repository.loadLifeStyleInDayToList(date)
@@ -96,13 +98,15 @@ class LoadLifeStyleInDayToListUseCaseTest {
                 close()
             } else {
                 retryUntilZero--
-                close(exception)
+                delay(2000)
             }
         }
 
         runBlocking {
             loadInDayToListUseCase(
                 date
+            ).timeout(
+                1000
             ).retry(
                 maxRetries
             ).catch {
@@ -114,7 +118,7 @@ class LoadLifeStyleInDayToListUseCaseTest {
     }
 
     @Test
-    fun `지정된 날짜를 보낼때, 네트워크 문제로 3번 재시도_3회차 연결 성공_해당 날짜의 활동 리스트 불러오기 성공`() {
+    fun `지정된 날짜를 보낼때, 네트워크 문제로 1000ms를 기다림을 3번 재시도_3회차 연결 성공_해당 날짜의 활동 리스트 불러오기 성공`() {
         val date = DateTime.now()
         val lifeStyleList = listOf(
             LifeStyle(date, "Sleeping", 22.0, 348.0),
@@ -122,7 +126,6 @@ class LoadLifeStyleInDayToListUseCaseTest {
         )
         var retryUntilZero = 3
         val maxRetries: Long = 3
-        val exception = NetworkFailureException()
         val expected = lifeStyleList
         coEvery {
             repository.loadLifeStyleInDayToList(date)
@@ -132,13 +135,15 @@ class LoadLifeStyleInDayToListUseCaseTest {
                 close()
             } else {
                 retryUntilZero--
-                close(exception)
+                delay(2000)
             }
         }
 
         runBlocking {
             loadInDayToListUseCase(
                 date
+            ).timeout(
+                1000
             ).retry(
                 maxRetries
             ).catch {
@@ -150,30 +155,30 @@ class LoadLifeStyleInDayToListUseCaseTest {
     }
 
     @Test
-    fun `지정된 날짜를 보낼때, 네트워크 문제로 3번 재시도_모든 재시도 연결 실패_해당 날짜의 활동 리스트 불러오기 실패`() {
+    fun `지정된 날짜를 보낼때, 네트워크 문제로 1000ms를 기다림을 3번 재시도_모든 재시도 연결 실패_해당 날짜의 활동 리스트 불러오기 실패`() {
         val date = DateTime.now()
         var retryUntilZero = 4
         val maxRetries: Long = 3
-        val exception = NetworkFailureException()
+        val exception = TimeoutCancellationException::class
         val expected = exception
         coEvery {
             repository.loadLifeStyleInDayToList(date)
         } returns callbackFlow {
-            if (retryUntilZero == 0) {
-                close(exception)
-            } else {
+            if (retryUntilZero != 0) {
                 retryUntilZero--
-                close(exception)
+                delay(2000)
             }
         }
 
         runBlocking {
             loadInDayToListUseCase(
                 date
+            ).timeout(
+                1000
             ).retry(
                 maxRetries
             ).catch {
-                assertEquals(expected::class, it::class)
+                assertEquals(expected, it::class)
             }.collect {
                 fail()
             }
