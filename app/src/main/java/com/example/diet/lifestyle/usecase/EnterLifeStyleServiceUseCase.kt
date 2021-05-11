@@ -6,7 +6,7 @@ import com.example.diet.lifestyle.repository.LifeStyleRepository
 import kotlinx.coroutines.flow.*
 import org.joda.time.DateTime
 
-class LoadLifeStyleForPresenterUseCase(
+class EnterLifeStyleServiceUseCase(
     private val presenter: LifeStylePresenter,
     private val userInfo: UserInfo,
     repository: LifeStyleRepository
