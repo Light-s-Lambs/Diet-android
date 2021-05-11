@@ -1,8 +1,8 @@
-package com.example.diet.lifestyle.presenter
+package com.example.diet.lifestyle.service
 
 import com.example.diet.lifestyle.model.LifeStyle
 
-interface LifeStylePresenter {
+interface LifeStyleService {
     fun showUserLifeStyle(
         basalMetabolism: Double,
         activityMetabolism: Double,
