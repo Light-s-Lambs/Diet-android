@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.Flow
 import org.joda.time.DateTime
 
 interface MealService {
-    fun reloadDailyMealList(date: DateTime, totalCalorie: Double, dailyMealList: List<Meal>): Flow<Unit>
+    fun refreshDailyMealListUI(date: DateTime, totalCalorie: Double, dailyMealList: List<Meal>): Flow<Unit>
 }

@@ -15,7 +15,7 @@ class EnterMealServiceUseCase(
         val dailyMealList = repository.getDailyMealList(date).first()
         val calculateTotalCalorieUseCase = CalculateDailyTotalCalorieUseCase(repository)
         val totalCalorie = calculateTotalCalorieUseCase(date).first()
-        mealService.reloadDailyMealList(date, totalCalorie, dailyMealList)
+        mealService.refreshDailyMealListUI(date, totalCalorie, dailyMealList)
         return flowOf()
     }
 }
