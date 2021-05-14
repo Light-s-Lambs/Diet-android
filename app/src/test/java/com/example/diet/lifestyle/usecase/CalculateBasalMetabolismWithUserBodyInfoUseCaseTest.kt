@@ -36,7 +36,7 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
     }
 
     @Test
-    fun `사용자 신체 정보를 정상적으로 가져온 경우, 기초대사량을 계산해서 전달`() {
+    fun `사용자 신체 정보를 정상적으로 가져온 경우_기초대사량을 계산 성공_전달`() {
         val userBodyInfo = UserBodyInfo(
             84.0,
             184.0,
@@ -61,7 +61,7 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
     }
 
     @Test
-    fun `사용자 신체 정보 중 잘못된 값이 있는 경우, 에러 출력`() {
+    fun `사용자 신체 정보 중 음수 값이 있는 경우_기초대사량 계산 실패_에러 출력`() {
         val userBodyInfo = UserBodyInfo(
             -5.0,
             184.0,
@@ -85,7 +85,7 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
     }
 
     @Test
-    fun `사용자 신체 정보를 2초안에 가져오지 못하는 경우, 에러 출력`() {
+    fun `사용자 신체 정보를 2초안에 가져오지 못하는 경우_에러 출력`() {
         val expected = TimeoutCancellationException::class
 
         coEvery {
