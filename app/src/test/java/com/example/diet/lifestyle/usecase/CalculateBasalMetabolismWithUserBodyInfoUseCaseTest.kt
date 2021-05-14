@@ -1,6 +1,5 @@
 package com.example.diet.lifestyle.usecase
 
-import com.example.diet.extension.timeout
 import com.example.diet.lifestyle.model.Gender
 import com.example.diet.lifestyle.model.UserBodyInfo
 import com.example.diet.lifestyle.service.UserBodyInfoService
@@ -36,7 +35,7 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
     }
 
     @Test
-    fun `사용자 신체 정보를 정상적으로 가져온 경우_기초대사량을 계산 성공_전달`() {
+    fun `사용자 신체 정보를 2초안에 가져옴_사용자 신체 정보로 기초대사량을 계산 성공_전달`() {
         val userBodyInfo = UserBodyInfo(
             84.0,
             184.0,
@@ -61,7 +60,7 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
     }
 
     @Test
-    fun `사용자 신체 정보 중 음수 값이 있는 경우_기초대사량 계산 실패_에러 출력`() {
+    fun `사용자 신체 정보를 2초안에 가져옴_사용자 신체 정보에 음수 값이 있는 경우_기초대사량 계산 실패_에러 출력`() {
         val userBodyInfo = UserBodyInfo(
             -5.0,
             184.0,
@@ -96,9 +95,7 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
 
         runBlocking {
             calculateBasalMetabolismWithUserBodyInfoUseCase()
-                .timeout(
-                    2000
-                ).catch { cause ->
+                .catch { cause ->
                     assertEquals(expected, cause::class)
                 }.collect {
                     fail()
