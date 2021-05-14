@@ -22,8 +22,8 @@ import org.junit.Test
 
 @kotlinx.coroutines.FlowPreview
 @ExperimentalCoroutinesApi
-class CalculateBasalMetabolismWithUserBodyInfoTest {
-    lateinit var calculateBasalMetabolismWithUserBodyInfo: CalculateBasalMetabolismWithUserBodyInfo
+class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
+    lateinit var calculateBasalMetabolismWithUserBodyInfoUseCase: CalculateBasalMetabolismWithUserBodyInfoUseCase
 
     @MockK
     lateinit var userBodyInfoService: UserBodyInfoService
@@ -31,8 +31,8 @@ class CalculateBasalMetabolismWithUserBodyInfoTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        calculateBasalMetabolismWithUserBodyInfo =
-            CalculateBasalMetabolismWithUserBodyInfo(userBodyInfoService)
+        calculateBasalMetabolismWithUserBodyInfoUseCase =
+            CalculateBasalMetabolismWithUserBodyInfoUseCase(userBodyInfoService)
     }
 
     @Test
@@ -51,7 +51,7 @@ class CalculateBasalMetabolismWithUserBodyInfoTest {
         } returns flowOf(userBodyInfo)
 
         runBlocking {
-            calculateBasalMetabolismWithUserBodyInfo()
+            calculateBasalMetabolismWithUserBodyInfoUseCase()
                 .catch {
                     fail()
                 }.collect {
@@ -75,7 +75,7 @@ class CalculateBasalMetabolismWithUserBodyInfoTest {
         } returns flowOf(userBodyInfo)
 
         runBlocking {
-            calculateBasalMetabolismWithUserBodyInfo()
+            calculateBasalMetabolismWithUserBodyInfoUseCase()
                 .catch { cause ->
                     assertEquals(expected::class, cause::class)
                 }.collect {
@@ -95,7 +95,7 @@ class CalculateBasalMetabolismWithUserBodyInfoTest {
         }
 
         runBlocking {
-            calculateBasalMetabolismWithUserBodyInfo()
+            calculateBasalMetabolismWithUserBodyInfoUseCase()
                 .timeout(
                     2000
                 ).catch { cause ->
