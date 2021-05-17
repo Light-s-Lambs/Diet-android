@@ -5,7 +5,7 @@ import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.model.UserInfo
 import com.example.diet.lifestyle.repository.LifeStyleRepository
 import com.example.diet.lifestyle.service.LifeStylePresentationService
-import com.example.diet.lifestyle.service.UserInfoService
+import com.example.diet.lifestyle.repository.UserBodyInfoRepository
 import com.example.diet.lifestyle.usecase.exception.DataNotFoundException
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -36,7 +36,7 @@ class EnterLifeStylePresentationServiceUseCaseTest {
     lateinit var lifeStylePresentationService: LifeStylePresentationService
 
     @MockK
-    lateinit var userInfoService: UserInfoService
+    lateinit var userBodyInfoRepository: UserBodyInfoRepository
 
     @Before
     fun setUp() {
@@ -45,7 +45,7 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         enterLifeStyleServiceUseCase =
             EnterLifeStyleServiceUseCase(
                 lifeStylePresentationService,
-                userInfoService,
+                userBodyInfoRepository,
                 loadInDayToListUseCase,
                 calculateBasalMetabolismUseCase
             )
@@ -70,7 +70,7 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         } returns flowOf(Unit)
 
         coEvery {
-            userInfoService.getCurrentUserInfo()
+            userBodyInfoRepository.getCurrentUserInfo()
         } returns flowOf(
             UserInfo(
                 84.0,
@@ -116,7 +116,7 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         } returns flowOf(Unit)
 
         coEvery {
-            userInfoService.getCurrentUserInfo()
+            userBodyInfoRepository.getCurrentUserInfo()
         } returns flowOf(
             UserInfo(
                 84.0,

@@ -1,7 +1,7 @@
 package com.example.diet.lifestyle.usecase
 
 import com.example.diet.lifestyle.service.LifeStylePresentationService
-import com.example.diet.lifestyle.service.UserInfoService
+import com.example.diet.lifestyle.repository.UserBodyInfoRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapConcat
 import org.joda.time.DateTime
@@ -9,7 +9,7 @@ import org.joda.time.DateTime
 @kotlinx.coroutines.FlowPreview
 class EnterLifeStyleServiceUseCase(
     private val lifeStylePresentationService: LifeStylePresentationService,
-    private val userInfoService: UserInfoService,
+    private val userBodyInfoRepository: UserBodyInfoRepository,
     private val loadInDayToListUseCase: LoadLifeStyleInDayToListUseCase,
     private val calculateBasalMetabolismUseCase: CalculateBasalMetabolismUseCase
 ) {
@@ -22,7 +22,7 @@ class EnterLifeStyleServiceUseCase(
     operator fun invoke(date: DateTime): Flow<Unit> =
         loadInDayToListUseCase(date)
             .flatMapConcat { lifeStyleList ->
-                userInfoService.getCurrentUserInfo()
+                userBodyInfoRepository.getCurrentUserInfo()
                     .flatMapConcat {
                         calculateBasalMetabolismUseCase(
                             it.weight,
