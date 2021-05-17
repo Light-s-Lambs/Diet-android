@@ -7,5 +7,5 @@ class UpdateWeightInfoUseCase(
     private val repository: WeightInfoRepository
 ) {
     operator fun invoke(date: String, weightInfo: WeightInfo): Boolean =
-        repository.update(date, weightInfo)
+        repository.updateWeightInfo(date, weightInfo)
 }

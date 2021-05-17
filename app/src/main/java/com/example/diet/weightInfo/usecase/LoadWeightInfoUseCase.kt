@@ -6,5 +6,5 @@ import com.example.diet.weightInfo.repository.WeightInfoRepository
 class LoadWeightInfoUseCase(
     private val repository: WeightInfoRepository
 ) {
-    operator fun invoke(date: String): WeightInfo = repository.load(date)
+    operator fun invoke(date: String): WeightInfo = repository.loadWeightInfo(date)
 }

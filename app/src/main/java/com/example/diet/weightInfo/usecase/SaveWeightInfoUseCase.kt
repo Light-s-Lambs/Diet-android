@@ -7,5 +7,5 @@ class SaveWeightInfoUseCase(
     private val repository: WeightInfoRepository
 ) {
     operator fun invoke(date: String, weightInfo: WeightInfo): Boolean =
-        repository.save(date, weightInfo)
+        repository.createWeightInfo(date, weightInfo)
 }
