@@ -1,6 +1,5 @@
 package com.example.diet.lifestyle.usecase
 
-import com.example.diet.lifestyle.repository.LifeStyleRepository
 import com.example.diet.lifestyle.service.LifeStylePresentationService
 import com.example.diet.lifestyle.service.UserInfoService
 import kotlinx.coroutines.flow.Flow
@@ -11,11 +10,9 @@ import org.joda.time.DateTime
 class EnterLifeStyleServiceUseCase(
     private val lifeStylePresentationService: LifeStylePresentationService,
     private val userInfoService: UserInfoService,
-    repository: LifeStyleRepository
+    private val loadInDayToListUseCase: LoadLifeStyleInDayToListUseCase,
+    private val calculateBasalMetabolismUseCase: CalculateBasalMetabolismUseCase
 ) {
-    val loadInDayToListUseCase = LoadLifeStyleInDayToListUseCase(repository)
-    val calculateBasalMetabolismUseCase = CalculateBasalMetabolismUseCase()
-
     /*
     Show 를 하려면 기초대사량, 활동 대사량, 활동 리스트가 필요함
     활동 대사량을 가져오려면 기초대사량과 활동 리스트가 필요함

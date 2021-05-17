@@ -22,12 +22,15 @@ import org.junit.Before
 import org.junit.Test
 
 @kotlinx.coroutines.ExperimentalCoroutinesApi
+@kotlinx.coroutines.FlowPreview
 class EnterLifeStylePresentationServiceUseCaseTest {
+    private val calculateBasalMetabolismUseCase = CalculateBasalMetabolismUseCase()
 
     lateinit var enterLifeStyleServiceUseCase: EnterLifeStyleServiceUseCase
+    lateinit var loadInDayToListUseCase: LoadLifeStyleInDayToListUseCase
 
     @MockK
-    lateinit var repository: LifeStyleRepository
+    lateinit var lifeStyleRepository: LifeStyleRepository
 
     @MockK
     lateinit var lifeStylePresentationService: LifeStylePresentationService
@@ -38,8 +41,14 @@ class EnterLifeStylePresentationServiceUseCaseTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
+        loadInDayToListUseCase = LoadLifeStyleInDayToListUseCase(lifeStyleRepository)
         enterLifeStyleServiceUseCase =
-            EnterLifeStyleServiceUseCase(lifeStylePresentationService, userInfoService, repository)
+            EnterLifeStyleServiceUseCase(
+                lifeStylePresentationService,
+                userInfoService,
+                loadInDayToListUseCase,
+                calculateBasalMetabolismUseCase
+            )
     }
 
     @Test
@@ -72,7 +81,7 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         )
 
         coEvery {
-            repository.loadLifeStyleInDayToList(
+            lifeStyleRepository.loadLifeStyleInDayToList(
                 date
             )
         } returns flowOf(lifeStyleList)
@@ -118,7 +127,7 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         )
 
         coEvery {
-            repository.loadLifeStyleInDayToList(
+            lifeStyleRepository.loadLifeStyleInDayToList(
                 date
             )
         } returns callbackFlow {
