@@ -2,7 +2,7 @@ package com.example.diet.lifestyle.usecase
 
 import com.example.diet.lifestyle.model.Gender
 import com.example.diet.lifestyle.model.UserBodyInfo
-import com.example.diet.lifestyle.service.UserBodyInfoService
+import com.example.diet.lifestyle.repository.UserBodyInfoRepository
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -25,13 +25,13 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
     lateinit var calculateBasalMetabolismWithUserBodyInfoUseCase: CalculateBasalMetabolismWithUserBodyInfoUseCase
 
     @MockK
-    lateinit var userBodyInfoService: UserBodyInfoService
+    lateinit var userBodyInfoRepository: UserBodyInfoRepository
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
         calculateBasalMetabolismWithUserBodyInfoUseCase =
-            CalculateBasalMetabolismWithUserBodyInfoUseCase(userBodyInfoService)
+            CalculateBasalMetabolismWithUserBodyInfoUseCase(userBodyInfoRepository)
     }
 
     @Test
@@ -46,7 +46,7 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
         val delta = 1e-15
 
         coEvery {
-            userBodyInfoService.getCurrentUserBodyInfo()
+            userBodyInfoRepository.getCurrentUserBodyInfo()
         } returns flowOf(userBodyInfo)
 
         runBlocking {
@@ -70,7 +70,7 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
         val expected = IllegalArgumentException()
 
         coEvery {
-            userBodyInfoService.getCurrentUserBodyInfo()
+            userBodyInfoRepository.getCurrentUserBodyInfo()
         } returns flowOf(userBodyInfo)
 
         runBlocking {
@@ -88,7 +88,7 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
         val expected = TimeoutCancellationException::class
 
         coEvery {
-            userBodyInfoService.getCurrentUserBodyInfo()
+            userBodyInfoRepository.getCurrentUserBodyInfo()
         } returns callbackFlow {
             delay(3000)
         }

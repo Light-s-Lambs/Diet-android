@@ -1,8 +1,8 @@
-package com.example.diet.lifestyle.service
+package com.example.diet.lifestyle.repository
 
 import com.example.diet.lifestyle.model.UserBodyInfo
 import kotlinx.coroutines.flow.Flow
 
-interface UserBodyInfoService {
+interface UserBodyInfoRepository {
     fun getCurrentUserBodyInfo(): Flow<UserBodyInfo>
 }
