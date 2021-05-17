@@ -23,6 +23,8 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
     lateinit var calculateBasalMetabolismWithUserBodyInfoUseCase: CalculateBasalMetabolismWithUserBodyInfoUseCase
+    private val calculateBasalMetabolismUseCase: CalculateBasalMetabolismUseCase =
+        CalculateBasalMetabolismUseCase()
 
     @MockK
     lateinit var userBodyInfoRepository: UserBodyInfoRepository
@@ -31,7 +33,10 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
     fun setUp() {
         MockKAnnotations.init(this)
         calculateBasalMetabolismWithUserBodyInfoUseCase =
-            CalculateBasalMetabolismWithUserBodyInfoUseCase(userBodyInfoRepository)
+            CalculateBasalMetabolismWithUserBodyInfoUseCase(
+                userBodyInfoRepository,
+                calculateBasalMetabolismUseCase
+            )
     }
 
     @Test

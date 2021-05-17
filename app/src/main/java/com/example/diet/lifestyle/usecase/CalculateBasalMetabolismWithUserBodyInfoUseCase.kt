@@ -7,10 +7,9 @@ import kotlinx.coroutines.flow.flatMapConcat
 
 @kotlinx.coroutines.FlowPreview
 class CalculateBasalMetabolismWithUserBodyInfoUseCase(
-    private val userBodyInfoRepository: UserBodyInfoRepository
+    private val userBodyInfoRepository: UserBodyInfoRepository,
+    private val calculateBasalMetabolismUseCase: CalculateBasalMetabolismUseCase
 ) {
-    val calculateBasalMetabolismUseCase = CalculateBasalMetabolismUseCase()
-
     suspend operator fun invoke(): Flow<Double> =
         userBodyInfoRepository.getCurrentUserBodyInfo()
             .timeout(2000)
