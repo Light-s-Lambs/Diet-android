@@ -3,6 +3,7 @@ package com.example.diet.lifestyle.usecase
 import com.example.diet.lifestyle.model.Gender
 import com.example.diet.lifestyle.model.UserBodyInfo
 import com.example.diet.lifestyle.repository.UserBodyInfoRepository
+import com.example.diet.lifestyle.usecase.exception.DataNotFoundException
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -89,6 +90,26 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
     }
 
     @Test
+    fun `사용자 신체 정보를 찾지 못한경우_기초대사량 계산 실패_에러 출력`() {
+        val expected = DataNotFoundException()
+
+        coEvery {
+            userBodyInfoRepository.getCurrentUserBodyInfo()
+        } returns callbackFlow {
+            close(expected)
+        }
+
+        runBlocking {
+            calculateBasalMetabolismWithUserBodyInfoUseCase()
+                .catch { cause ->
+                    assertEquals(expected, cause)
+                }.collect {
+                    fail()
+                }
+        }
+    }
+
+    @Test
     fun `사용자 신체 정보를 2초안에 가져오지 못하는 경우_에러 출력`() {
         val expected = TimeoutCancellationException::class
 
@@ -107,5 +128,4 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
                 }
         }
     }
-
 }
