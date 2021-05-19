@@ -8,5 +8,5 @@ interface LifeStylePresentationService {
         basalMetabolism: Double,
         activityMetabolism: Double,
         lifeStyleList: List<LifeStyle>
-    ): Flow<Unit>
+    ): Flow<Boolean>
 }
