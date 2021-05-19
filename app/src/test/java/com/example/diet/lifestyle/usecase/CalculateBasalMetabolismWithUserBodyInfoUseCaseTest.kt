@@ -66,7 +66,7 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
     }
 
     @Test
-    fun `사용자 신체 정보를 2초안에 가져옴_사용자 신체 정보에 음수 값이 있는 경우_기초대사량 계산 실패_에러 출력`() {
+    fun `사용자 신체 정보를 2초안에 가져옴_사용자 신체 정보에 음수 값이 있는 경우_기초대사량 계산 실패_에러 발생`() {
         val userBodyInfo = UserBodyInfo(
             -5.0,
             184.0,
@@ -90,7 +90,7 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
     }
 
     @Test
-    fun `사용자 신체 정보를 찾지 못한경우_기초대사량 계산 실패_에러 출력`() {
+    fun `사용자 신체 정보를 찾지 못한경우_기초대사량 계산 실패_에러 발생`() {
         val expected = DataNotFoundException()
 
         coEvery {
@@ -110,7 +110,7 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
     }
 
     @Test
-    fun `사용자 신체 정보를 2초안에 가져오지 못하는 경우_에러 출력`() {
+    fun `사용자 신체 정보를 2초안에 가져오지 못하는 경우_에러 발생`() {
         val expected = TimeoutCancellationException::class
 
         coEvery {
