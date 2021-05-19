@@ -1,5 +1,6 @@
 package com.example.diet.lifestyle.usecase
 
+import com.example.diet.extension.timeout
 import com.example.diet.lifestyle.repository.UserBodyInfoRepository
 import com.example.diet.lifestyle.service.LifeStylePresentationService
 import kotlinx.coroutines.flow.Flow
@@ -16,8 +17,10 @@ class EnterLifeStyleServiceUseCase(
 ) {
     operator fun invoke(date: DateTime): Flow<Unit> = flow {
         loadInDayToListUseCase(date)
+            .timeout(1000)
             .flatMapConcat { lifeStyleList ->
                 userBodyInfoRepository.getCurrentUserInfo()
+                    .timeout(2000)
                     .flatMapConcat {
                         calculateBasalMetabolismUseCase(
                             it.weight,
