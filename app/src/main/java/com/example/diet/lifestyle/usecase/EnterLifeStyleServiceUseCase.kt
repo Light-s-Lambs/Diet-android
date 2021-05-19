@@ -1,9 +1,10 @@
 package com.example.diet.lifestyle.usecase
 
-import com.example.diet.lifestyle.service.LifeStylePresentationService
 import com.example.diet.lifestyle.repository.UserBodyInfoRepository
+import com.example.diet.lifestyle.service.LifeStylePresentationService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flow
 import org.joda.time.DateTime
 
 @kotlinx.coroutines.FlowPreview
@@ -13,13 +14,7 @@ class EnterLifeStyleServiceUseCase(
     private val loadInDayToListUseCase: LoadLifeStyleInDayToListUseCase,
     private val calculateBasalMetabolismUseCase: CalculateBasalMetabolismUseCase
 ) {
-    /*
-    Show 를 하려면 기초대사량, 활동 대사량, 활동 리스트가 필요함
-    활동 대사량을 가져오려면 기초대사량과 활동 리스트가 필요함
-    기초 대사량을 가져오려면 userInfoService.getCurrentUserInfo()가 필요함
-    Load해서 리스트를 가져옴
- */
-    operator fun invoke(date: DateTime): Flow<Unit> =
+    operator fun invoke(date: DateTime): Flow<Unit> = flow {
         loadInDayToListUseCase(date)
             .flatMapConcat { lifeStyleList ->
                 userBodyInfoRepository.getCurrentUserInfo()
@@ -42,4 +37,5 @@ class EnterLifeStyleServiceUseCase(
                         )
                     }
             }
+    }
 }
