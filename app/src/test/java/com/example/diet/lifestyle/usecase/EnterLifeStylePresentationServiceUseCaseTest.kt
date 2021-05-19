@@ -52,7 +52,7 @@ class EnterLifeStylePresentationServiceUseCaseTest {
     }
 
     @Test
-    fun `지정된 날짜에 저장된 기존 활동들이 있고 사용자 정보를 가져왔을 때_기초대사량, 활동 대사량, 활동 리스트를 화면에 출력 성공`() {
+    fun `지정된 날짜에 저장된 기존 활동들이 있으며_사용자 정보를 가져왔을 때_기초대사량, 활동 대사량, 활동 리스트를 화면에 출력 성공`() {
         val date = DateTime.now()
         val lifeStyleList = listOf(
             LifeStyle(date, "Sleeping", 22.0, 348.0),
@@ -97,7 +97,10 @@ class EnterLifeStylePresentationServiceUseCaseTest {
     }
 
     @Test
-    fun `사용자 정보는 가져왔지만 지정된 날짜에 저장된 기존 활동들이 없을 때_기초대사량, 활동 대사량, 활동 리스트를 화면에 출력 실패`() {
+    fun  `지정된 날짜에 저장된 기존 활동들이 있으며_사용자 정보를 가져왔을 때_화면 컴포넌트 문제로 Show가 실패한 경우_에러출력`(){}
+
+    @Test
+    fun `지정된 날짜에 저장된 기존 활동들이 없을 때_LifeStyle 로드 실패_에러 출력`() {
         val date = DateTime.now()
         val lifeStyleList = listOf(
             LifeStyle(date, "Sleeping", 22.0, 348.0),
@@ -144,4 +147,16 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             }
         }
     }
+
+    @Test
+    fun `지정된 날짜에 저장된 기존 활동들을 1초안에 가져오지 못했을 때_LifeSTyle 로드 실패_에러 출력`(){}
+
+    @Test
+    fun `지정된 날짜에 저장된 기존 활동들이 있지만_사용자 정보를 2초안에 가져오지 못했을 때_사용자 정보 로드 실패_에러 출력`(){}
+
+    @Test
+    fun `지정된 날짜에 저장된 기존 활동들이 있지만_사용자 정보를 찾지못해 가져오지 못했을 때_사용자 정보 로드 실패_에러 출력`() {}
+
+    @Test
+    fun `지정된 날짜에 저장된 기존 활동들이 있으며_사용자 정보를 가져왔지만_사용자 정보에 음수가 있는 경우_기초대사량 계산 실패_에러 출력`(){}
 }
