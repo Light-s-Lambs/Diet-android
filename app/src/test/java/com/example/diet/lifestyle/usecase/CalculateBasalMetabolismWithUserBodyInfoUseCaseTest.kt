@@ -5,7 +5,7 @@ import com.example.diet.lifestyle.model.UserBodyInfo
 import com.example.diet.lifestyle.repository.UserBodyInfoRepository
 import com.example.diet.lifestyle.usecase.exception.DataNotFoundException
 import io.mockk.MockKAnnotations
-import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.TimeoutCancellationException
@@ -51,7 +51,7 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
         val expected = 1979.2
         val delta = 1e-15
 
-        coEvery {
+        every {
             userBodyInfoRepository.getCurrentUserBodyInfo()
         } returns flowOf(userBodyInfo)
 
@@ -75,7 +75,7 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
         )
         val expected = IllegalArgumentException()
 
-        coEvery {
+        every {
             userBodyInfoRepository.getCurrentUserBodyInfo()
         } returns flowOf(userBodyInfo)
 
@@ -93,7 +93,7 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
     fun `사용자 신체 정보를 찾지 못한경우_기초대사량 계산 실패_에러 발생`() {
         val expected = DataNotFoundException()
 
-        coEvery {
+        every {
             userBodyInfoRepository.getCurrentUserBodyInfo()
         } returns callbackFlow {
             close(expected)
@@ -113,7 +113,7 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
     fun `사용자 신체 정보를 2초안에 가져오지 못하는 경우_에러 발생`() {
         val expected = TimeoutCancellationException::class
 
-        coEvery {
+        every {
             userBodyInfoRepository.getCurrentUserBodyInfo()
         } returns callbackFlow {
             delay(3000)
