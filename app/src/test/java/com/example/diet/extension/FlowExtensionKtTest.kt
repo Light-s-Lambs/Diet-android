@@ -100,7 +100,7 @@ class FlowExtensionKtTest {
     }
 
     @Test
-    fun `timeout 인자로 음수가 넘어오는 경우_에러 전달`(){
+    fun `timeout 인자로 음수가 넘어오는 경우_IllegalArgumentException 전달`(){
         val expected = IllegalArgumentException()
         val emitDelayTime: Long = 2000
         val timeoutDelayTime: Long = -1
