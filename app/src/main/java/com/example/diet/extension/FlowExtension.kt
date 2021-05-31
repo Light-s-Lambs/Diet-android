@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withTimeout
 
 @FlowPreview
-suspend fun <T> Flow<T>.timeout(timeMillis: Long): Flow<T> = flow {
+fun <T> Flow<T>.timeout(timeMillis: Long): Flow<T> = flow {
     require(timeMillis >= 0L) { "Timeout should not be negative" }
     withTimeout(timeMillis) {
         collect { value ->
