@@ -7,10 +7,10 @@ import org.joda.time.DateTime
 
 class EnterMealServiceUseCase(
     private val mealService: MealService,
-    private val repository: MealRepository
+    private val repository: MealRepository,
+    private val calculateDailyTotalCalorieUseCase: CalculateDailyTotalCalorieUseCase
 ) {
     operator fun invoke(date: DateTime) {
-        val calculateDailyTotalCalorieUseCase = CalculateDailyTotalCalorieUseCase()
         repository.getDailyMealList(date).map { mealService.renderingDailyMealList(date, calculateDailyTotalCalorieUseCase(it), it) }
     }
 }
