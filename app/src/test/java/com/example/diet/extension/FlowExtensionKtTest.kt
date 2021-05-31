@@ -98,4 +98,27 @@ class FlowExtensionKtTest {
                 }
         }
     }
+
+    @Test
+    fun `timeout 인자로 음수가 넘어오는 경우_IllegalArgumentException 전달`(){
+        val expected = IllegalArgumentException()
+        val emitDelayTime: Long = 2000
+        val timeoutDelayTime: Long = -1
+
+        upperStream = flow {
+            delay(emitDelayTime)
+            emit(1)
+        }
+
+        runBlocking {
+            upperStream
+                .timeout(
+                    timeoutDelayTime
+                ).catch {
+                    assertEquals(it::class, expected::class)
+                }.collect {
+                    fail()
+                }
+        }
+    }
 }
