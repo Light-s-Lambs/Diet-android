@@ -2,14 +2,15 @@ package com.example.diet.lifestyle.usecase
 
 import com.example.diet.extension.timeout
 import com.example.diet.lifestyle.repository.UserBodyInfoRepository
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapConcat
 
 @kotlinx.coroutines.FlowPreview
 class CalculateBasalMetabolismWithUserBodyInfoUseCase(
     private val userBodyInfoRepository: UserBodyInfoRepository,
     private val calculateBasalMetabolismUseCase: CalculateBasalMetabolismUseCase
 ) {
-    operator fun invoke(): Flow<Double> = flow {
+    operator fun invoke(): Flow<Double> =
         userBodyInfoRepository.getCurrentUserBodyInfo()
             .timeout(2000)
             .flatMapConcat { userBodyInfo ->
@@ -19,10 +20,7 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCase(
                     userBodyInfo.age,
                     userBodyInfo.gender
                 )
-            }.collect {
-                emit(it)
             }
-    }
 }
 
 
