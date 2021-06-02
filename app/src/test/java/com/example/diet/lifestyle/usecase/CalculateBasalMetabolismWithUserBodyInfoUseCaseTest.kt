@@ -7,6 +7,8 @@ import com.example.diet.lifestyle.usecase.exception.DataNotFoundException
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.impl.annotations.SpyK
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.delay
@@ -24,7 +26,9 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
     lateinit var calculateBasalMetabolismWithUserBodyInfoUseCase: CalculateBasalMetabolismWithUserBodyInfoUseCase
-    private val calculateBasalMetabolismUseCase: CalculateBasalMetabolismUseCase =
+
+    @SpyK
+    private var calculateBasalMetabolismUseCase: CalculateBasalMetabolismUseCase =
         CalculateBasalMetabolismUseCase()
 
     @MockK
@@ -48,8 +52,6 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
             24,
             Gender.Male
         )
-        val expected = 1979.2
-        val delta = 1e-15
 
         every {
             userBodyInfoRepository.getCurrentUserBodyInfo()
@@ -59,9 +61,16 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
             calculateBasalMetabolismWithUserBodyInfoUseCase()
                 .catch {
                     fail()
-                }.collect {
-                    assertEquals(expected, it, delta)
-                }
+                }.collect()
+        }
+
+        verify {
+            calculateBasalMetabolismUseCase.invoke(
+                userBodyInfo.weight,
+                userBodyInfo.height,
+                userBodyInfo.age,
+                userBodyInfo.gender
+            )
         }
     }
 
