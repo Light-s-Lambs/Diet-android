@@ -1,11 +1,10 @@
 package com.example.diet.lifestyle.usecase
 
 import com.example.diet.extension.timeout
+import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.repository.UserBodyInfoRepository
 import com.example.diet.lifestyle.service.LifeStylePresentationService
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapConcat
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.*
 import org.joda.time.DateTime
 
 @kotlinx.coroutines.FlowPreview
@@ -15,30 +14,46 @@ class EnterLifeStyleServiceUseCase(
     private val loadInDayToListUseCase: LoadLifeStyleInDayToListUseCase,
     private val calculateBasalMetabolismUseCase: CalculateBasalMetabolismUseCase
 ) {
-    operator fun invoke(date: DateTime): Flow<Unit> = flow {
+    private val basalMetabolismFlow: Flow<Double> = flow {
+        val result = userBodyInfoRepository.getCurrentUserInfo()
+            .timeout(2000)
+            .catch { cause ->
+                throw cause
+            }.flatMapConcat { userBodyInfo ->
+                calculateBasalMetabolismUseCase(
+                    userBodyInfo.weight,
+                    userBodyInfo.height,
+                    userBodyInfo.age,
+                    userBodyInfo.gender
+                )
+            }.catch { cause ->
+                throw cause
+            }.first()
+        emit(result)
+    }
+
+    operator fun invoke(date: DateTime): Flow<Boolean> =
         loadInDayToListUseCase(date)
             .timeout(1000)
             .flatMapConcat { lifeStyleList ->
-                userBodyInfoRepository.getCurrentUserInfo()
-                    .timeout(2000)
-                    .flatMapConcat {
-                        calculateBasalMetabolismUseCase(
-                            it.weight,
-                            it.height,
-                            it.age,
-                            it.gender
-                        )
-                    }.flatMapConcat { basalMetabolism ->
-                        val activityMetabolism: Double =
-                            basalMetabolism + lifeStyleList.sumOf { lifeStyle ->
-                                lifeStyle.burnedCalorie
-                            }
-                        lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                            basalMetabolism,
-                            activityMetabolism,
-                            lifeStyleList
-                        )
-                    }
+                val basalMetabolism = basalMetabolismFlow.first()
+                val activityMetabolism =
+                    calculateActivityMetabolism(lifeStyleList, basalMetabolism).first()
+                lifeStylePresentationService.showUserLifeStyleWithMetabolism(
+                    basalMetabolism,
+                    activityMetabolism,
+                    lifeStyleList
+                )
             }
+
+    private fun calculateActivityMetabolism(
+        lifeStyleList: List<LifeStyle>,
+        basalMetabolism: Double
+    ): Flow<Double> = flow {
+        emit(
+            basalMetabolism + lifeStyleList.sumOf {
+                it.burnedCalorie
+            }
+        )
     }
 }
