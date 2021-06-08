@@ -9,6 +9,7 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
 import io.mockk.verify
+import io.mockk.verifyOrder
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.delay
@@ -72,6 +73,15 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
                 userBodyInfo.gender
             )
         }
+        verifyOrder {
+            userBodyInfoRepository.getCurrentUserBodyInfo()
+            calculateBasalMetabolismUseCase.invoke(
+                userBodyInfo.weight,
+                userBodyInfo.height,
+                userBodyInfo.age,
+                userBodyInfo.gender
+            )
+        }
     }
 
     @Test
@@ -98,6 +108,15 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
         }
 
         verify(exactly = 1) {
+            calculateBasalMetabolismUseCase.invoke(
+                userBodyInfo.weight,
+                userBodyInfo.height,
+                userBodyInfo.age,
+                userBodyInfo.gender
+            )
+        }
+        verifyOrder {
+            userBodyInfoRepository.getCurrentUserBodyInfo()
             calculateBasalMetabolismUseCase.invoke(
                 userBodyInfo.weight,
                 userBodyInfo.height,
