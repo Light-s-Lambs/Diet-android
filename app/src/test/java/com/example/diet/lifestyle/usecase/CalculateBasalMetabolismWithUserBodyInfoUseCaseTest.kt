@@ -64,7 +64,7 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
                 }.collect()
         }
 
-        verify {
+        verify(exactly = 1) {
             calculateBasalMetabolismUseCase.invoke(
                 userBodyInfo.weight,
                 userBodyInfo.height,
@@ -95,6 +95,15 @@ class CalculateBasalMetabolismWithUserBodyInfoUseCaseTest {
                 }.collect {
                     fail()
                 }
+        }
+
+        verify(exactly = 1) {
+            calculateBasalMetabolismUseCase.invoke(
+                userBodyInfo.weight,
+                userBodyInfo.height,
+                userBodyInfo.age,
+                userBodyInfo.gender
+            )
         }
     }
 
