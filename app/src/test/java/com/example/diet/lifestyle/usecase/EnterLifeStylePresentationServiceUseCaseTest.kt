@@ -2,7 +2,7 @@ package com.example.diet.lifestyle.usecase
 
 import com.example.diet.lifestyle.model.Gender
 import com.example.diet.lifestyle.model.LifeStyle
-import com.example.diet.lifestyle.model.UserInfo
+import com.example.diet.lifestyle.model.UserBodyInfo
 import com.example.diet.lifestyle.repository.LifeStyleRepository
 import com.example.diet.lifestyle.repository.UserBodyInfoRepository
 import com.example.diet.lifestyle.service.LifeStylePresentationService
@@ -71,9 +71,9 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             )
         } returns flowOf(lifeStyleList)
         coEvery {
-            userBodyInfoRepository.getCurrentUserInfo()
+            userBodyInfoRepository.getCurrentUserBodyInfo()
         } returns flowOf(
-            UserInfo(
+            UserBodyInfo(
                 84.0,
                 184.0,
                 24,
@@ -123,9 +123,6 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         }
     }
 
-    /*
-    Todo : Load should be done in x seconds
-    */
     @Test
     fun `지정된 날짜에 저장된 기존 활동들을 1초안에 가져오지 못했을 때_LifeStyle 로드 실패_에러 발생`() {
         val date = DateTime.now()
@@ -144,18 +141,13 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             enterLifeStyleServiceUseCase(
                 date
             ).catch { cause ->
-                //Cannot Reach
-                println(cause)
                 assertEquals(expected, cause::class)
             }.collect {
                 fail()
             }
         }
     }
-
-    /*
-    Todo : Get UserBodyInfo should be done in x seconds
-    */
+    
     @Test
     fun `지정된 날짜에 저장된 기존 활동들이 있지만_사용자 정보를 2초안에 가져오지 못했을 때_사용자 정보 로드 실패_에러 발생`() {
         val date = DateTime.now()
@@ -171,7 +163,7 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             )
         } returns flowOf(lifeStyleList)
         coEvery {
-            userBodyInfoRepository.getCurrentUserInfo()
+            userBodyInfoRepository.getCurrentUserBodyInfo()
         } returns callbackFlow {
             delay(3000)
             fail()
@@ -181,7 +173,6 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             enterLifeStyleServiceUseCase(
                 date
             ).catch { cause ->
-                //Cannot Reach
                 assertEquals(expected, cause::class)
             }.collect {
                 fail()
@@ -204,7 +195,7 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             )
         } returns flowOf(lifeStyleList)
         coEvery {
-            userBodyInfoRepository.getCurrentUserInfo()
+            userBodyInfoRepository.getCurrentUserBodyInfo()
         } returns callbackFlow {
             close(expected)
         }
@@ -235,9 +226,9 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             )
         } returns flowOf(lifeStyleList)
         coEvery {
-            userBodyInfoRepository.getCurrentUserInfo()
+            userBodyInfoRepository.getCurrentUserBodyInfo()
         } returns flowOf(
-            UserInfo(
+            UserBodyInfo(
                 -1.0,
                 184.0,
                 24,
@@ -273,9 +264,9 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             )
         } returns flowOf(lifeStyleList)
         coEvery {
-            userBodyInfoRepository.getCurrentUserInfo()
+            userBodyInfoRepository.getCurrentUserBodyInfo()
         } returns flowOf(
-            UserInfo(
+            UserBodyInfo(
                 84.0,
                 184.0,
                 24,

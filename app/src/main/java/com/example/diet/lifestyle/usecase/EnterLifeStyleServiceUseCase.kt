@@ -15,7 +15,7 @@ class EnterLifeStyleServiceUseCase(
     private val calculateBasalMetabolismUseCase: CalculateBasalMetabolismUseCase
 ) {
     private val basalMetabolismFlow: Flow<Double> = flow {
-        val result = userBodyInfoRepository.getCurrentUserInfo()
+        val result = userBodyInfoRepository.getCurrentUserBodyInfo()
             .timeout(2000)
             .catch { cause ->
                 throw cause
