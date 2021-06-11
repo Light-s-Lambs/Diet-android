@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diet.R
+import com.example.diet.lifestyle.model.LifeStyle
 import kotlinx.android.synthetic.main.activity_user_life_style.*
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat

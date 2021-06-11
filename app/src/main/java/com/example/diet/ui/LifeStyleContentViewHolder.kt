@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diet.R
+import com.example.diet.lifestyle.model.LifeStyle
 import kotlinx.android.synthetic.main.user_life_style_list_item.view.*
 
 class LifeStyleContentViewHolder(
@@ -13,7 +14,7 @@ class LifeStyleContentViewHolder(
 ) {
     fun bind(lifeStyle: LifeStyle) {
         itemView.lifeStyleNameTextView.text = lifeStyle.name
-        itemView.lifeStyleTimeTextView.text = lifeStyle.time
-        itemView.lifeStyleBurnedCalorieTextView.text = lifeStyle.burnedCalorie
+        itemView.lifeStyleTimeTextView.text = lifeStyle.time.toString()
+        itemView.lifeStyleBurnedCalorieTextView.text = lifeStyle.burnedCalorie.toString()
     }
 }
