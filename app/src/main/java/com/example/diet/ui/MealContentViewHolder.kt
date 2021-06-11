@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diet.R
 import kotlinx.android.synthetic.main.user_meal_list_item.view.*
+import com.example.diet.meal.model.Meal
 
 class MealContentViewHolder(
     parent: ViewGroup
@@ -12,8 +13,8 @@ class MealContentViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.user_meal_list_item, parent, false)
 ) {
     fun bind(meal: Meal) {
-        itemView.mealTypeTextView.text = meal.mealType
-        itemView.mealMenuTextView.text = meal.menu
-        itemView.mealCalorieTextView.text = meal.calorie
+        itemView.mealTypeTextView.text = meal.mealType.toString()
+        itemView.mealMenuTextView.text = meal.mealName
+        itemView.mealCalorieTextView.text = meal.calorie.toString()
     }
 }

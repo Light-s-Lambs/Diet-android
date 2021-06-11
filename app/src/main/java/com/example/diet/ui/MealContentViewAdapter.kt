@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.diet.meal.model.Meal
 
 class MealContentViewAdapter : ListAdapter<Meal, RecyclerView.ViewHolder>(
     object : DiffUtil.ItemCallback<Meal>() {
