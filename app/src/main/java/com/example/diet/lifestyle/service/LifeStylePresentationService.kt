@@ -5,8 +5,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface LifeStylePresentationService {
     fun showUserLifeStyleWithMetabolism(
-        basalMetabolismFlow: Flow<Double>,
-        activityMetabolismFlow: Flow<Double>,
-        lifeStyleList: Flow<List<LifeStyle>>
+        basalMetabolismFlow: Double,
+        activityMetabolismFlow: Double,
+        lifeStyleList: List<LifeStyle>
     ): Flow<Unit>
 }

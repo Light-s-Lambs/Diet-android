@@ -11,11 +11,12 @@ import com.example.diet.lifestyle.usecase.exception.PresentationFailureException
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-
+import io.mockk.verify
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
@@ -62,36 +63,32 @@ class EnterLifeStylePresentationServiceUseCaseTest {
     @Test
     fun `지정된 날짜에 저장된 기존 활동들이 있으며_사용자 정보를 가져왔을 때_기초대사량 계산을 성공하면_기초대사량, 활동 대사량, 활동 리스트를 화면에 출력 성공`() {
         val date = DateTime.now()
-        val lifeStyleListFlow =
-            flowOf(
-                listOf(
-                    LifeStyle(date, "Sleeping", 22.0, 348.0),
-                    LifeStyle(date, "Running", 2.0, 1510.0)
-                )
-            )
-        val basalMetabolismFlow = flowOf(1979.2)
-        val activityMetabolismFlow = flowOf(3837.2)
-        val userBodyInfoFlow = flowOf(
-            UserBodyInfo(
-                84.0,
-                184.0,
-                24,
-                Gender.Male
-            )
+        val lifeStyleList = listOf(
+            LifeStyle(date, "Sleeping", 22.0, 348.0),
+            LifeStyle(date, "Running", 2.0, 1510.0)
+        )
+        val basalMetabolism = 1979.2
+        val activityMetabolism = 3837.2
+        val userBodyInfo = UserBodyInfo(
+            84.0,
+            184.0,
+            24,
+            Gender.Male
         )
         every {
             lifeStyleRepository.loadLifeStyleInDayToList(
                 date
             )
-        } returns lifeStyleListFlow
+        } returns flowOf(lifeStyleList)
         every {
             userBodyInfoRepository.getCurrentUserBodyInfo()
-        } returns userBodyInfoFlow
+        } returns flowOf(userBodyInfo)
+
         every {
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                basalMetabolismFlow,
-                activityMetabolismFlow,
-                lifeStyleListFlow
+                activityMetabolism,
+                basalMetabolism,
+                lifeStyleList
             )
         } returns flowOf(Unit)
 
@@ -100,20 +97,23 @@ class EnterLifeStylePresentationServiceUseCaseTest {
                 date
             ).catch {
                 fail()
-            }
+            }.collect()
+        }
+
+        verify(exactly = 2) {
+            loadInDayToListUseCase.invoke(date)
+            calculateBasalMetabolismWithUserBodyInfoUseCase.invoke()
         }
     }
 
     @Test
     fun `지정된 날짜에 저장된 기존 활동들이 없을 때_LifeStyle 로드 실패_에러 발생`() {
         val date = DateTime.now()
-        val userBodyInfoFlow = flowOf(
-            UserBodyInfo(
-                84.0,
-                184.0,
-                24,
-                Gender.Male
-            )
+        val userBodyInfo = UserBodyInfo(
+            84.0,
+            184.0,
+            24,
+            Gender.Male
         )
         val expected = DataNotFoundException()
 
@@ -126,27 +126,32 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         }
         every {
             userBodyInfoRepository.getCurrentUserBodyInfo()
-        } returns userBodyInfoFlow
+        } returns flowOf(userBodyInfo)
 
         runBlocking {
             enterLifeStyleServiceUseCase(
                 date
             ).catch { cause ->
                 assertEquals(expected::class, cause::class)
-            }
+            }.collect()
+        }
+
+        verify(exactly = 1) {
+            loadInDayToListUseCase.invoke(date)
+        }
+        verify(exactly = 2) {
+            calculateBasalMetabolismWithUserBodyInfoUseCase.invoke()
         }
     }
 
     @Test
     fun `지정된 날짜에 저장된 기존 활동들을 1초안에 가져오지 못했을 때_LifeStyle 로드 실패_에러 발생`() {
         val date = DateTime.now()
-        val userBodyInfoFlow = flowOf(
-            UserBodyInfo(
-                84.0,
-                184.0,
-                24,
-                Gender.Male
-            )
+        val userBodyInfo = UserBodyInfo(
+            84.0,
+            184.0,
+            24,
+            Gender.Male
         )
         val expected = TimeoutCancellationException::class
 
@@ -160,25 +165,29 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         }
         every {
             userBodyInfoRepository.getCurrentUserBodyInfo()
-        } returns userBodyInfoFlow
+        } returns flowOf(userBodyInfo)
 
         runBlocking {
             enterLifeStyleServiceUseCase(
                 date
             ).catch { cause ->
                 assertEquals(expected, cause::class)
-            }
+            }.collect()
+        }
+        verify(exactly = 1) {
+            loadInDayToListUseCase.invoke(date)
+        }
+        verify(exactly = 2) {
+            calculateBasalMetabolismWithUserBodyInfoUseCase.invoke()
         }
     }
 
     @Test
     fun `지정된 날짜에 저장된 기존 활동들이 있지만_사용자 정보를 2초안에 가져오지 못했을 때_사용자 정보 로드 실패_에러 발생`() {
         val date = DateTime.now()
-        val lifeStyleListFlow = flowOf(
-            listOf(
-                LifeStyle(date, "Sleeping", 22.0, 348.0),
-                LifeStyle(date, "Running", 2.0, 1510.0)
-            )
+        val lifeStyleList = listOf(
+            LifeStyle(date, "Sleeping", 22.0, 348.0),
+            LifeStyle(date, "Running", 2.0, 1510.0)
         )
         val expected = TimeoutCancellationException::class
 
@@ -186,7 +195,7 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             lifeStyleRepository.loadLifeStyleInDayToList(
                 date
             )
-        } returns lifeStyleListFlow
+        } returns flowOf(lifeStyleList)
         every {
             userBodyInfoRepository.getCurrentUserBodyInfo()
         } returns callbackFlow {
@@ -199,18 +208,23 @@ class EnterLifeStylePresentationServiceUseCaseTest {
                 date
             ).catch { cause ->
                 assertEquals(expected, cause::class)
-            }
+            }.collect()
+        }
+
+        verify(exactly = 0) {
+            loadInDayToListUseCase.invoke(date)
+        }
+        verify(exactly = 1) {
+            calculateBasalMetabolismWithUserBodyInfoUseCase.invoke()
         }
     }
 
     @Test
     fun `지정된 날짜에 저장된 기존 활동들이 있지만_사용자 정보를 찾지못해 가져오지 못했을 때_사용자 정보 로드 실패_에러 발생`() {
         val date = DateTime.now()
-        val lifeStyleListFlow = flowOf(
-            listOf(
-                LifeStyle(date, "Sleeping", 22.0, 348.0),
-                LifeStyle(date, "Running", 2.0, 1510.0)
-            )
+        val lifeStyleList = listOf(
+            LifeStyle(date, "Sleeping", 22.0, 348.0),
+            LifeStyle(date, "Running", 2.0, 1510.0)
         )
         val expected = DataNotFoundException()
 
@@ -218,7 +232,7 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             lifeStyleRepository.loadLifeStyleInDayToList(
                 date
             )
-        } returns lifeStyleListFlow
+        } returns flowOf(lifeStyleList)
         every {
             userBodyInfoRepository.getCurrentUserBodyInfo()
         } returns callbackFlow {
@@ -230,18 +244,23 @@ class EnterLifeStylePresentationServiceUseCaseTest {
                 date
             ).catch { cause ->
                 assertEquals(expected::class, cause::class)
-            }
+            }.collect()
+        }
+
+        verify(exactly = 0) {
+            loadInDayToListUseCase.invoke(date)
+        }
+        verify(exactly = 1) {
+            calculateBasalMetabolismWithUserBodyInfoUseCase.invoke()
         }
     }
 
     @Test
     fun `지정된 날짜에 저장된 기존 활동들이 있으며_사용자 정보를 가져왔지만_사용자 정보에 음수가 있는 경우_기초대사량 계산 실패_에러 발생`() {
         val date = DateTime.now()
-        val lifeStyleListFlow = flowOf(
-            listOf(
-                LifeStyle(date, "Sleeping", 22.0, 348.0),
-                LifeStyle(date, "Running", 2.0, 1510.0)
-            )
+        val lifeStyleList = listOf(
+            LifeStyle(date, "Sleeping", 22.0, 348.0),
+            LifeStyle(date, "Running", 2.0, 1510.0)
         )
         val expected = IllegalArgumentException()
 
@@ -249,7 +268,7 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             lifeStyleRepository.loadLifeStyleInDayToList(
                 date
             )
-        } returns lifeStyleListFlow
+        } returns flowOf(lifeStyleList)
         every {
             userBodyInfoRepository.getCurrentUserBodyInfo()
         } returns flowOf(
@@ -266,29 +285,32 @@ class EnterLifeStylePresentationServiceUseCaseTest {
                 date
             ).catch { cause ->
                 assertEquals(expected::class, cause::class)
-            }
+            }.collect()
+        }
+
+        verify(exactly = 0) {
+            loadInDayToListUseCase.invoke(date)
+        }
+        verify(exactly = 1) {
+            calculateBasalMetabolismWithUserBodyInfoUseCase.invoke()
         }
     }
 
     @Test
     fun `지정된 날짜에 저장된 기존 활동들이 있으며_사용자 정보를 가져왔을 때_기초대사량 계산을 성공하였지만_화면에 Show가 실패한 경우_에러 발생`() {
         val date = DateTime.now()
-        val lifeStyleListFlow =
-            flowOf(
-                listOf(
-                    LifeStyle(date, "Sleeping", 22.0, 348.0),
-                    LifeStyle(date, "Running", 2.0, 1510.0)
-                )
-            )
-        val basalMetabolismFlow = flowOf(1979.2)
-        val activityMetabolismFlow = flowOf(3837.2)
-        val userBodyInfoFlow = flowOf(
-            UserBodyInfo(
-                84.0,
-                184.0,
-                24,
-                Gender.Male
-            )
+        val lifeStyleList = listOf(
+            LifeStyle(date, "Sleeping", 22.0, 348.0),
+            LifeStyle(date, "Running", 2.0, 1510.0)
+        )
+        val basalMetabolism = 1979.2
+        val activityMetabolism = 3837.2
+        val userBodyInfo = UserBodyInfo(
+            84.0,
+            184.0,
+            24,
+            Gender.Male
+
         )
         val expected = PresentationFailureException()
 
@@ -296,15 +318,15 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             lifeStyleRepository.loadLifeStyleInDayToList(
                 date
             )
-        } returns lifeStyleListFlow
+        } returns flowOf(lifeStyleList)
         every {
             userBodyInfoRepository.getCurrentUserBodyInfo()
-        } returns userBodyInfoFlow
+        } returns flowOf(userBodyInfo)
         every {
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                basalMetabolismFlow,
-                activityMetabolismFlow,
-                lifeStyleListFlow
+                basalMetabolism,
+                activityMetabolism,
+                lifeStyleList
             )
         } returns callbackFlow {
             close(expected)
@@ -315,7 +337,12 @@ class EnterLifeStylePresentationServiceUseCaseTest {
                 date
             ).catch { cause ->
                 assertEquals(expected::class, cause::class)
-            }
+            }.collect()
+        }
+
+        verify(exactly = 2) {
+            loadInDayToListUseCase.invoke(date)
+            calculateBasalMetabolismWithUserBodyInfoUseCase.invoke()
         }
     }
 }
