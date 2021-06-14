@@ -11,6 +11,9 @@ class EnterMealServiceUseCase(
     private val calculateDailyTotalCalorieUseCase: CalculateDailyTotalCalorieUseCase
 ) {
     operator fun invoke(date: DateTime) {
-        repository.getDailyMealList(date).map { mealService.renderingDailyMealList(date, calculateDailyTotalCalorieUseCase(it), it) }
+        calculateDailyTotalCalorieUseCase(repository.getDailyMealList(date))
+            .map { totalCalorie -> mealService.renderingDailyTotalCalorie(date, totalCalorie) }
+        repository.getDailyMealList(date)
+            .map { dailyMealList -> mealService.renderingDailyMealList(date, dailyMealList) }
     }
 }

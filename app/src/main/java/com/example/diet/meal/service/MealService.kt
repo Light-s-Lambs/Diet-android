@@ -5,5 +5,6 @@ import kotlinx.coroutines.flow.Flow
 import org.joda.time.DateTime
 
 interface MealService {
-    fun renderingDailyMealList(date: DateTime, totalCalorie: Double, dailyMealList: List<Meal>): Flow<Unit>
+    fun renderingDailyTotalCalorie(date: DateTime, totalCalorie: Double): Flow<Unit>
+    fun renderingDailyMealList(date: DateTime, dailyMealList: List<Meal>): Flow<Unit>
 }
