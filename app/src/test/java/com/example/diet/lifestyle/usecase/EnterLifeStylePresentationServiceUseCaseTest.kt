@@ -86,8 +86,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
 
         every {
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                activityMetabolism,
                 basalMetabolism,
+                activityMetabolism,
                 lifeStyleList
             )
         } returns flowOf(Unit)
@@ -100,15 +100,26 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             }.collect()
         }
 
-        verify(exactly = 2) {
+        verify(exactly = 1) {
             loadInDayToListUseCase.invoke(date)
             calculateBasalMetabolismWithUserBodyInfoUseCase.invoke()
+            lifeStylePresentationService.showUserLifeStyleWithMetabolism(
+                basalMetabolism,
+                activityMetabolism,
+                lifeStyleList
+            )
         }
     }
 
     @Test
     fun `지정된 날짜에 저장된 기존 활동들이 없을 때_LifeStyle 로드 실패_에러 발생`() {
         val date = DateTime.now()
+        val lifeStyleList = listOf(
+            LifeStyle(date, "Sleeping", 22.0, 348.0),
+            LifeStyle(date, "Running", 2.0, 1510.0)
+        )
+        val basalMetabolism = 1979.2
+        val activityMetabolism = 3837.2
         val userBodyInfo = UserBodyInfo(
             84.0,
             184.0,
@@ -127,6 +138,13 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         every {
             userBodyInfoRepository.getCurrentUserBodyInfo()
         } returns flowOf(userBodyInfo)
+        every {
+            lifeStylePresentationService.showUserLifeStyleWithMetabolism(
+                basalMetabolism,
+                activityMetabolism,
+                lifeStyleList
+            )
+        } returns flowOf(Unit)
 
         runBlocking {
             enterLifeStyleServiceUseCase(
@@ -138,15 +156,26 @@ class EnterLifeStylePresentationServiceUseCaseTest {
 
         verify(exactly = 1) {
             loadInDayToListUseCase.invoke(date)
-        }
-        verify(exactly = 2) {
             calculateBasalMetabolismWithUserBodyInfoUseCase.invoke()
+        }
+        verify(exactly = 0) {
+            lifeStylePresentationService.showUserLifeStyleWithMetabolism(
+                basalMetabolism,
+                activityMetabolism,
+                lifeStyleList
+            )
         }
     }
 
     @Test
     fun `지정된 날짜에 저장된 기존 활동들을 1초안에 가져오지 못했을 때_LifeStyle 로드 실패_에러 발생`() {
         val date = DateTime.now()
+        val lifeStyleList = listOf(
+            LifeStyle(date, "Sleeping", 22.0, 348.0),
+            LifeStyle(date, "Running", 2.0, 1510.0)
+        )
+        val basalMetabolism = 1979.2
+        val activityMetabolism = 3837.2
         val userBodyInfo = UserBodyInfo(
             84.0,
             184.0,
@@ -166,6 +195,13 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         every {
             userBodyInfoRepository.getCurrentUserBodyInfo()
         } returns flowOf(userBodyInfo)
+        every {
+            lifeStylePresentationService.showUserLifeStyleWithMetabolism(
+                basalMetabolism,
+                activityMetabolism,
+                lifeStyleList
+            )
+        } returns flowOf(Unit)
 
         runBlocking {
             enterLifeStyleServiceUseCase(
@@ -174,11 +210,17 @@ class EnterLifeStylePresentationServiceUseCaseTest {
                 assertEquals(expected, cause::class)
             }.collect()
         }
+
         verify(exactly = 1) {
             loadInDayToListUseCase.invoke(date)
-        }
-        verify(exactly = 2) {
             calculateBasalMetabolismWithUserBodyInfoUseCase.invoke()
+        }
+        verify(exactly = 0) {
+            lifeStylePresentationService.showUserLifeStyleWithMetabolism(
+                basalMetabolism,
+                activityMetabolism,
+                lifeStyleList
+            )
         }
     }
 
@@ -189,6 +231,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             LifeStyle(date, "Sleeping", 22.0, 348.0),
             LifeStyle(date, "Running", 2.0, 1510.0)
         )
+        val basalMetabolism = 1979.2
+        val activityMetabolism = 3837.2
         val expected = TimeoutCancellationException::class
 
         every {
@@ -202,6 +246,13 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             delay(3000)
             fail()
         }
+        every {
+            lifeStylePresentationService.showUserLifeStyleWithMetabolism(
+                basalMetabolism,
+                activityMetabolism,
+                lifeStyleList
+            )
+        } returns flowOf(Unit)
 
         runBlocking {
             enterLifeStyleServiceUseCase(
@@ -211,11 +262,16 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             }.collect()
         }
 
-        verify(exactly = 0) {
-            loadInDayToListUseCase.invoke(date)
-        }
         verify(exactly = 1) {
+            loadInDayToListUseCase.invoke(date)
             calculateBasalMetabolismWithUserBodyInfoUseCase.invoke()
+        }
+        verify(exactly = 0) {
+            lifeStylePresentationService.showUserLifeStyleWithMetabolism(
+                basalMetabolism,
+                activityMetabolism,
+                lifeStyleList
+            )
         }
     }
 
@@ -226,6 +282,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             LifeStyle(date, "Sleeping", 22.0, 348.0),
             LifeStyle(date, "Running", 2.0, 1510.0)
         )
+        val basalMetabolism = 1979.2
+        val activityMetabolism = 3837.2
         val expected = DataNotFoundException()
 
         every {
@@ -238,6 +296,13 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         } returns callbackFlow {
             close(expected)
         }
+        every {
+            lifeStylePresentationService.showUserLifeStyleWithMetabolism(
+                basalMetabolism,
+                activityMetabolism,
+                lifeStyleList
+            )
+        } returns flowOf(Unit)
 
         runBlocking {
             enterLifeStyleServiceUseCase(
@@ -247,11 +312,16 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             }.collect()
         }
 
-        verify(exactly = 0) {
-            loadInDayToListUseCase.invoke(date)
-        }
         verify(exactly = 1) {
+            loadInDayToListUseCase.invoke(date)
             calculateBasalMetabolismWithUserBodyInfoUseCase.invoke()
+        }
+        verify(exactly = 0) {
+            lifeStylePresentationService.showUserLifeStyleWithMetabolism(
+                basalMetabolism,
+                activityMetabolism,
+                lifeStyleList
+            )
         }
     }
 
@@ -261,6 +331,14 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         val lifeStyleList = listOf(
             LifeStyle(date, "Sleeping", 22.0, 348.0),
             LifeStyle(date, "Running", 2.0, 1510.0)
+        )
+        val basalMetabolism = 1979.2
+        val activityMetabolism = 3837.2
+        val userBodyInfo = UserBodyInfo(
+            -1.0,
+            184.0,
+            24,
+            Gender.Male
         )
         val expected = IllegalArgumentException()
 
@@ -272,13 +350,15 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         every {
             userBodyInfoRepository.getCurrentUserBodyInfo()
         } returns flowOf(
-            UserBodyInfo(
-                -1.0,
-                184.0,
-                24,
-                Gender.Male
-            )
+            userBodyInfo
         )
+        every {
+            lifeStylePresentationService.showUserLifeStyleWithMetabolism(
+                basalMetabolism,
+                activityMetabolism,
+                lifeStyleList
+            )
+        } returns flowOf(Unit)
 
         runBlocking {
             enterLifeStyleServiceUseCase(
@@ -288,11 +368,16 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             }.collect()
         }
 
-        verify(exactly = 0) {
-            loadInDayToListUseCase.invoke(date)
-        }
         verify(exactly = 1) {
+            loadInDayToListUseCase.invoke(date)
             calculateBasalMetabolismWithUserBodyInfoUseCase.invoke()
+        }
+        verify(exactly = 0) {
+            lifeStylePresentationService.showUserLifeStyleWithMetabolism(
+                basalMetabolism,
+                activityMetabolism,
+                lifeStyleList
+            )
         }
     }
 
@@ -340,9 +425,14 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             }.collect()
         }
 
-        verify(exactly = 2) {
+        verify(exactly = 1) {
             loadInDayToListUseCase.invoke(date)
             calculateBasalMetabolismWithUserBodyInfoUseCase.invoke()
+            lifeStylePresentationService.showUserLifeStyleWithMetabolism(
+                basalMetabolism,
+                activityMetabolism,
+                lifeStyleList
+            )
         }
     }
 }
