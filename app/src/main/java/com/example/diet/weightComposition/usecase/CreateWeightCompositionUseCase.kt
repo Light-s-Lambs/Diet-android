@@ -2,7 +2,7 @@ package com.example.diet.weightComposition.usecase
 
 import com.example.diet.weightComposition.repository.WeightCompositionRepository
 
-class SaveWeightCompositionUseCase(
+class CreateWeightCompositionUseCase(
     private val repository: WeightCompositionRepository
 ) {
     operator fun invoke(

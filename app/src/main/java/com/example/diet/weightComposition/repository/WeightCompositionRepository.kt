@@ -8,12 +8,12 @@ import org.joda.time.DateTime
 interface WeightCompositionRepository {
     fun createWeightComposition(weightCompositionRequest: WeightCompositionRequest): Flow<WeightComposition>
 
+    fun deleteWeightInfo(weightCompositionRequestFrom: WeightCompositionRequest): Flow<WeightComposition>
+
     fun loadWeightInfo(date: DateTime): Flow<WeightComposition>
 
     fun updateWeightInfo(
         weightCompositionRequestFrom: WeightCompositionRequest,
         weightCompositionRequestTo: WeightCompositionRequest
     ): Flow<WeightComposition>
-
-    fun deleteWeightInfo(weightCompositionRequestFrom: WeightCompositionRequest): Flow<WeightComposition>
 }
