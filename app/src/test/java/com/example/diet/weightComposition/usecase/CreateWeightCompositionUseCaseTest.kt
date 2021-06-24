@@ -38,6 +38,7 @@ class CreateWeightCompositionUseCaseTest {
                 41.0
             )
         val weightComposition = WeightComposition(
+            weightCompositionRequest.date,
             weightCompositionRequest.weight,
             weightCompositionRequest.percentageOfBodyFat,
             weightCompositionRequest.amountOfMuscle
