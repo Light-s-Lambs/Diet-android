@@ -1,6 +1,6 @@
-package com.example.diet.weightInfo.model
+package com.example.diet.weightComposition.model
 
-data class WeightInfo(
+data class WeightComposition(
     val weight: Double,
     val percentageOfBodyFat: Double,
     val amountOfMuscle: Double
