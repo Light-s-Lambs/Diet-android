@@ -11,7 +11,10 @@ import com.example.diet.lifestyle.usecase.exception.PresentationFailureException
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.slot
 import io.mockk.verify
+import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.fail
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.callbackFlow
@@ -20,8 +23,6 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
-import org.junit.Assert.assertEquals
-import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
 
@@ -67,8 +68,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             LifeStyle(date, "Sleeping", 22.0, 348.0),
             LifeStyle(date, "Running", 2.0, 1510.0)
         )
-        val basalMetabolism = 1979.2
-        val activityMetabolism = 3837.2
+        val basalMetabolism = slot<Double>()
+        val activityMetabolism = slot<Double>()
         val userBodyInfo = UserBodyInfo(
             84.0,
             184.0,
@@ -86,8 +87,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
 
         every {
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                basalMetabolism,
-                activityMetabolism,
+                capture(basalMetabolism),
+                capture(activityMetabolism),
                 lifeStyleList
             )
         } returns flowOf(Unit)
@@ -104,11 +105,13 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             loadInDayToListUseCase(date)
             calculateBasalMetabolismWithUserBodyInfoUseCase()
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                basalMetabolism,
-                activityMetabolism,
+                capture(basalMetabolism),
+                capture(activityMetabolism),
                 lifeStyleList
             )
         }
+        assertEquals(1979.2, basalMetabolism.captured)
+        assertEquals(3837.2, activityMetabolism.captured)
     }
 
     @Test
@@ -118,8 +121,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             LifeStyle(date, "Sleeping", 22.0, 348.0),
             LifeStyle(date, "Running", 2.0, 1510.0)
         )
-        val basalMetabolism = 1979.2
-        val activityMetabolism = 3837.2
+        val basalMetabolism = slot<Double>()
+        val activityMetabolism = slot<Double>()
         val userBodyInfo = UserBodyInfo(
             84.0,
             184.0,
@@ -140,8 +143,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         } returns flowOf(userBodyInfo)
         every {
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                basalMetabolism,
-                activityMetabolism,
+                capture(basalMetabolism),
+                capture(activityMetabolism),
                 lifeStyleList
             )
         } returns flowOf(Unit)
@@ -160,8 +163,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         }
         verify(exactly = 0) {
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                basalMetabolism,
-                activityMetabolism,
+                capture(basalMetabolism),
+                capture(activityMetabolism),
                 lifeStyleList
             )
         }
@@ -174,8 +177,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             LifeStyle(date, "Sleeping", 22.0, 348.0),
             LifeStyle(date, "Running", 2.0, 1510.0)
         )
-        val basalMetabolism = 1979.2
-        val activityMetabolism = 3837.2
+        val basalMetabolism = slot<Double>()
+        val activityMetabolism = slot<Double>()
         val userBodyInfo = UserBodyInfo(
             84.0,
             184.0,
@@ -197,8 +200,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         } returns flowOf(userBodyInfo)
         every {
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                basalMetabolism,
-                activityMetabolism,
+                capture(basalMetabolism),
+                capture(activityMetabolism),
                 lifeStyleList
             )
         } returns flowOf(Unit)
@@ -217,8 +220,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         }
         verify(exactly = 0) {
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                basalMetabolism,
-                activityMetabolism,
+                capture(basalMetabolism),
+                capture(activityMetabolism),
                 lifeStyleList
             )
         }
@@ -231,8 +234,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             LifeStyle(date, "Sleeping", 22.0, 348.0),
             LifeStyle(date, "Running", 2.0, 1510.0)
         )
-        val basalMetabolism = 1979.2
-        val activityMetabolism = 3837.2
+        val basalMetabolism = slot<Double>()
+        val activityMetabolism = slot<Double>()
         val expected = TimeoutCancellationException::class
 
         every {
@@ -248,8 +251,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         }
         every {
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                basalMetabolism,
-                activityMetabolism,
+                capture(basalMetabolism),
+                capture(activityMetabolism),
                 lifeStyleList
             )
         } returns flowOf(Unit)
@@ -268,8 +271,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         }
         verify(exactly = 0) {
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                basalMetabolism,
-                activityMetabolism,
+                capture(basalMetabolism),
+                capture(activityMetabolism),
                 lifeStyleList
             )
         }
@@ -282,8 +285,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             LifeStyle(date, "Sleeping", 22.0, 348.0),
             LifeStyle(date, "Running", 2.0, 1510.0)
         )
-        val basalMetabolism = 1979.2
-        val activityMetabolism = 3837.2
+        val basalMetabolism = slot<Double>()
+        val activityMetabolism = slot<Double>()
         val expected = DataNotFoundException()
 
         every {
@@ -298,8 +301,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         }
         every {
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                basalMetabolism,
-                activityMetabolism,
+                capture(basalMetabolism),
+                capture(activityMetabolism),
                 lifeStyleList
             )
         } returns flowOf(Unit)
@@ -318,8 +321,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         }
         verify(exactly = 0) {
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                basalMetabolism,
-                activityMetabolism,
+                capture(basalMetabolism),
+                capture(activityMetabolism),
                 lifeStyleList
             )
         }
@@ -332,8 +335,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             LifeStyle(date, "Sleeping", 22.0, 348.0),
             LifeStyle(date, "Running", 2.0, 1510.0)
         )
-        val basalMetabolism = 1979.2
-        val activityMetabolism = 3837.2
+        val basalMetabolism = slot<Double>()
+        val activityMetabolism = slot<Double>()
         val userBodyInfo = UserBodyInfo(
             -1.0,
             184.0,
@@ -354,8 +357,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         )
         every {
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                basalMetabolism,
-                activityMetabolism,
+                capture(basalMetabolism),
+                capture(activityMetabolism),
                 lifeStyleList
             )
         } returns flowOf(Unit)
@@ -374,8 +377,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         }
         verify(exactly = 0) {
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                basalMetabolism,
-                activityMetabolism,
+                capture(basalMetabolism),
+                capture(activityMetabolism),
                 lifeStyleList
             )
         }
@@ -388,8 +391,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             LifeStyle(date, "Sleeping", 22.0, 348.0),
             LifeStyle(date, "Running", 2.0, 1510.0)
         )
-        val basalMetabolism = 1979.2
-        val activityMetabolism = 3837.2
+        val basalMetabolism = slot<Double>()
+        val activityMetabolism = slot<Double>()
         val userBodyInfo = UserBodyInfo(
             84.0,
             184.0,
@@ -409,8 +412,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         } returns flowOf(userBodyInfo)
         every {
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                basalMetabolism,
-                activityMetabolism,
+                capture(basalMetabolism),
+                capture(activityMetabolism),
                 lifeStyleList
             )
         } returns callbackFlow {
@@ -429,8 +432,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             loadInDayToListUseCase(date)
             calculateBasalMetabolismWithUserBodyInfoUseCase()
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                basalMetabolism,
-                activityMetabolism,
+                capture(basalMetabolism),
+                capture(activityMetabolism),
                 lifeStyleList
             )
         }
