@@ -3,8 +3,7 @@ package com.example.diet.lifestyle.usecase
 import com.example.diet.extension.timeout
 import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.service.LifeStylePresentationService
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.zip
+import kotlinx.coroutines.flow.*
 import org.joda.time.DateTime
 
 @kotlinx.coroutines.FlowPreview
@@ -25,7 +24,7 @@ class EnterLifeStyleServiceUseCase(
                 ),
                 lifeStyleList
             )
-        }
+        }.flattenConcat()
 
     private fun calculateActivityMetabolism(
         lifeStyleList: List<LifeStyle>,
