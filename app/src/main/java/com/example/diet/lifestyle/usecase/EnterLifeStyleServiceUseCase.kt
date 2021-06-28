@@ -15,8 +15,8 @@ class EnterLifeStyleServiceUseCase(
     private val calculateBasalMetabolismWithUserBodyInfoUseCase: CalculateBasalMetabolismWithUserBodyInfoUseCase
 ) {
     operator fun invoke(date: DateTime): Flow<Unit> =
-        calculateBasalMetabolismWithUserBodyInfoUseCase.invoke().zip(
-            loadInDayToListUseCase.invoke(date).timeout(1000)
+        calculateBasalMetabolismWithUserBodyInfoUseCase().zip(
+            loadInDayToListUseCase(date).timeout(1000)
         ) { basalMetabolism, lifeStyleList ->
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
                 basalMetabolism,

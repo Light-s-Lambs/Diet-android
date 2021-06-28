@@ -101,8 +101,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         }
 
         verify(exactly = 1) {
-            loadInDayToListUseCase.invoke(date)
-            calculateBasalMetabolismWithUserBodyInfoUseCase.invoke()
+            loadInDayToListUseCase(date)
+            calculateBasalMetabolismWithUserBodyInfoUseCase()
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
                 basalMetabolism,
                 activityMetabolism,
@@ -155,8 +155,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         }
 
         verify(exactly = 1) {
-            loadInDayToListUseCase.invoke(date)
-            calculateBasalMetabolismWithUserBodyInfoUseCase.invoke()
+            loadInDayToListUseCase(date)
+            calculateBasalMetabolismWithUserBodyInfoUseCase()
         }
         verify(exactly = 0) {
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
@@ -212,8 +212,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         }
 
         verify(exactly = 1) {
-            loadInDayToListUseCase.invoke(date)
-            calculateBasalMetabolismWithUserBodyInfoUseCase.invoke()
+            loadInDayToListUseCase(date)
+            calculateBasalMetabolismWithUserBodyInfoUseCase()
         }
         verify(exactly = 0) {
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
@@ -263,8 +263,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         }
 
         verify(exactly = 1) {
-            loadInDayToListUseCase.invoke(date)
-            calculateBasalMetabolismWithUserBodyInfoUseCase.invoke()
+            loadInDayToListUseCase(date)
+            calculateBasalMetabolismWithUserBodyInfoUseCase()
         }
         verify(exactly = 0) {
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
@@ -313,8 +313,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         }
 
         verify(exactly = 1) {
-            loadInDayToListUseCase.invoke(date)
-            calculateBasalMetabolismWithUserBodyInfoUseCase.invoke()
+            loadInDayToListUseCase(date)
+            calculateBasalMetabolismWithUserBodyInfoUseCase()
         }
         verify(exactly = 0) {
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
@@ -369,8 +369,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         }
 
         verify(exactly = 1) {
-            loadInDayToListUseCase.invoke(date)
-            calculateBasalMetabolismWithUserBodyInfoUseCase.invoke()
+            loadInDayToListUseCase(date)
+            calculateBasalMetabolismWithUserBodyInfoUseCase()
         }
         verify(exactly = 0) {
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
@@ -426,8 +426,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
         }
 
         verify(exactly = 1) {
-            loadInDayToListUseCase.invoke(date)
-            calculateBasalMetabolismWithUserBodyInfoUseCase.invoke()
+            loadInDayToListUseCase(date)
+            calculateBasalMetabolismWithUserBodyInfoUseCase()
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
                 basalMetabolism,
                 activityMetabolism,
