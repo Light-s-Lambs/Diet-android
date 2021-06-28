@@ -3,17 +3,19 @@ package com.example.diet.lifestyle.usecase
 import com.example.diet.extension.timeout
 import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.service.LifeStylePresentationService
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flattenConcat
+import kotlinx.coroutines.flow.zip
 import org.joda.time.DateTime
 
 @kotlinx.coroutines.FlowPreview
 class EnterLifeStyleServiceUseCase(
     private val lifeStylePresentationService: LifeStylePresentationService,
     private val loadInDayToListUseCase: LoadLifeStyleInDayToListUseCase,
-    private val calculateBasalMetabolismUseCaseWithUserBodyInfoUseCase: CalculateBasalMetabolismWithUserBodyInfoUseCase
+    private val calculateBasalMetabolismWithUserBodyInfoUseCase: CalculateBasalMetabolismWithUserBodyInfoUseCase
 ) {
     operator fun invoke(date: DateTime): Flow<Unit> =
-        calculateBasalMetabolismUseCaseWithUserBodyInfoUseCase.invoke().zip(
+        calculateBasalMetabolismWithUserBodyInfoUseCase.invoke().zip(
             loadInDayToListUseCase.invoke(date).timeout(1000)
         ) { basalMetabolism, lifeStyleList ->
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
