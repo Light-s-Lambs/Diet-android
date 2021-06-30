@@ -4,7 +4,7 @@ import com.example.diet.extension.timeout
 import com.example.diet.lifestyle.model.LifeStyle
 import com.example.diet.lifestyle.service.LifeStylePresentationService
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flattenConcat
+import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.zip
 import org.joda.time.DateTime
 
@@ -18,7 +18,7 @@ class EnterLifeStyleServiceUseCase(
         calculateBasalMetabolismWithUserBodyInfoUseCase().zip(
             loadInDayToListUseCase(date).timeout(1000)
         ) { basalMetabolism, lifeStyleList ->
-            lifeStylePresentationService.showUserLifeStyleWithMetabolism(
+            LifeStylePresentationData(
                 basalMetabolism,
                 calculateActivityMetabolism(
                     lifeStyleList,
@@ -26,7 +26,13 @@ class EnterLifeStyleServiceUseCase(
                 ),
                 lifeStyleList
             )
-        }.flattenConcat()
+        }.flatMapConcat {
+            lifeStylePresentationService.showUserLifeStyleWithMetabolism(
+                it.basalMetabolism,
+                it.activityMetabolism,
+                it.lifeStyleList
+            )
+        }
 
     private fun calculateActivityMetabolism(
         lifeStyleList: List<LifeStyle>,
@@ -34,4 +40,10 @@ class EnterLifeStyleServiceUseCase(
     ): Double {
         return lifeStyleList.fold(basalMetabolism) { activityMetabolism, lifeStyle -> activityMetabolism + lifeStyle.burnedCalorie }
     }
+
+    data class LifeStylePresentationData(
+        val basalMetabolism: Double,
+        val activityMetabolism: Double,
+        val lifeStyleList: List<LifeStyle>
+    )
 }
