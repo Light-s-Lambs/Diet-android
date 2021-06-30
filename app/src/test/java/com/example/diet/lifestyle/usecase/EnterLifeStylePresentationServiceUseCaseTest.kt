@@ -8,11 +8,8 @@ import com.example.diet.lifestyle.repository.UserBodyInfoRepository
 import com.example.diet.lifestyle.service.LifeStylePresentationService
 import com.example.diet.lifestyle.usecase.exception.DataNotFoundException
 import com.example.diet.lifestyle.usecase.exception.PresentationFailureException
-import io.mockk.MockKAnnotations
-import io.mockk.every
+import io.mockk.*
 import io.mockk.impl.annotations.MockK
-import io.mockk.slot
-import io.mockk.verify
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.fail
 import kotlinx.coroutines.TimeoutCancellationException
@@ -62,7 +59,7 @@ class EnterLifeStylePresentationServiceUseCaseTest {
     }
 
     @Test
-    fun `지정된 날짜에 저장된 기존 활동들이 있으며_사용자 정보를 가져왔을 때_기초대사량 계산을 성공하면_기초대사량, 활동 대사량, 활동 리스트를 화면에 출력 성공`() {
+    fun `지정된 날짜에 저장된 기존 활동과 현재 사용자의 기초대사량을 가져왔을 때_기초대사량, 활동 대사량, 활동 리스트를 화면에 출력 성공`() {
         val date = DateTime.now()
         val lifeStyleList = listOf(
             LifeStyle(date, "Sleeping", 22.0, 348.0),
@@ -101,17 +98,23 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             }.collect()
         }
 
-        verify(exactly = 1) {
+        verifyOrder {
             loadInDayToListUseCase(date)
-            calculateBasalMetabolismWithUserBodyInfoUseCase()
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                capture(basalMetabolism),
-                capture(activityMetabolism),
+                basalMetabolism.captured,
+                activityMetabolism.captured,
                 lifeStyleList
             )
         }
-        assertEquals(1979.2, basalMetabolism.captured)
-        assertEquals(3837.2, activityMetabolism.captured)
+
+        verifyOrder {
+            calculateBasalMetabolismWithUserBodyInfoUseCase()
+            lifeStylePresentationService.showUserLifeStyleWithMetabolism(
+                basalMetabolism.captured,
+                activityMetabolism.captured,
+                lifeStyleList
+            )
+        }
     }
 
     @Test
@@ -157,16 +160,8 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             }.collect()
         }
 
-        verify(exactly = 1) {
+        verify {
             loadInDayToListUseCase(date)
-            calculateBasalMetabolismWithUserBodyInfoUseCase()
-        }
-        verify(exactly = 0) {
-            lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                capture(basalMetabolism),
-                capture(activityMetabolism),
-                lifeStyleList
-            )
         }
     }
 
@@ -214,21 +209,13 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             }.collect()
         }
 
-        verify(exactly = 1) {
+        verify {
             loadInDayToListUseCase(date)
-            calculateBasalMetabolismWithUserBodyInfoUseCase()
-        }
-        verify(exactly = 0) {
-            lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                capture(basalMetabolism),
-                capture(activityMetabolism),
-                lifeStyleList
-            )
         }
     }
 
     @Test
-    fun `지정된 날짜에 저장된 기존 활동들이 있지만_사용자 정보를 2초안에 가져오지 못했을 때_사용자 정보 로드 실패_에러 발생`() {
+    fun `현재 사용자 정보를 2초안에 가져오지 못했을 때_사용자 정보 로드 실패_에러 발생`() {
         val date = DateTime.now()
         val lifeStyleList = listOf(
             LifeStyle(date, "Sleeping", 22.0, 348.0),
@@ -265,21 +252,13 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             }.collect()
         }
 
-        verify(exactly = 1) {
-            loadInDayToListUseCase(date)
+        verify {
             calculateBasalMetabolismWithUserBodyInfoUseCase()
-        }
-        verify(exactly = 0) {
-            lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                capture(basalMetabolism),
-                capture(activityMetabolism),
-                lifeStyleList
-            )
         }
     }
 
     @Test
-    fun `지정된 날짜에 저장된 기존 활동들이 있지만_사용자 정보를 찾지못해 가져오지 못했을 때_사용자 정보 로드 실패_에러 발생`() {
+    fun `현재 사용자 정보를 찾지못해 가져오지 못했을 때_사용자 정보 로드 실패_에러 발생`() {
         val date = DateTime.now()
         val lifeStyleList = listOf(
             LifeStyle(date, "Sleeping", 22.0, 348.0),
@@ -315,21 +294,13 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             }.collect()
         }
 
-        verify(exactly = 1) {
-            loadInDayToListUseCase(date)
+        verify {
             calculateBasalMetabolismWithUserBodyInfoUseCase()
-        }
-        verify(exactly = 0) {
-            lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                capture(basalMetabolism),
-                capture(activityMetabolism),
-                lifeStyleList
-            )
         }
     }
 
     @Test
-    fun `지정된 날짜에 저장된 기존 활동들이 있으며_사용자 정보를 가져왔지만_사용자 정보에 음수가 있는 경우_기초대사량 계산 실패_에러 발생`() {
+    fun `현재 사용자 정보에 음수가 있는 경우_기초대사량 계산 실패_에러 발생`() {
         val date = DateTime.now()
         val lifeStyleList = listOf(
             LifeStyle(date, "Sleeping", 22.0, 348.0),
@@ -371,21 +342,13 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             }.collect()
         }
 
-        verify(exactly = 1) {
-            loadInDayToListUseCase(date)
+        verify {
             calculateBasalMetabolismWithUserBodyInfoUseCase()
-        }
-        verify(exactly = 0) {
-            lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                capture(basalMetabolism),
-                capture(activityMetabolism),
-                lifeStyleList
-            )
         }
     }
 
     @Test
-    fun `지정된 날짜에 저장된 기존 활동들이 있으며_사용자 정보를 가져왔을 때_기초대사량 계산을 성공하였지만_화면에 Show가 실패한 경우_에러 발생`() {
+    fun `지정된 날짜에 저장된 기존 활동과 현재 사용자의 기초대사량을 가져왔지만_화면에 Show가 실패한 경우_에러 발생`() {
         val date = DateTime.now()
         val lifeStyleList = listOf(
             LifeStyle(date, "Sleeping", 22.0, 348.0),
@@ -428,12 +391,20 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             }.collect()
         }
 
-        verify(exactly = 1) {
+        verifyOrder {
             loadInDayToListUseCase(date)
+            lifeStylePresentationService.showUserLifeStyleWithMetabolism(
+                basalMetabolism.captured,
+                activityMetabolism.captured,
+                lifeStyleList
+            )
+        }
+
+        verifyOrder {
             calculateBasalMetabolismWithUserBodyInfoUseCase()
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                capture(basalMetabolism),
-                capture(activityMetabolism),
+                basalMetabolism.captured,
+                activityMetabolism.captured,
                 lifeStyleList
             )
         }
