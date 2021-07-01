@@ -18,7 +18,7 @@ class EnterLifeStyleServiceUseCase(
         calculateBasalMetabolismWithUserBodyInfoUseCase().zip(
             loadInDayToListUseCase(date).timeout(1000)
         ) { basalMetabolism, lifeStyleList ->
-            LifeStylePresentationData(
+            LifeStylePresentationModel(
                 basalMetabolism,
                 calculateActivityMetabolism(
                     lifeStyleList,
@@ -41,7 +41,7 @@ class EnterLifeStyleServiceUseCase(
         return lifeStyleList.fold(basalMetabolism) { activityMetabolism, lifeStyle -> activityMetabolism + lifeStyle.burnedCalorie }
     }
 
-    data class LifeStylePresentationData(
+    data class LifeStylePresentationModel(
         val basalMetabolism: Double,
         val activityMetabolism: Double,
         val lifeStyleList: List<LifeStyle>
