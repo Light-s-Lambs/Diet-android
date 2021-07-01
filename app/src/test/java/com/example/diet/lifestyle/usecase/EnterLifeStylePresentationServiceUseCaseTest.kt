@@ -73,6 +73,7 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             24,
             Gender.Male
         )
+        val expected = Unit
         every {
             lifeStyleRepository.loadLifeStyleInDayToList(
                 date
@@ -95,25 +96,9 @@ class EnterLifeStylePresentationServiceUseCaseTest {
                 date
             ).catch {
                 fail()
-            }.collect()
-        }
-
-        verifyOrder {
-            loadInDayToListUseCase(date)
-            lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                basalMetabolism.captured,
-                activityMetabolism.captured,
-                lifeStyleList
-            )
-        }
-
-        verifyOrder {
-            calculateBasalMetabolismWithUserBodyInfoUseCase()
-            lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                basalMetabolism.captured,
-                activityMetabolism.captured,
-                lifeStyleList
-            )
+            }.collect{
+                assertEquals(expected, it)
+            }
         }
     }
 
@@ -391,17 +376,7 @@ class EnterLifeStylePresentationServiceUseCaseTest {
             }.collect()
         }
 
-        verifyOrder {
-            loadInDayToListUseCase(date)
-            lifeStylePresentationService.showUserLifeStyleWithMetabolism(
-                basalMetabolism.captured,
-                activityMetabolism.captured,
-                lifeStyleList
-            )
-        }
-
-        verifyOrder {
-            calculateBasalMetabolismWithUserBodyInfoUseCase()
+        verify {
             lifeStylePresentationService.showUserLifeStyleWithMetabolism(
                 basalMetabolism.captured,
                 activityMetabolism.captured,
