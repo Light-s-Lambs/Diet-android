@@ -21,7 +21,20 @@ class CalculateDailyTotalCalorieUseCaseTest {
     }
 
     @Test
-    fun `지정한 날짜의 mealList를 받아 총 칼로리 계산 성공`() {
+    fun `비어있는 식단 목록 Flow가 주어졌을 때_식단의 총 칼로리 반환 성공`() {
+        val dailyMealList = mutableListOf<Meal>()
+        val dailyMealListFlow = flowOf(dailyMealList)
+        val expected = 0.0
+
+        runBlocking {
+            useCase(dailyMealListFlow)
+                .catch { fail() }
+                .collect { assertEquals(expected, it, 0.1) }
+        }
+    }
+
+    @Test
+    fun `비어있지 않은 식단 목록 Flow가 주어졌을 때_식단의 총 칼로리 반환 성공`() {
         val dailyMealList = mutableListOf<Meal>()
         val date = DateTime.now()
         val mealType1 = MealType.Breakfast
