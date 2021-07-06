@@ -22,7 +22,7 @@ class CalculateDailyTotalCalorieUseCaseTest {
 
     @Test
     fun `비어있는 식단 목록 Flow가 주어졌을 때_식단의 총 칼로리 반환 성공`() {
-        val dailyMealList = mutableListOf<Meal>()
+        val dailyMealList = emptyList<Meal>()
         val dailyMealListFlow = flowOf(dailyMealList)
         val expected = 0.0
 
@@ -48,6 +48,7 @@ class CalculateDailyTotalCalorieUseCaseTest {
         dailyMealList.add(meal1)
         dailyMealList.add(meal2)
         val dailyMealListFlow = flowOf(dailyMealList)
+
         val expected = dailyMealList.sumByDouble { meal -> meal.calorie }
 
         runBlocking {
