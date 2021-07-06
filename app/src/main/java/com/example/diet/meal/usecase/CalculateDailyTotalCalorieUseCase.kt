@@ -5,6 +5,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class CalculateDailyTotalCalorieUseCase {
-    operator fun invoke(dailyMealListFlow: Flow<List<Meal>>): Flow<Double> =
-        dailyMealListFlow.map { it.sumByDouble { meal -> meal.calorie } }
+    operator fun invoke(mealListFlow: Flow<List<Meal>>): Flow<Double> =
+        mealListFlow.map { it.sumByDouble { meal -> meal.calorie } }
 }
